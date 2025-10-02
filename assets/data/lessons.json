@@ -1,0 +1,18 @@
+{
+  "lessons": [
+    {
+      "id": "lesson1",
+      "title": "Введение в информатику",
+      "grade": "5",
+      "pages": 5,
+      "href": "lesson1.html"
+    },
+    {
+      "id": "2lesson1",
+      "title": "Алгоритмы и исполнители",
+      "grade": "6",
+      "pages": 8,
+      "href": "2lesson1.html"
+    }
+  ]
+}

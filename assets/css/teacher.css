@@ -1,0 +1,185 @@
+/* ===== Teacher specific (поверх admin.css) ===== */
+.teacher-topbar .brand__name::after {
+  content: ' • Teacher';
+  font-weight: 600;
+  color: var(--muted);
+  margin-left: 6px;
+}
+
+/* KPI компактнее и адаптивнее */
+.teacher-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+@media (max-width: 1100px) {
+  .teacher-kpis {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .teacher-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .teacher-kpis {
+    grid-template-columns: 1fr;
+  }
+}
+.teacher-kpis .kpi {
+  min-height: 72px;
+  padding: 14px;
+}
+.teacher-kpis .kpi h3 {
+  font-size: 12px;
+  margin: 0 0 4px;
+  opacity: 0.85;
+}
+.teacher-kpis .kpi .value {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+/* Результаты */
+.results-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.results-actions .btn {
+  padding: 8px 12px;
+}
+.table .right {
+  text-align: right;
+}
+.chart-card {
+  padding: 0;
+  overflow: hidden;
+}
+.chart-card > header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--outline);
+}
+.chart-card > .canvas-wrap {
+  padding: 12px 16px;
+}
+
+/* Ученики (список как в админке) */
+.student-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--outline);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  margin-bottom: 12px;
+}
+.student-left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.avatar.big {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6aa0ff, #936bff);
+}
+.student-meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--outline);
+  font-size: 12px;
+  color: #fff;
+}
+.badge.grade-5 {
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+}
+.badge.grade-6 {
+  background: linear-gradient(135deg, #22c55e, #84cc16);
+}
+.progress {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 6px;
+  min-width: 180px;
+}
+.progress > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #84cc16);
+}
+.placeholder {
+  color: var(--muted);
+  opacity: 0.9;
+}
+
+/* Уроки (вид только чтение) */
+.lesson-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--outline);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  margin-bottom: 12px;
+}
+.lesson-title {
+  font-weight: 700;
+}
+.link-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--outline);
+  border-radius: 999px;
+  text-decoration: none;
+  color: #fff;
+}
+.link-pill:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.link-pill .arrow {
+  font-size: 14px;
+  opacity: 0.8;
+}
+.q-group td {
+  background: rgba(255, 255, 255, 0.03);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.q-group td {
+  border-top: 1px solid var(--outline);
+  border-bottom: 1px solid var(--outline);
+}
+.q-sep td {
+  padding: 0;
+  border: none;
+}
+.q-sep .line {
+  height: 10px;
+  border-top: 1px solid var(--outline);
+  border-bottom: 1px solid transparent;
+}
+.q-itog td {
+  font-style: italic;
+  opacity: 0.9;
+}

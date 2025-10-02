@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - Урок 3: Тест по кибер-гигиене</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="js/test-export.js"></script>
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn active" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+            <ul class="lesson-list">
+              <li data-href="lesson0.html">Введение</li>
+              <li data-href="lesson1.html">
+                Урок 1. Базовые правила безопасности в кабинете информатики
+              </li>
+              <li data-href="lesson2.html">Урок 2. Эргономика</li>
+              <li data-href="lesson3.html" class="active">
+                Урок 3. Кибер-гигиена и защита личных данных
+              </li>
+              <li data-href="lesson4.html">
+                Урок 4. Как работают компьютеры: Аппаратное обеспечение
+              </li>
+              <li data-href="lesson5.html">
+                Урок 5. Как работают компьютеры: Программное обеспечение
+              </li>
+              <li data-href="lesson6.html">Урок 6. Алгоритмы</li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <div class="cybersecurity-test">
+              <div class="test-header">
+                <div class="test-intro">
+                  <h2>🔐 Итоговый тест: Кибер-гигиена</h2>
+                  <p>
+                    Проверь свои знания о защите личных данных и безопасности!
+                  </p>
+                  <button id="startCybersecurityTest" class="start-test-btn">
+                    Начать тест
+                  </button>
+                </div>
+              </div>
+
+              <div
+                id="cybersecurityTestContainer"
+                class="test-container"
+                style="display: none"
+              >
+                <div class="test-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="testProgressFill"></div>
+                  </div>
+                  <p>
+                    Вопрос <span id="currentTestQ">1</span> из
+                    <span id="totalTestQ">5</span>
+                  </p>
+                </div>
+
+                <div id="testQuestionContainer" class="question-container">
+                  <!-- Вопросы будут добавлены через JavaScript -->
+                </div>
+
+                <div
+                  id="cybersecurityTestResult"
+                  class="test-result"
+                  style="display: none"
+                >
+                  <h3 id="testResultTitle">Результат</h3>
+                  <p id="testResultText">Текст результата</p>
+                  <div id="testResultDetails" class="result-details"></div>
+                  <div class="security-tips">
+                    <h4>🛡️ Помни главные правила:</h4>
+                    <ul>
+                      <li>Используй сложные уникальные пароли</li>
+                      <li>Не делись личной информацией с незнакомцами</li>
+                      <li>Будь осторожен с подозрительными ссылками</li>
+                      <li>Проверяй безопасность сайтов (🔒 и https)</li>
+                      <li>Сообщай взрослым о подозрительных контактах</li>
+                    </ul>
+                  </div>
+                  <button
+                    id="nextStageBtn"
+                    class="next-lesson-btn"
+                    style="display: none"
+                  >
+                    Перейти к следующему этапу
+                  </button>
+                  <button
+                    id="retryTestBtn"
+                    class="retry-btn"
+                    style="display: none"
+                  >
+                    Попробовать снова
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .cybersecurity-test {
+        padding: 40px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 20px;
+        margin: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .test-header {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .test-intro h2 {
+        color: #dc3545;
+        margin-bottom: 15px;
+        font-size: 28px;
+      }
+
+      .test-intro p {
+        margin-bottom: 25px;
+        font-size: 16px;
+        color: #666;
+      }
+
+      .start-test-btn {
+        padding: 20px 40px;
+        background: linear-gradient(135deg, #dc3545, #e74c3c);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+      }
+
+      .start-test-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+      }
+
+      .test-container {
+        margin-top: 30px;
+      }
+
+      .test-progress {
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #dc3545, #e74c3c);
+        transition: width 0.5s ease;
+        width: 20%;
+      }
+
+      .question-container {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .question-title {
+        color: #dc3545;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      .question-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .option-btn {
+        padding: 15px 20px;
+        background: #f8f9fa;
+        border: 2px solid #dee2e6;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        text-align: left;
+        transition: all 0.3s ease;
+      }
+
+      .option-btn:hover {
+        background: #ffe6e6;
+        border-color: #dc3545;
+        transform: translateX(5px);
+      }
+
+      .option-btn.selected {
+        border-color: #dc3545;
+        background: #ffe6e6;
+      }
+
+      .option-btn.correct {
+        background: #d4edda;
+        border-color: #28a745;
+        color: #155724;
+        animation: correctPulse 1s ease-in-out;
+      }
+
+      .option-btn.incorrect {
+        background: #f8d7da;
+        border-color: #dc3545;
+        color: #721c24;
+        animation: shake 0.5s ease-in-out;
+      }
+
+      @keyframes correctPulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.02);
+          box-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        75% {
+          transform: translateX(5px);
+        }
+      }
+
+      .option-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .test-result {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .test-result.success {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        border: 2px solid #28a745;
+      }
+
+      .test-result.partial {
+        background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+        border: 2px solid #ffc107;
+      }
+
+      .test-result.failed {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        border: 2px solid #dc3545;
+      }
+
+      .result-details {
+        margin: 20px 0;
+        text-align: left;
+      }
+
+      .result-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        margin: 8px 0;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
+        border-left: 4px solid transparent;
+      }
+
+      .result-item.correct {
+        border-left-color: #28a745;
+      }
+
+      .result-item.incorrect {
+        border-left-color: #dc3545;
+      }
+
+      .security-tips {
+        background: rgba(255, 255, 255, 0.6);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        text-align: left;
+      }
+
+      .security-tips h4 {
+        color: #155724;
+        margin-bottom: 15px;
+        font-size: 16px;
+        text-align: center;
+      }
+
+      .security-tips ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .security-tips li {
+        margin-bottom: 8px;
+        color: #155724;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .next-lesson-btn,
+      .retry-btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        margin: 10px;
+      }
+
+      .next-lesson-btn {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+      }
+
+      .retry-btn {
+        background: linear-gradient(135deg, #ffc107, #ffca2c);
+        color: #212529;
+      }
+
+      .next-lesson-btn:hover,
+      .retry-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      @media (max-width: 768px) {
+        .cybersecurity-test {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .test-header {
+          flex-direction: column;
+          text-align: center;
+          gap: 20px;
+        }
+
+        .test-intro h2 {
+          font-size: 24px;
+        }
+
+        .question-container {
+          padding: 20px;
+        }
+
+        .option-btn {
+          padding: 12px 15px;
+        }
+
+        .start-test-btn {
+          padding: 15px 30px;
+          font-size: 16px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        
+        if (window.TestResults) { try { window.TestResults.init({ lessonId: 3, requireAuth: true }); } catch(e) { console.warn(e); } }
+const questions = [
+          {
+            question: 'Что такое личные данные?',
+            options: [
+              'Информация о других людях',
+              'Твоё имя, адрес, телефон, пароли',
+              'Просто слова в интернете',
+            ],
+            correct: 1,
+            explanation:
+              'Личные данные - это любая информация, которая может идентифицировать тебя как личность: имя, адрес, телефон, пароли.',
+          },
+          {
+            question: 'Какой пароль безопаснее?',
+            options: ['123456', 'Qwerty123', '9r@K!2mL_'],
+            correct: 2,
+            explanation:
+              'Безопасный пароль содержит буквы разного регистра, цифры и специальные символы, как 9r@K!2mL_.',
+          },
+          {
+            question: 'Что делать, если тебе пишет незнакомец?',
+            options: [
+              'Рассказать о себе',
+              'Игнорировать или сообщить родителям',
+              'Сразу отправить ему фото',
+            ],
+            correct: 1,
+            explanation:
+              'Никогда не общайся с незнакомцами в интернете. Лучше игнорировать или сразу сообщить родителям.',
+          },
+          {
+            question: 'Как узнать, что сайт безопасен?',
+            options: [
+              'Там есть картинка котика',
+              'В адресе есть 🔒 значок и "https"',
+              'Он красиво выглядит',
+            ],
+            correct: 1,
+            explanation:
+              'Безопасный сайт имеет защищенное соединение - в адресной строке есть значок замка 🔒 и адрес начинается с "https".',
+          },
+          {
+            question:
+              'Что делать, если пришло письмо с подозрительной ссылкой?',
+            options: [
+              'Открыть и посмотреть',
+              'Удалить, не открывая',
+              'Отправить всем друзьям',
+            ],
+            correct: 1,
+            explanation:
+              'Подозрительные ссылки могут содержать вирусы или вести на опасные сайты. Лучше сразу удалить такие письма.',
+          },
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answers = [];
+
+        document
+          .getElementById('startCybersecurityTest')
+          .addEventListener('click', startTest);
+        document
+          .getElementById('retryTestBtn')
+          .addEventListener('click', retryTest);
+        document
+          .getElementById('nextStageBtn')
+          .addEventListener('click', () => {
+            window.location.href = 'lesson3-7.html'; // Переход к тесту мотивации
+          });
+
+        function startTest() {
+          document.querySelector('.test-header').style.display = 'none';
+          document.getElementById('cybersecurityTestContainer').style.display =
+            'block';
+          document.getElementById('totalTestQ').textContent = questions.length;
+          showQuestion();
+        }
+
+        function showQuestion() {
+          const question = questions[currentQuestion];
+          document.getElementById('currentTestQ').textContent =
+            currentQuestion + 1;
+
+          const progress = ((currentQuestion + 1) / questions.length) * 100;
+          document.getElementById('testProgressFill').style.width =
+            progress + '%';
+
+          const container = document.getElementById('testQuestionContainer');
+          container.innerHTML = `
+            <div class="question-title">${question.question}</div>
+            <div class="question-options">
+              ${question.options
+                .map(
+                  (option, index) =>
+                    `<button class="option-btn" data-index="${index}">${option}</button>`
+                )
+                .join('')}
+            </div>
+          `;
+
+          container.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+              selectAnswer(parseInt(this.dataset.index));
+            });
+          });
+        }
+
+        function selectAnswer(selectedIndex) {
+          const question = questions[currentQuestion];
+          const isCorrect = selectedIndex === question.correct;
+
+          answers.push({
+            question: question.question,
+            selected: selectedIndex,
+            correct: question.correct,
+            isCorrect: isCorrect,
+            explanation: question.explanation,
+          });
+
+          if (isCorrect) score++;
+
+          const options = document.querySelectorAll('.option-btn');
+          options.forEach((btn, index) => {
+            btn.disabled = true;
+            if (index === question.correct) {
+              btn.classList.add('correct');
+            } else if (index === selectedIndex && !isCorrect) {
+              btn.classList.add('incorrect');
+            }
+          });
+
+          setTimeout(() => {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+              showQuestion();
+            } else {
+              showResults();
+            }
+          }, 2000);
+        }
+
+        function showResults() {
+          document.getElementById('testQuestionContainer').style.display =
+            'none';
+          const resultDiv = document.getElementById('cybersecurityTestResult');
+          resultDiv.style.display = 'block';
+
+          const percentage = Math.round((score / questions.length) * 100);
+          let resultClass, title, text;
+
+          if (percentage >= 80) {
+            resultClass = 'success';
+            title = '🎉 Отлично!';
+            text = `Ты правильно ответил на ${score} из ${questions.length} вопросов (${percentage}%). Ты отлично знаешь правила кибер-безопасности!`;
+            document.getElementById('nextStageBtn').style.display =
+              'inline-block';
+          } else if (percentage >= 60) {
+            resultClass = 'partial';
+            title = '👍 Хорошо!';
+            text = `Ты правильно ответил на ${score} из ${questions.length} вопросов (${percentage}%). Неплохо, но можно лучше!`;
+            document.getElementById('nextStageBtn').style.display =
+              'inline-block';
+            document.getElementById('retryTestBtn').style.display =
+              'inline-block';
+          } else {
+            resultClass = 'failed';
+            title = '😔 Нужно повторить';
+            text = `Ты правильно ответил на ${score} из ${questions.length} вопросов (${percentage}%). Повтори материал и попробуй снова!`;
+            document.getElementById('retryTestBtn').style.display =
+              'inline-block';
+          }
+
+          resultDiv.className = `test-result ${resultClass}`;
+          document.getElementById('testResultTitle').textContent = title;
+          document.getElementById('testResultText').textContent = text;
+
+          const detailsDiv = document.getElementById('testResultDetails');
+          detailsDiv.innerHTML =
+            '<h4>Разбор ответов:</h4>' +
+            answers
+              .map(
+                (answer, index) => `
+              <div class="result-item ${
+                answer.isCorrect ? 'correct' : 'incorrect'
+              }">
+                <div>
+                  <strong>Вопрос ${index + 1}:</strong> ${
+                  answer.isCorrect ? '✅ Правильно' : '❌ Неправильно'
+                }<br>
+                  <small>${answer.explanation}</small>
+                </div>
+              </div>
+            `
+              )
+              .join('');
+          // === Экспорт для Excel (лист "Знания") ===
+          try {
+            if (window.TestResults) {
+              const exportQuestions = answers.map((a, i) => ({
+                index: i + 1,
+                question: a.question,
+                answer: String(questions[i]?.options?.[a.selected] ?? a.selected),
+                correct: !!a.isCorrect,
+                correctAnswer: String(questions[i]?.options?.[a.correct] ?? '')
+              }));
+              window.TestResults.saveTest({
+                testType: 'knowledge',
+                questions: exportQuestions
+              });
+            }
+          } catch (e) { console.warn('saveTest knowledge failed', e); }
+
+        }
+
+        function retryTest() {
+          currentQuestion = 0;
+          score = 0;
+          answers = [];
+          document.getElementById('cybersecurityTestResult').style.display =
+            'none';
+          document.getElementById('testQuestionContainer').style.display =
+            'block';
+          document.getElementById('testProgressFill').style.width = '20%';
+          showQuestion();
+        }
+      });
+    </script>
+  </body>
+</html>

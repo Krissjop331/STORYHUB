@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - Урок 3: Кибер-гигиена и защита личных данных</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn active" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+            <ul class="lesson-list">
+              <li data-href="lesson0.html">Введение</li>
+              <li data-href="lesson1.html">
+                Урок 1. Базовые правила безопасности в кабинете информатики
+              </li>
+              <li data-href="lesson2.html">Урок 2. Эргономика</li>
+              <li data-href="lesson3.html" class="active">
+                Урок 3. Кибер-гигиена и защита личных данных
+              </li>
+              <li data-href="lesson4.html">
+                Урок 4. Как работают компьютеры: Аппаратное обеспечение
+              </li>
+              <li data-href="lesson5.html">
+                Урок 5. Как работают компьютеры: Программное обеспечение
+              </li>
+              <li data-href="lesson6.html">Урок 6. Алгоритмы</li>
+            </ul>
+          </div>
+
+          <div class="content_games" id="center">
+            <div class="password-comparison-section">
+              <div class="section-header">
+                <h2>🔐 Сравнение паролей</h2>
+                <p>Посмотри, как различаются уровни безопасности паролей</p>
+              </div>
+
+              <div class="password-comparison-content">
+                <img
+                  src="images/Video3_7.png"
+                  alt="Сравнение паролей"
+                  class="comparison-image"
+                />
+
+                <div class="password-examples">
+                  <div class="password-example weak-password">
+                    <div class="password-header">
+                      <span class="password-strength-icon">🔴</span>
+                      <span class="password-strength-label">Очень слабый</span>
+                    </div>
+                    <div class="password-display">123456</div>
+                    <div class="password-description">
+                      Простые числа подряд - легко взломать за секунды!
+                    </div>
+                    <div class="crack-time">⏱️ Время взлома: мгновенно</div>
+                  </div>
+
+                  <div class="password-example medium-password">
+                    <div class="password-header">
+                      <span class="password-strength-icon">🟡</span>
+                      <span class="password-strength-label">Средний</span>
+                    </div>
+                    <div class="password-display">Qwerty2024</div>
+                    <div class="password-description">
+                      Популярное слово + год - предсказуемо для хакеров
+                    </div>
+                    <div class="crack-time">
+                      ⏱️ Время взлома: несколько часов
+                    </div>
+                  </div>
+
+                  <div class="password-example strong-password">
+                    <div class="password-header">
+                      <span class="password-strength-icon">🟢</span>
+                      <span class="password-strength-label"
+                        >Очень надёжный</span
+                      >
+                    </div>
+                    <div class="password-display">R3!kT#dN9p</div>
+                    <div class="password-description">
+                      Случайные символы, цифры и спецсимволы - практически
+                      невзломаемый!
+                    </div>
+                    <div class="crack-time">⏱️ Время взлома: миллионы лет</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="security-tip">
+                <div class="tip-icon">💡</div>
+                <div class="tip-content">
+                  <h3>Золотое правило безопасности:</h3>
+                  <p>
+                    Всегда используй сложные пароли с комбинацией букв, цифр и
+                    специальных символов!
+                  </p>
+                </div>
+              </div>
+
+              <img
+                src="images/arrow.png"
+                alt="Далее"
+                class="arrow next-lesson-arrow"
+                id="nextArrow"
+              />
+              <img
+                src="images/arrow.png"
+                alt="Назад"
+                class="arrow-back"
+                id="back-arrow"
+                title="Вернуться к предыдущей странице"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .password-comparison-section {
+        padding: 30px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 20px;
+        margin: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .section-header h2 {
+        color: #4d36db;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .section-header p {
+        color: #666;
+        font-size: 16px;
+        margin: 0;
+      }
+
+      .password-comparison-content {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 50px;
+        margin-bottom: 40px;
+      }
+
+      .comparison-image {
+        /* max-width: 400px;
+        max-height: 300px;
+        object-fit: contain; */
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .password-examples {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        max-width: 450px;
+      }
+
+      .password-example {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-left: 5px solid;
+        transition: transform 0.3s ease;
+      }
+
+      .password-example:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .weak-password {
+        border-left-color: #dc3545;
+        background: linear-gradient(135deg, #fff, #fef8f8);
+      }
+
+      .medium-password {
+        border-left-color: #ffc107;
+        background: linear-gradient(135deg, #fff, #fffef8);
+      }
+
+      .strong-password {
+        border-left-color: #28a745;
+        background: linear-gradient(135deg, #fff, #f8fef8);
+      }
+
+      .password-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .password-strength-icon {
+        font-size: 20px;
+      }
+
+      .password-strength-label {
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .weak-password .password-strength-label {
+        color: #dc3545;
+      }
+
+      .medium-password .password-strength-label {
+        color: #ffc107;
+      }
+
+      .strong-password .password-strength-label {
+        color: #28a745;
+      }
+
+      .password-display {
+        font-family: 'Courier New', monospace;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 12px 15px;
+        background: rgba(77, 54, 219, 0.1);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        text-align: center;
+        color: #4d36db;
+      }
+
+      .password-description {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.4;
+        margin-bottom: 10px;
+      }
+
+      .crack-time {
+        font-size: 13px;
+        font-weight: 600;
+        padding: 8px 12px;
+        border-radius: 6px;
+        text-align: center;
+      }
+
+      .weak-password .crack-time {
+        background: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+      }
+
+      .medium-password .crack-time {
+        background: rgba(255, 193, 7, 0.1);
+        color: #e68900;
+      }
+
+      .strong-password .crack-time {
+        background: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+      }
+
+      .security-tip {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        color: white;
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        box-shadow: 0 6px 20px rgba(77, 54, 219, 0.3);
+      }
+
+      .tip-icon {
+        font-size: 40px;
+        flex-shrink: 0;
+      }
+
+      .tip-content h3 {
+        margin: 0 0 8px 0;
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .tip-content p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.4;
+      }
+
+      .next-lesson-arrow {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+      }
+
+      .next-lesson-arrow:hover {
+        transform: scale(1.1);
+      }
+
+      /* Адаптивность */
+      @media (max-width: 768px) {
+        .password-comparison-section {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .password-comparison-content {
+          flex-direction: column;
+          gap: 30px;
+        }
+
+        .comparison-image {
+          max-width: 100%;
+          max-height: 250px;
+        }
+
+        .password-examples {
+          max-width: 100%;
+        }
+
+        .password-example {
+          padding: 20px;
+        }
+
+        .password-display {
+          font-size: 18px;
+        }
+
+        .security-tip {
+          flex-direction: column;
+          text-align: center;
+          gap: 15px;
+          padding: 20px;
+        }
+
+        .tip-icon {
+          font-size: 30px;
+        }
+
+        .section-header h2 {
+          font-size: 24px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .password-display {
+          font-size: 16px;
+          padding: 10px;
+        }
+
+        .password-description {
+          font-size: 13px;
+        }
+
+        .crack-time {
+          font-size: 12px;
+        }
+
+        .next-lesson-arrow {
+          width: 50px;
+          height: 50px;
+          bottom: 15px;
+          right: 15px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Добавляем анимацию появления элементов
+        const passwordExamples = document.querySelectorAll('.password-example');
+        passwordExamples.forEach((example, index) => {
+          setTimeout(() => {
+            example.style.opacity = '0';
+            example.style.transform = 'translateY(20px)';
+            example.style.transition = 'all 0.6s ease';
+
+            setTimeout(() => {
+              example.style.opacity = '1';
+              example.style.transform = 'translateY(0)';
+            }, 100);
+          }, index * 200);
+        });
+
+        // Анимация для совета по безопасности
+        setTimeout(() => {
+          const tip = document.querySelector('.security-tip');
+          tip.style.opacity = '0';
+          tip.style.transform = 'scale(0.95)';
+          tip.style.transition = 'all 0.6s ease';
+
+          setTimeout(() => {
+            tip.style.opacity = '1';
+            tip.style.transform = 'scale(1)';
+          }, 100);
+        }, 800);
+      });
+    </script>
+    <script src="js/video-modal.js"></script>
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5807.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

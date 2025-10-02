@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - Урок 4: Шестнадцатеричная система счисления</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="index.html">5 класс</button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html">Урок 2. Бит и Байт</li>
+              <li data-href="2lesson3.html">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html" class="active">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <div class="hex-conversion-container">
+              <!-- Робот-помощник -->
+              <div class="robot-helper">
+                <div class="robot-avatar">🤖</div>
+                <div class="robot-speech">
+                  <h3>
+                    Примеры перевода из десятичной в шестнадцатеричную систему:
+                  </h3>
+                </div>
+              </div>
+
+              <!-- Интерактивная таблица -->
+              <div class="conversion-table">
+                <div class="table-row header-row">
+                  <div class="table-cell">Десятичная (10)</div>
+                  <div class="table-cell">Шестнадцатеричная (16)</div>
+                  <div class="table-cell">Объяснение</div>
+                </div>
+
+                <div class="table-row" data-decimal="10">
+                  <div class="table-cell decimal">10₁₀</div>
+                  <div class="table-cell hex reveal-hex" data-answer="A">
+                    ??
+                  </div>
+                  <div class="table-cell explanation">
+                    10 в шестнадцатеричной = A
+                  </div>
+                </div>
+
+                <div class="table-row" data-decimal="11">
+                  <div class="table-cell decimal">11₁₀</div>
+                  <div class="table-cell hex reveal-hex" data-answer="B">
+                    ??
+                  </div>
+                  <div class="table-cell explanation">
+                    11 в шестнадцатеричной = B
+                  </div>
+                </div>
+
+                <div class="table-row" data-decimal="12">
+                  <div class="table-cell decimal">12₁₀</div>
+                  <div class="table-cell hex reveal-hex" data-answer="C">
+                    ??
+                  </div>
+                  <div class="table-cell explanation">
+                    12 в шестнадцатеричной = C
+                  </div>
+                </div>
+
+                <div class="table-row" data-decimal="13">
+                  <div class="table-cell decimal">13₁₀</div>
+                  <div class="table-cell hex reveal-hex" data-answer="D">
+                    ??
+                  </div>
+                  <div class="table-cell explanation">
+                    13 в шестнадцатеричной = D
+                  </div>
+                </div>
+
+                <div class="table-row" data-decimal="14">
+                  <div class="table-cell decimal">14₁₀</div>
+                  <div class="table-cell hex reveal-hex" data-answer="E">
+                    ??
+                  </div>
+                  <div class="table-cell explanation">
+                    14 в шестнадцатеричной = E
+                  </div>
+                </div>
+
+                <div class="table-row" data-decimal="15">
+                  <div class="table-cell decimal">15₁₀</div>
+                  <div class="table-cell hex reveal-hex" data-answer="F">
+                    ??
+                  </div>
+                  <div class="table-cell explanation">
+                    15 в шестнадцатеричная = F
+                  </div>
+                </div>
+
+                <div class="table-row" data-decimal="16">
+                  <div class="table-cell decimal">16₁₀</div>
+                  <div class="table-cell hex reveal-hex" data-answer="10">
+                    ??
+                  </div>
+                  <div class="table-cell explanation">1×16 + 0 = 16</div>
+                </div>
+
+                <div class="table-row" data-decimal="17">
+                  <div class="table-cell decimal">17₁₀</div>
+                  <div class="table-cell hex reveal-hex" data-answer="11">
+                    ??
+                  </div>
+                  <div class="table-cell explanation">1×16 + 1 = 17</div>
+                </div>
+              </div>
+
+              <!-- Кнопка "Показать все ответы" -->
+              <div class="controls">
+                <button class="reveal-all-btn">Показать все ответы</button>
+                <button class="hide-all-btn" style="display: none">
+                  Скрыть ответы
+                </button>
+              </div>
+
+              <!-- Прогресс -->
+              <div class="progress-indicator">
+                <p>Открыто ответов: <span id="revealed-count">0</span>/8</p>
+              </div>
+            </div>
+
+            <img src="images/arrow.png" alt="Далее" class="arrow" />
+            <img
+              src="images/arrow.png"
+              alt="Назад"
+              class="arrow-back"
+              id="back-arrow"
+              title="Вернуться к предыдущей странице"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .hex-conversion-container {
+        width: 100%;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      .robot-helper {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 25px;
+        gap: 15px;
+      }
+
+      .robot-avatar {
+        font-size: 60px;
+        background: white;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .robot-speech {
+        background: rgba(255, 255, 255, 0.15);
+        padding: 20px;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        flex: 1;
+        position: relative;
+      }
+
+      .robot-speech::before {
+        content: '';
+        position: absolute;
+        left: -10px;
+        top: 20px;
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 10px solid rgba(255, 255, 255, 0.15);
+      }
+
+      .robot-speech h3 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+        color: white;
+      }
+
+      .conversion-table {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .table-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr;
+        align-items: center;
+        min-height: 60px;
+      }
+
+      .header-row {
+        background: rgba(255, 255, 255, 0.2);
+        font-weight: 700;
+        font-size: 16px;
+      }
+
+      .table-row:not(.header-row) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: background-color 0.3s ease;
+      }
+
+      .table-row:not(.header-row):hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .table-cell {
+        padding: 15px;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      .table-cell.explanation {
+        text-align: left;
+        font-size: 14px;
+        opacity: 0.9;
+      }
+
+      .reveal-hex {
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        margin: 5px;
+        transition: all 0.3s ease;
+        font-weight: 700;
+        font-size: 18px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .reveal-hex:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+      }
+
+      .reveal-hex.revealed {
+        background: rgba(46, 204, 113, 0.8);
+        color: white;
+        animation: reveal 0.6s ease-out;
+      }
+
+      @keyframes reveal {
+        0% {
+          transform: rotateY(180deg);
+          opacity: 0;
+        }
+        100% {
+          transform: rotateY(0deg);
+          opacity: 1;
+        }
+      }
+
+      .controls {
+        text-align: center;
+        margin-bottom: 15px;
+      }
+
+      .reveal-all-btn,
+      .hide-all-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        padding: 12px 25px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 600;
+        font-family: 'Montserrat', sans-serif;
+        transition: all 0.3s ease;
+      }
+
+      .reveal-all-btn:hover,
+      .hide-all-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .progress-indicator {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.15);
+        padding: 15px;
+        border-radius: 12px;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+      }
+
+      #revealed-count {
+        color: #2ecc71;
+        font-weight: 700;
+        font-size: 18px;
+      }
+
+      @media (max-width: 768px) {
+        .robot-helper {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .table-row {
+          grid-template-columns: 1fr;
+          gap: 10px;
+          text-align: center;
+        }
+
+        .table-cell.explanation {
+          text-align: center;
+        }
+
+        .robot-speech::before {
+          display: none;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        let revealedCount = 0;
+        const totalAnswers = 8;
+
+        // Обработчик клика по ячейкам с ответами
+        document.querySelectorAll('.reveal-hex').forEach(cell => {
+          cell.addEventListener('click', function () {
+            if (!this.classList.contains('revealed')) {
+              revealAnswer(this);
+            }
+          });
+        });
+
+        function revealAnswer(cell) {
+          const answer = cell.dataset.answer;
+          cell.textContent = answer + '₁₆';
+          cell.classList.add('revealed');
+          revealedCount++;
+          updateProgress();
+
+          // Добавляем небольшую анимацию
+          cell.style.transform = 'scale(1.1)';
+          setTimeout(() => {
+            cell.style.transform = 'scale(1)';
+          }, 200);
+        }
+
+        function updateProgress() {
+          document.getElementById('revealed-count').textContent = revealedCount;
+
+          if (revealedCount === totalAnswers) {
+            setTimeout(() => {
+              showCongratulations();
+            }, 500);
+          }
+        }
+
+        function showCongratulations() {
+          const progressIndicator = document.querySelector(
+            '.progress-indicator'
+          );
+          progressIndicator.innerHTML = `
+          <p style="color: #2ecc71; font-size: 18px; font-weight: bold;">
+            🎉 Отлично! Ты изучил все преобразования! 🎉
+          </p>
+        `;
+          progressIndicator.style.background = 'rgba(46, 204, 113, 0.3)';
+        }
+
+        // Кнопка "Показать все ответы"
+        document
+          .querySelector('.reveal-all-btn')
+          .addEventListener('click', function () {
+            document
+              .querySelectorAll('.reveal-hex:not(.revealed)')
+              .forEach(cell => {
+                revealAnswer(cell);
+              });
+
+            this.style.display = 'none';
+            document.querySelector('.hide-all-btn').style.display =
+              'inline-block';
+          });
+
+        // Кнопка "Скрыть ответы"
+        document
+          .querySelector('.hide-all-btn')
+          .addEventListener('click', function () {
+            document.querySelectorAll('.reveal-hex').forEach(cell => {
+              cell.textContent = '??';
+              cell.classList.remove('revealed');
+              cell.style.background = 'rgba(255, 255, 255, 0.2)';
+            });
+
+            revealedCount = 0;
+            updateProgress();
+
+            this.style.display = 'none';
+            document.querySelector('.reveal-all-btn').style.display =
+              'inline-block';
+
+            // Восстанавливаем прогресс-индикатор
+            const progressIndicator = document.querySelector(
+              '.progress-indicator'
+            );
+            progressIndicator.innerHTML = `
+          <p>Открыто ответов: <span id="revealed-count">0</span>/8</p>
+        `;
+            progressIndicator.style.background = 'rgba(255, 255, 255, 0.15)';
+          });
+      });
+    </script>
+    <script src="js/video-modal.js"></script>
+    <!-- Подключаем видео-плеер -->
+    <script src="js/main.js"></script>
+
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5793_1.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - 6 класс: Шестнадцатеричная система</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <!-- Скрипт авторизации -->
+    <script>
+      const SessionUtils = {
+        get: function (name) {
+          try {
+            return sessionStorage.getItem(name);
+          } catch (error) {
+            return null;
+          }
+        },
+        remove: function (name) {
+          try {
+            sessionStorage.removeItem(name);
+          } catch (error) {
+            return false;
+          }
+        },
+      };
+
+      function validateSessionToken(token) {
+        if (!token) return false;
+        try {
+          const tokenData = JSON.parse(atob(token));
+          const sessionStart = SessionUtils.get('STORYHUB_session_start');
+          return (
+            tokenData.sessionId &&
+            tokenData.username &&
+            tokenData.createdAt &&
+            sessionStart &&
+            tokenData.createdAt >= sessionStart
+          );
+        } catch (error) {
+          return false;
+        }
+      }
+
+      function requireAuth() {
+        const token = SessionUtils.get('STORYHUB_auth_token');
+        const userData = SessionUtils.get('STORYHUB_user_data');
+        if (!token || !userData || !validateSessionToken(token)) {
+          SessionUtils.remove('STORYHUB_auth_token');
+          SessionUtils.remove('STORYHUB_user_data');
+          window.location.href = 'index.html';
+          return false;
+        }
+        return true;
+      }
+
+      function getCurrentUser() {
+        const token = SessionUtils.get('STORYHUB_auth_token');
+        const userData = SessionUtils.get('STORYHUB_user_data');
+        if (token && userData && validateSessionToken(token)) {
+          try {
+            return JSON.parse(userData);
+          } catch (error) {
+            return null;
+          }
+        }
+        return null;
+      }
+
+      function logout() {
+        SessionUtils.remove('STORYHUB_auth_token');
+        SessionUtils.remove('STORYHUB_user_data');
+        window.location.href = 'index.html';
+      }
+
+      if (!requireAuth()) {
+        document.documentElement.style.display = 'none';
+      }
+    </script>
+
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="lesson0.html">
+                5 класс
+              </button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html">Урок 2. Бит и Байт</li>
+              <li data-href="2lesson3.html">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html" class="active">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <!-- Интерактивная задача -->
+            <div class="hex-challenge">
+              <h3>🔢 Продвинутая задача: 0xFFF в десятичной системе</h3>
+              <p>Используй формулу для трёхзначного hex числа</p>
+
+              <!-- Система подсказок -->
+              <div class="hint-system">
+                <button id="toggleHints" class="hint-toggle-btn">
+                  💡 Показать подсказки
+                </button>
+
+                <div id="hintsPanel" class="hints-panel" style="display: none">
+                  <div class="hints-header">
+                    <h4>🧠 Интеллектуальный помощник</h4>
+                    <p>Выбери нужную подсказку:</p>
+                  </div>
+
+                  <div class="hint-buttons">
+                    <button class="hint-btn" data-hint="basics">
+                      🔤 Основы HEX
+                    </button>
+                    <button class="hint-btn" data-hint="powers">
+                      🔢 Степени 16
+                    </button>
+                    <button class="hint-btn" data-hint="formula">
+                      📐 Формула
+                    </button>
+                    <button class="hint-btn" data-hint="steps">
+                      👣 Пошагово
+                    </button>
+                    <button class="hint-btn" data-hint="calculator">
+                      🧮 Калькулятор
+                    </button>
+                  </div>
+
+                  <div id="hintContent" class="hint-content">
+                    <div class="hint-message">Выбери тип подсказки выше 👆</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hex-calculator">
+                <h4>🧮 Пошаговый калькулятор:</h4>
+
+                <div class="calc-row">
+                  <span class="label">F × 16² =</span>
+                  <input type="number" id="step1" placeholder="?" />
+                  <span class="check-mark" id="check1">✓</span>
+                  <button
+                    class="step-help-btn"
+                    data-step="1"
+                    title="Помощь по шагу 1"
+                  >
+                    ❓
+                  </button>
+                </div>
+
+                <div class="calc-row">
+                  <span class="label">F × 16¹ =</span>
+                  <input type="number" id="step2" placeholder="?" />
+                  <span class="check-mark" id="check2">✓</span>
+                  <button
+                    class="step-help-btn"
+                    data-step="2"
+                    title="Помощь по шагу 2"
+                  >
+                    ❓
+                  </button>
+                </div>
+
+                <div class="calc-row">
+                  <span class="label">F × 16⁰ =</span>
+                  <input type="number" id="step3" placeholder="?" />
+                  <span class="check-mark" id="check3">✓</span>
+                  <button
+                    class="step-help-btn"
+                    data-step="3"
+                    title="Помощь по шагу 3"
+                  >
+                    ❓
+                  </button>
+                </div>
+
+                <div class="calc-row final-row">
+                  <span class="label">Итого:</span>
+                  <input type="number" id="finalAnswer" placeholder="?" />
+                  <button id="checkFinal" class="check-final-btn">
+                    Проверить
+                  </button>
+                  <button
+                    class="step-help-btn"
+                    data-step="final"
+                    title="Помощь с итогом"
+                  >
+                    ❓
+                  </button>
+                </div>
+              </div>
+
+              <!-- Динамические подсказки -->
+              <div class="dynamic-hints">
+                <div class="hint-card" id="basicHints">
+                  <div class="hint">💡 16² = 256</div>
+                  <div class="hint">💡 16¹ = 16</div>
+                  <div class="hint">💡 16⁰ = 1</div>
+                  <div class="hint">💡 F = 15</div>
+                </div>
+
+                <div
+                  class="smart-feedback"
+                  id="smartFeedback"
+                  style="display: none"
+                >
+                  <div class="feedback-content">
+                    <div class="feedback-icon">🤖</div>
+                    <div class="feedback-text" id="feedbackText"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hex-result" id="calculatorResult"></div>
+            </div>
+
+            <img
+              src="images/arrow.png"
+              alt="Далее"
+              class="arrow"
+              id="nextArrow"
+              style="display: none"
+            />
+            <img
+              src="images/arrow.png"
+              alt="Назад"
+              class="arrow-back"
+              id="back-arrow"
+              title="Вернуться к предыдущей странице"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно выхода -->
+    <div id="logoutModal" class="logout-modal" style="display: none">
+      <div class="logout-modal-content">
+        <h3>Подтверждение выхода</h3>
+        <p>Вы действительно хотите выйти из системы?</p>
+        <div class="logout-modal-buttons">
+          <button id="confirmLogout" class="logout-confirm-btn">
+            Да, выйти
+          </button>
+          <button id="cancelLogout" class="logout-cancel-btn">Отмена</button>
+        </div>
+      </div>
+    </div>
+    <div id="logoutOverlay" class="logout-overlay" style="display: none"></div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .hex-challenge {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border: 3px solid #4d36db;
+        text-align: center;
+        max-width: 750px;
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .hex-challenge h3 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 20px;
+      }
+
+      .hex-challenge p {
+        color: #666;
+        margin-bottom: 20px;
+        font-style: italic;
+      }
+
+      /* Система подсказок */
+      .hint-system {
+        margin-bottom: 25px;
+      }
+
+      .hint-toggle-btn {
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #17a2b8, #138496);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      .hint-toggle-btn:hover {
+        background: linear-gradient(135deg, #138496, #117a8b);
+        transform: translateY(-2px);
+      }
+
+      .hints-panel {
+        background: #e8f4fd;
+        border: 2px solid #17a2b8;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 15px;
+        text-align: left;
+        animation: slideDown 0.3s ease-out;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hints-header h4 {
+        color: #17a2b8;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .hints-header p {
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
+
+      .hint-buttons {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hint-btn {
+        padding: 8px 12px;
+        background: white;
+        border: 2px solid #17a2b8;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        color: #17a2b8;
+      }
+
+      .hint-btn:hover,
+      .hint-btn.active {
+        background: #17a2b8;
+        color: white;
+        transform: translateY(-1px);
+      }
+
+      .hint-content {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #17a2b8;
+        min-height: 60px;
+      }
+
+      .hint-message {
+        color: #666;
+        text-align: center;
+        font-style: italic;
+      }
+
+      /* Калькулятор */
+      .hex-calculator {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+
+      .hex-calculator h4 {
+        color: #4d36db;
+        margin-bottom: 20px;
+        font-size: 18px;
+      }
+
+      .calc-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        padding: 10px;
+        background: white;
+        border-radius: 8px;
+        gap: 10px;
+      }
+
+      .calc-row.final-row {
+        background: #e8f5e8;
+        border: 2px solid #28a745;
+        font-weight: bold;
+      }
+
+      .label {
+        font-family: monospace;
+        font-size: 16px;
+        font-weight: bold;
+        min-width: 120px;
+        text-align: left;
+      }
+
+      .calc-row input {
+        width: 100px;
+        height: 40px;
+        font-size: 16px;
+        text-align: center;
+        border: 2px solid #4d36db;
+        border-radius: 5px;
+        font-family: monospace;
+        font-weight: bold;
+      }
+
+      .calc-row input:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(77, 54, 219, 0.3);
+      }
+
+      .calc-row input.correct {
+        border-color: #28a745;
+        background: #d4edda;
+      }
+
+      .calc-row input.incorrect {
+        border-color: #dc3545;
+        background: #f8d7da;
+      }
+
+      .check-mark {
+        color: #28a745;
+        font-size: 20px;
+        font-weight: bold;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        min-width: 20px;
+      }
+
+      .check-mark.visible {
+        opacity: 1;
+      }
+
+      .step-help-btn {
+        width: 25px;
+        height: 25px;
+        background: #ffc107;
+        color: #212529;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+
+      .step-help-btn:hover {
+        background: #e0a800;
+        transform: scale(1.1);
+      }
+
+      .check-final-btn {
+        padding: 10px 20px;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      .check-final-btn:hover {
+        background: #218838;
+        transform: translateY(-1px);
+      }
+
+      /* Динамические подсказки */
+      .dynamic-hints {
+        margin-bottom: 20px;
+      }
+
+      .hint-card {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .hint {
+        background: #fff3cd;
+        color: #856404;
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        border: 1px solid #ffeaa7;
+        transition: all 0.3s ease;
+      }
+
+      .hint:hover {
+        background: #ffc107;
+        color: #212529;
+        transform: scale(1.05);
+      }
+
+      .smart-feedback {
+        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        border: 2px solid #2196f3;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 15px 0;
+        animation: fadeIn 0.5s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .feedback-content {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .feedback-icon {
+        font-size: 24px;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-5px);
+        }
+        60% {
+          transform: translateY(-3px);
+        }
+      }
+
+      .feedback-text {
+        color: #1976d2;
+        font-weight: 600;
+        line-height: 1.4;
+      }
+
+      .hex-result {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        font-weight: bold;
+        min-height: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .hex-result.success {
+        background: #d4edda;
+        color: #155724;
+        border: 2px solid #28a745;
+      }
+
+      .hex-result.error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 2px solid #dc3545;
+      }
+
+      /* Стили авторизации */
+      .iconexit {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: #f0f0f0;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        border: 2px solid transparent;
+      }
+
+      .iconexit:hover {
+        background-color: #dc3545;
+        color: white;
+        border-color: #dc3545;
+        transform: scale(1.1);
+      }
+
+      .nameuser {
+        font-weight: 600;
+        color: #4d36db;
+        margin-right: 15px;
+        font-size: 16px;
+      }
+
+      .nameuser.loading {
+        color: #999;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      .logout-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 9999;
+      }
+
+      .logout-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        z-index: 10000;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border: 3px solid #4d36db;
+      }
+
+      .logout-modal h3 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .logout-modal p {
+        color: #666;
+        margin-bottom: 25px;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .logout-modal-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+      }
+
+      .logout-confirm-btn,
+      .logout-cancel-btn {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 100px;
+      }
+
+      .logout-confirm-btn {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+      }
+
+      .logout-cancel-btn {
+        background: #f8f9fa;
+        color: #4d36db;
+        border: 2px solid #4d36db;
+      }
+
+      @media (max-width: 768px) {
+        .hex-challenge {
+          top: 50%;
+          padding: 20px;
+          margin: 10px;
+          max-height: 95vh;
+        }
+
+        .calc-row {
+          flex-direction: column;
+          gap: 10px;
+          text-align: center;
+        }
+
+        .label {
+          min-width: auto;
+        }
+
+        .hint-card {
+          justify-content: center;
+        }
+
+        .hint {
+          font-size: 12px;
+          padding: 6px 8px;
+        }
+
+        .hint-buttons {
+          justify-content: center;
+        }
+
+        .feedback-content {
+          flex-direction: column;
+          text-align: center;
+          gap: 10px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Инициализация авторизации
+        if (!requireAuth()) return;
+
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+          document.getElementById('userName').textContent = currentUser.name;
+          document.getElementById('userName').classList.remove('loading');
+        } else {
+          logout();
+        }
+
+        // Обработчики авторизации
+        const logoutBtn = document.getElementById('logoutBtn');
+        const logoutModal = document.getElementById('logoutModal');
+        const logoutOverlay = document.getElementById('logoutOverlay');
+        const confirmLogout = document.getElementById('confirmLogout');
+        const cancelLogout = document.getElementById('cancelLogout');
+
+        logoutBtn.addEventListener('click', e => {
+          e.preventDefault();
+          logoutModal.style.display = 'block';
+          logoutOverlay.style.display = 'block';
+        });
+
+        confirmLogout.addEventListener('click', () => {
+          confirmLogout.textContent = 'Выходим...';
+          confirmLogout.disabled = true;
+          setTimeout(logout, 500);
+        });
+
+        function hideLogoutModal() {
+          logoutModal.style.display = 'none';
+          logoutOverlay.style.display = 'none';
+          confirmLogout.textContent = 'Да, выйти';
+          confirmLogout.disabled = false;
+        }
+
+        cancelLogout.addEventListener('click', hideLogoutModal);
+        logoutOverlay.addEventListener('click', hideLogoutModal);
+
+        // Основная логика урока
+        const step1Input = document.getElementById('step1');
+        const step2Input = document.getElementById('step2');
+        const step3Input = document.getElementById('step3');
+        const finalInput = document.getElementById('finalAnswer');
+        const checkFinalBtn = document.getElementById('checkFinal');
+        const resultDiv = document.getElementById('calculatorResult');
+        const nextArrow = document.getElementById('nextArrow');
+
+        // Система подсказок
+        const toggleHintsBtn = document.getElementById('toggleHints');
+        const hintsPanel = document.getElementById('hintsPanel');
+        const hintButtons = document.querySelectorAll('.hint-btn');
+        const hintContent = document.getElementById('hintContent');
+        const stepHelpButtons = document.querySelectorAll('.step-help-btn');
+        const smartFeedback = document.getElementById('smartFeedback');
+        const feedbackText = document.getElementById('feedbackText');
+
+        // Правильные ответы
+        const answers = {
+          step1: 3840, // 15 × 256
+          step2: 240, // 15 × 16
+          step3: 15, // 15 × 1
+          final: 4095, // 3840 + 240 + 15
+        };
+
+        let completedSteps = 0;
+        let hintsVisible = false;
+
+        // Контент подсказок
+        const hintContents = {
+          basics: `
+            <h5>🔤 Основы шестнадцатеричной системы</h5>
+            <p><strong>Цифры:</strong> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9</p>
+            <p><strong>Буквы:</strong> A=10, B=11, C=12, D=13, E=14, <span style="color: #dc3545; font-weight: bold;">F=15</span></p>
+            <p><strong>Основание:</strong> 16 (используется 16 символов)</p>
+            <div style="background: #fff3cd; padding: 10px; border-radius: 5px; margin-top: 10px;">
+              💡 <strong>Запомни:</strong> F - это максимальная цифра в HEX = 15 в десятичной системе
+            </div>
+          `,
+          powers: `
+            <h5>🔢 Степени числа 16</h5>
+            <div style="font-family: monospace; font-size: 16px; line-height: 1.8;">
+              <div>16⁰ = 1</div>
+              <div>16¹ = 16</div>
+              <div><strong style="color: #dc3545;">16² = 16 × 16 = 256</strong></div>
+              <div>16³ = 16 × 16 × 16 = 4096</div>
+            </div>
+            <div style="background: #e3f2fd; padding: 10px; border-radius: 5px; margin-top: 10px;">
+              💡 <strong>Подсказка:</strong> Каждая позиция в HEX числе имеет вес, равный степени 16
+            </div>
+          `,
+          formula: `
+            <h5>📐 Формула для 0xFFF</h5>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-family: monospace;">
+              <div style="font-size: 18px; text-align: center; margin-bottom: 10px;">
+                <strong>FFF₁₆ = F×16² + F×16¹ + F×16⁰</strong>
+              </div>
+              <div style="text-align: center; color: #666;">
+                ↓ подставляем F = 15 ↓
+              </div>
+              <div style="font-size: 16px; text-align: center; margin-top: 10px;">
+                <strong>15×256 + 15×16 + 15×1</strong>
+              </div>
+            </div>
+            <div style="background: #d4edda; padding: 10px; border-radius: 5px; margin-top: 10px;">
+              ✅ <strong>Принцип:</strong> Каждая позиция умножается на соответствующую степень 16
+            </div>
+          `,
+          steps: `
+            <h5>👣 Пошаговое решение</h5>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+              <div style="margin-bottom: 10px;"><strong>Шаг 1:</strong> F × 16² = 15 × 256 = <span style="color: #28a745; font-weight: bold;">3840</span></div>
+              <div style="margin-bottom: 10px;"><strong>Шаг 2:</strong> F × 16¹ = 15 × 16 = <span style="color: #28a745; font-weight: bold;">240</span></div>
+              <div style="margin-bottom: 10px;"><strong>Шаг 3:</strong> F × 16⁰ = 15 × 1 = <span style="color: #28a745; font-weight: bold;">15</span></div>
+              <hr style="margin: 15px 0;">
+              <div><strong>Итого:</strong> 3840 + 240 + 15 = <span style="color: #dc3545; font-weight: bold; font-size: 18px;">4095</span></div>
+            </div>
+            <div style="background: #fff3cd; padding: 10px; border-radius: 5px; margin-top: 10px;">
+              💡 <strong>Проверка:</strong> 4095₁₀ = FFF₁₆ (максимальное 3-значное HEX число)
+            </div>
+          `,
+          calculator: `
+            <h5>🧮 Помощь с калькулятором</h5>
+            <div style="background: #e8f4fd; padding: 15px; border-radius: 8px;">
+              <p><strong>Как пользоваться:</strong></p>
+              <ol style="text-align: left; padding-left: 20px;">
+                <li>Вычисли каждый шаг по порядку</li>
+                <li>Используй подсказки справа от каждого поля</li>
+                <li>Зеленая галочка ✓ означает правильный ответ</li>
+                <li>Красное поле означает ошибку - попробуй еще раз</li>
+                <li>После всех шагов сложи результаты</li>
+              </ol>
+            </div>
+            <div style="background: #d1ecf1; padding: 10px; border-radius: 5px; margin-top: 10px;">
+              🎯 <strong>Совет:</strong> Если застрял, нажми ❓ рядом с полем для конкретной помощи
+            </div>
+          `,
+        };
+
+        // Обработчики системы подсказок
+        toggleHintsBtn.addEventListener('click', () => {
+          hintsVisible = !hintsVisible;
+          hintsPanel.style.display = hintsVisible ? 'block' : 'none';
+          toggleHintsBtn.textContent = hintsVisible
+            ? '🔼 Скрыть подсказки'
+            : '💡 Показать подсказки';
+        });
+
+        hintButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            // Убираем активный класс у всех кнопок
+            hintButtons.forEach(b => b.classList.remove('active'));
+            // Добавляем активный класс к нажатой кнопке
+            btn.classList.add('active');
+
+            const hintType = btn.dataset.hint;
+            hintContent.innerHTML = hintContents[hintType];
+          });
+        });
+
+        // Помощь по конкретным шагам
+        stepHelpButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const step = btn.dataset.step;
+            let helpMessage = '';
+
+            switch (step) {
+              case '1':
+                helpMessage =
+                  'Шаг 1: F = 15, а 16² = 256. Перемножь: 15 × 256 = 3840';
+                break;
+              case '2':
+                helpMessage =
+                  'Шаг 2: F = 15, а 16¹ = 16. Перемножь: 15 × 16 = 240';
+                break;
+              case '3':
+                helpMessage =
+                  'Шаг 3: F = 15, а 16⁰ = 1. Перемножь: 15 × 1 = 15';
+                break;
+              case 'final':
+                helpMessage = 'Сложи все результаты: 3840 + 240 + 15 = 4095';
+                break;
+            }
+
+            showSmartFeedback(helpMessage, '🤖');
+          });
+        });
+
+        function showSmartFeedback(message, icon = '💡') {
+          feedbackText.innerHTML = message;
+          smartFeedback.querySelector('.feedback-icon').textContent = icon;
+          smartFeedback.style.display = 'block';
+
+          // Автоматически скрываем через 8 секунд
+          setTimeout(() => {
+            smartFeedback.style.display = 'none';
+          }, 8000);
+        }
+
+        function checkStep(input, stepNum, checkMarkId) {
+          const userAnswer = parseInt(input.value);
+          const correctAnswer = answers[`step${stepNum}`];
+          const checkMark = document.getElementById(checkMarkId);
+
+          if (userAnswer === correctAnswer) {
+            input.classList.remove('incorrect');
+            input.classList.add('correct');
+            checkMark.classList.add('visible');
+            completedSteps++;
+
+            // Умная обратная связь при правильном ответе
+            const encouragements = [
+              'Отлично! 🎉',
+              'Правильно! 👍',
+              'Супер! ⭐',
+              'Молодец! 🎯',
+            ];
+            const randomEncouragement =
+              encouragements[Math.floor(Math.random() * encouragements.length)];
+            showSmartFeedback(
+              `${randomEncouragement} Шаг ${stepNum} выполнен верно!`,
+              '✅'
+            );
+
+            if (completedSteps === 3) {
+              // Автоматически заполняем итоговое поле подсказкой
+              const sum = answers.step1 + answers.step2 + answers.step3;
+              finalInput.placeholder = `${answers.step1} + ${answers.step2} + ${answers.step3} = ?`;
+              showSmartFeedback(
+                'Все шаги выполнены! Теперь сложи результаты для получения итогового ответа.',
+                '🎯'
+              );
+            }
+
+            return true;
+          } else if (userAnswer && !isNaN(userAnswer)) {
+            input.classList.remove('correct');
+            input.classList.add('incorrect');
+            checkMark.classList.remove('visible');
+
+            // Умные подсказки для каждого шага
+            let errorMessage = '';
+            if (stepNum === 1) {
+              if (userAnswer === 15 * 16) {
+                errorMessage =
+                  'Ты использовал 16¹ вместо 16². Нужно: 15 × 256 = 3840';
+              } else if (userAnswer === 15) {
+                errorMessage =
+                  'Ты забыл умножить на степень! Нужно: 15 × 256 = 3840';
+              } else {
+                errorMessage = 'Шаг 1: 15 × 256 = 3840. Проверь вычисления!';
+              }
+            } else if (stepNum === 2) {
+              if (userAnswer === 15 * 256) {
+                errorMessage =
+                  'Ты использовал 16² вместо 16¹. Нужно: 15 × 16 = 240';
+              } else if (userAnswer === 15) {
+                errorMessage = 'Ты забыл умножить на 16! Нужно: 15 × 16 = 240';
+              } else {
+                errorMessage = 'Шаг 2: 15 × 16 = 240. Попробуй еще раз!';
+              }
+            } else if (stepNum === 3) {
+              if (userAnswer !== 15) {
+                errorMessage = 'Шаг 3: 15 × 1 = 15. Это самый простой шаг!';
+              }
+            }
+
+            showSmartFeedback(errorMessage, '❌');
+            return false;
+          }
+
+          input.classList.remove('correct', 'incorrect');
+          checkMark.classList.remove('visible');
+          return false;
+        }
+
+        function checkFinalAnswer() {
+          const userAnswer = parseInt(finalInput.value);
+
+          if (completedSteps < 3) {
+            showResult('Сначала реши все промежуточные шаги!', 'error');
+            showSmartFeedback(
+              'Тебе нужно выполнить все три шага, прежде чем вычислять итоговый результат.',
+              '⚠️'
+            );
+            return;
+          }
+
+          if (isNaN(userAnswer) || finalInput.value.trim() === '') {
+            showResult('Введи итоговый ответ!', 'error');
+            return;
+          }
+
+          if (userAnswer === answers.final) {
+            showResult('🎉 Превосходно! 0xFFF₁₆ = 4095₁₀', 'success');
+            nextArrow.style.display = 'block';
+            checkFinalBtn.disabled = true;
+            finalInput.disabled = true;
+
+            showSmartFeedback(
+              'Поздравляю! Ты освоил преобразование трёхзначных шестнадцатеричных чисел! 🎓',
+              '🏆'
+            );
+
+            setTimeout(() => {
+              resultDiv.innerHTML +=
+                '<br><small>✨ Полное решение: 15×256 + 15×16 + 15×1 = 3840 + 240 + 15 = 4095</small>' +
+                '<br><small>🎯 FFF₁₆ - это максимальное трёхзначное шестнадцатеричное число!</small>';
+            }, 1000);
+          } else {
+            // Умная диагностика ошибок
+            const expectedSum = answers.step1 + answers.step2 + answers.step3;
+            if (userAnswer === expectedSum - answers.step3) {
+              showResult('❌ Ты забыл прибавить третий шаг (15)', 'error');
+              showSmartFeedback(
+                'Почти правильно! Ты забыл прибавить результат третьего шага: + 15',
+                '💡'
+              );
+            } else if (userAnswer === answers.step1 + answers.step2) {
+              showResult('❌ Не забудь про третий шаг: + 15', 'error');
+            } else if (userAnswer > 5000) {
+              showResult('❌ Слишком много! Проверь сложение', 'error');
+            } else if (userAnswer < 3000) {
+              showResult(
+                '❌ Слишком мало! Проверь, все ли шаги учтены',
+                'error'
+              );
+            } else {
+              showResult(
+                `❌ Неправильно. Сложи результаты: ${answers.step1} + ${answers.step2} + ${answers.step3}`,
+                'error'
+              );
+              showSmartFeedback(
+                'Проверь каждое слагаемое и попробуй сложить еще раз. Используй калькулятор, если нужно!',
+                '🔢'
+              );
+            }
+          }
+        }
+
+        function showResult(message, type) {
+          resultDiv.innerHTML = message;
+          resultDiv.className = `hex-result ${type}`;
+        }
+
+        // Обработчики для каждого шага
+        step1Input.addEventListener('input', () =>
+          checkStep(step1Input, 1, 'check1')
+        );
+        step2Input.addEventListener('input', () =>
+          checkStep(step2Input, 2, 'check2')
+        );
+        step3Input.addEventListener('input', () =>
+          checkStep(step3Input, 3, 'check3')
+        );
+
+        // Обработчик для финального ответа
+        checkFinalBtn.addEventListener('click', checkFinalAnswer);
+        finalInput.addEventListener('keypress', e => {
+          if (e.key === 'Enter') {
+            checkFinalAnswer();
+          }
+        });
+
+        // Автофокус на первое поле
+        step1Input.focus();
+
+        // Периодическая проверка авторизации
+        setInterval(() => {
+          if (
+            !getCurrentUser() ||
+            !validateSessionToken(SessionUtils.get('STORYHUB_auth_token'))
+          ) {
+            alert('Ваша сессия истекла. Необходимо войти заново.');
+            logout();
+          }
+        }, 60000);
+
+        console.log(
+          '✅ Продвинутый урок шестнадцатеричной системы с умными подсказками инициализирован'
+        );
+      });
+
+      // Глобальные функции
+      window.logout = logout;
+      window.getCurrentUser = getCurrentUser;
+      window.requireAuth = requireAuth;
+    </script>
+    <script src="js/video-modal.js"></script>
+    <!-- Подключаем видео-плеер -->
+    <script src="js/main.js"></script>
+
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5808.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

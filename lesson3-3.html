@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - Урок 3: Кибер-гигиена и защита личных данных</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+            <ul class="lesson-list">
+              <li data-href="lesson0.html">Введение</li>
+              <li data-href="lesson1.html">
+                Урок 1. Базовые правила безопасности в кабинете информатики
+              </li>
+              <li data-href="lesson2.html">Урок 2. Эргономика</li>
+              <li data-href="lesson3.html" class="active">
+                Урок 3. Кибер-гигиена и защита личных данных
+              </li>
+              <li data-href="lesson4.html">
+                Урок 4. Как работают компьютеры: Аппаратное обеспечение
+              </li>
+              <li data-href="lesson5.html">
+                Урок 5. Как работают компьютеры: Программное обеспечение
+              </li>
+              <li data-href="lesson6.html">Урок 6. Алгоритмы</li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <div class="interactive-lesson-container">
+              <!-- Основное изображение -->
+              <img
+                src="images/lesson3-4.png"
+                alt="Урок 3: Кибер-гигиена - часть 3"
+                class="content_games_img"
+              />
+
+              <!-- Интерактивные кнопки -->
+              <div class="answer-buttons" id="answerButtons">
+                <button class="answer-btn no-btn" id="noBtn" data-answer="no">
+                  <span class="btn-icon">❌</span>
+                  Нет
+                </button>
+                <button
+                  class="answer-btn yes-btn"
+                  id="yesBtn"
+                  data-answer="yes"
+                >
+                  <span class="btn-icon">✅</span>
+                  Да
+                </button>
+              </div>
+
+              <!-- Стрелка перехода (скрыта изначально) -->
+              <img
+                src="images/arrow.png"
+                alt="Далее"
+                class="arrow"
+                id="nextArrow"
+                style="display: none"
+              />
+              <img
+                src="images/arrow.png"
+                alt="Назад"
+                class="arrow-back"
+                id="back-arrow"
+                title="Вернуться к предыдущей странице"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for feedback -->
+    <div id="feedbackModal" class="feedback-modal">
+      <div class="feedback-content">
+        <h3 id="feedbackTitle">Результат</h3>
+        <p id="feedbackText">Текст обратной связи</p>
+        <button id="closeFeedback" class="close-feedback-btn">Понятно</button>
+      </div>
+    </div>
+
+    <div id="feedbackOverlay" class="feedback-overlay"></div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .interactive-lesson-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 500px;
+        padding: 20px;
+      }
+
+      .content_games_img {
+        max-width: 100%;
+        max-height: 500px;
+        object-fit: contain;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .answer-buttons {
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        z-index: 10;
+      }
+
+      .answer-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 50px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 18px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        min-width: 120px;
+        justify-content: center;
+      }
+
+      .no-btn {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+      }
+
+      .no-btn:hover:not(.selected) {
+        background: linear-gradient(135deg, #c82333, #bd2130);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+      }
+
+      .yes-btn {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+      }
+
+      .yes-btn:hover:not(.selected) {
+        background: linear-gradient(135deg, #20c997, #17a2b8);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+      }
+
+      .btn-icon {
+        font-size: 20px;
+      }
+
+      .answer-btn.selected {
+        pointer-events: none;
+        opacity: 0.7;
+        transform: scale(0.95);
+      }
+
+      .arrow {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        z-index: 10;
+        width: 60px;
+        height: 60px;
+      }
+
+      .arrow:hover {
+        transform: scale(1.1);
+      }
+
+      .feedback-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border-radius: 20px;
+        padding: 35px;
+        z-index: 1001;
+        max-width: 450px;
+        width: 90%;
+        display: none;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        border: 3px solid #4d36db;
+      }
+
+      .feedback-modal.active {
+        display: block;
+        animation: modalAppear 0.3s ease-out;
+      }
+
+      @keyframes modalAppear {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      .feedback-content h3 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 22px;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .feedback-content p {
+        margin-bottom: 25px;
+        font-size: 16px;
+        line-height: 1.6;
+        text-align: center;
+        color: #333;
+      }
+
+      .close-feedback-btn {
+        display: block;
+        margin: 0 auto;
+        padding: 12px 35px;
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+
+      .close-feedback-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(77, 54, 219, 0.4);
+      }
+
+      .feedback-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        display: none;
+      }
+
+      .feedback-overlay.active {
+        display: block;
+      }
+
+      /* Адаптивность */
+      @media (max-width: 768px) {
+        .interactive-lesson-container {
+          min-height: 400px;
+          padding: 15px;
+        }
+
+        .content_games_img {
+          max-height: 400px;
+        }
+
+        .answer-buttons {
+          bottom: 30px;
+          gap: 15px;
+        }
+
+        .answer-btn {
+          padding: 12px 25px;
+          font-size: 16px;
+          min-width: 100px;
+        }
+
+        .btn-icon {
+          font-size: 18px;
+        }
+
+        .arrow {
+          width: 50px;
+          height: 50px;
+          bottom: 15px;
+          right: 15px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .answer-buttons {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .answer-btn {
+          padding: 10px 20px;
+          font-size: 14px;
+          min-width: 80px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        let correctAnswered = false;
+        let selectedOptions = new Set();
+
+        // Обработчики для кнопок ответов
+        document.querySelectorAll('.answer-btn').forEach(btn => {
+          btn.addEventListener('click', function () {
+            // Если уже правильно ответили, не реагируем
+            if (correctAnswered) return;
+
+            // Если эта кнопка уже была нажата, не реагируем
+            if (selectedOptions.has(this)) return;
+
+            const answer = this.dataset.answer;
+
+            // Добавляем кнопку в список выбранных
+            selectedOptions.add(this);
+
+            if (answer === 'no') {
+              // Неправильный ответ - отключаем только эту кнопку
+              this.classList.add('selected');
+
+              setTimeout(() => {
+                showFeedback(
+                  '❌ Неправильно!',
+                  'Это подозрительное сообщение! Банки и официальные организации никогда не просят данные карты через SMS. Мошенники часто создают ощущение срочности ("заблокируется карта"), чтобы заставить действовать быстро и необдуманно.'
+                );
+              }, 500);
+            } else if (answer === 'yes') {
+              // Правильный ответ - отключаем все кнопки
+              correctAnswered = true;
+
+              document.querySelectorAll('.answer-btn').forEach(button => {
+                button.classList.add('selected');
+              });
+
+              setTimeout(() => {
+                showFeedback(
+                  '✅ Правильно!',
+                  'Отлично! Ты правильно определил мошенничество. Это классическая схема фишинга - притворяться банком и запрашивать личные данные под предлогом "блокировки карты". Настоящие банки никогда не просят данные через SMS.'
+                );
+
+                // Показываем стрелку для перехода дальше
+                setTimeout(() => {
+                  document.getElementById('nextArrow').style.display = 'block';
+                }, 1000);
+              }, 500);
+            }
+          });
+        });
+
+        function showFeedback(title, text) {
+          document.getElementById('feedbackTitle').textContent = title;
+          document.getElementById('feedbackText').textContent = text;
+          document.getElementById('feedbackModal').classList.add('active');
+          document.getElementById('feedbackOverlay').classList.add('active');
+        }
+
+        function closeFeedback() {
+          document.getElementById('feedbackModal').classList.remove('active');
+          document.getElementById('feedbackOverlay').classList.remove('active');
+        }
+
+        // Обработчики закрытия модального окна
+        document
+          .getElementById('closeFeedback')
+          .addEventListener('click', closeFeedback);
+        document
+          .getElementById('feedbackOverlay')
+          .addEventListener('click', closeFeedback);
+      });
+    </script>
+    <script src="js/video-modal.js"></script>
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5804_1.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

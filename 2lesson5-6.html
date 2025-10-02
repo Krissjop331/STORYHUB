@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - 6 класс: Hardware и Software</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="index.html">5 класс</button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html">Урок 2. Бит и Байт</li>
+              <li data-href="2lesson3.html">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html" class="active">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games" id="center">
+            <div class="question-container">
+              <img
+                src="images/2Video5_6.png"
+                alt="Вопрос: Что нужно для работы компьютера?"
+                class="question-image"
+              />
+
+              <div class="question-section">
+                <h2>💭 Что нужно для работы компьютера?</h2>
+                <p>Подумай и выбери правильный ответ:</p>
+                <p
+                  id="attemptCounter"
+                  class="attempt-counter"
+                  style="display: none"
+                >
+                  Попробуй еще раз! 🎯
+                </p>
+
+                <div class="answer-options">
+                  <div
+                    class="answer-option"
+                    data-correct="false"
+                    data-feedback="Неправильно! Только аппаратного обеспечения недостаточно. Без программ компьютер не сможет работать."
+                  >
+                    <div class="option-content">
+                      <span class="option-icon">🔧</span>
+                      <span class="option-text">Hardware</span>
+                      <span class="option-description"
+                        >Только аппаратное обеспечение</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="answer-option"
+                    data-correct="false"
+                    data-feedback="Неправильно! Только программного обеспечения недостаточно. Программы не могут работать без физических компонентов."
+                  >
+                    <div class="option-content">
+                      <span class="option-icon">💾</span>
+                      <span class="option-text">Software</span>
+                      <span class="option-description"
+                        >Только программное обеспечение</span
+                      >
+                    </div>
+                  </div>
+
+                  <div
+                    class="answer-option"
+                    data-correct="true"
+                    data-feedback="Правильно! Для работы компьютера нужны оба компонента: Hardware (железо) и Software (программы). Они работают вместе!"
+                  >
+                    <div class="option-content">
+                      <span class="option-icon">🤝</span>
+                      <span class="option-text">Нужны оба</span>
+                      <span class="option-description"
+                        >Hardware + Software</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="hint-box">
+                  <h4>💡 Подсказка:</h4>
+                  <p>
+                    Представь компьютер как человека: hardware - это тело, а
+                    software - это мозг и знания. Может ли человек
+                    функционировать без одного из них?
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <img
+              src="images/arrow.png"
+              alt="Далее"
+              class="arrow"
+              id="next-arrow"
+              style="display: none"
+            />
+            <img
+              src="images/arrow.png"
+              alt="Назад"
+              class="arrow-back"
+              id="back-arrow"
+              title="Вернуться к предыдущей странице"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="feedback-modal">
+      <div class="feedback-content">
+        <h3 id="feedbackTitle">Результат</h3>
+        <p id="feedbackText">Текст обратной связи</p>
+        <div class="explanation-box">
+          <h4>🔍 Объяснение:</h4>
+          <p>
+            <strong>Hardware</strong> - физические компоненты: процессор,
+            память, жесткий диск
+          </p>
+          <p>
+            <strong>Software</strong> - программы: операционная система,
+            приложения, игры
+          </p>
+          <p><strong>Вместе</strong> они создают работающий компьютер!</p>
+        </div>
+        <button id="closeFeedback" class="close-feedback-btn">Понятно</button>
+        <button id="tryAgain" class="try-again-btn" style="display: none">
+          Попробовать снова
+        </button>
+      </div>
+    </div>
+
+    <div id="feedbackOverlay" class="feedback-overlay"></div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .question-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        padding: 30px;
+        min-height: 400px;
+      }
+
+      .question-section {
+        max-width: 450px;
+        text-align: center;
+      }
+
+      .question-section h2 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 24px;
+      }
+
+      .question-section p {
+        color: #666;
+        margin-bottom: 25px;
+        font-size: 16px;
+      }
+
+      .attempt-counter {
+        color: #ff6b35;
+        font-weight: 600;
+        font-size: 18px;
+        margin-bottom: 20px;
+        animation: bounce 0.5s ease-in-out;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      .answer-options {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      .answer-option {
+        background: white;
+        border: 2px solid #4d36db;
+        border-radius: 12px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        user-select: none;
+        text-align: left;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .answer-option:hover:not(.disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(77, 54, 219, 0.2);
+        background: #f8f9ff;
+      }
+
+      .answer-option.disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      .answer-option.correct {
+        background: #d4edda;
+        border-color: #28a745;
+        animation: correctPulse 1s ease-in-out;
+      }
+
+      .answer-option.incorrect {
+        background: #f8d7da;
+        border-color: #dc3545;
+        animation: incorrectShake 0.6s ease-in-out;
+      }
+
+      @keyframes correctPulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+          box-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes incorrectShake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        75% {
+          transform: translateX(5px);
+        }
+      }
+
+      .option-content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .option-icon {
+        font-size: 24px;
+        text-align: center;
+      }
+
+      .option-text {
+        font-size: 18px;
+        font-weight: 700;
+        color: #4d36db;
+        text-align: center;
+      }
+
+      .option-description {
+        font-size: 14px;
+        color: #666;
+        text-align: center;
+      }
+
+      .hint-box {
+        background: #fff3cd;
+        border: 2px solid #ffc107;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: left;
+      }
+
+      .hint-box h4 {
+        color: #856404;
+        margin-bottom: 8px;
+        font-size: 16px;
+      }
+
+      .hint-box p {
+        color: #856404;
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .feedback-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        z-index: 1001;
+        max-width: 500px;
+        width: 90%;
+        display: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .feedback-modal.active {
+        display: block;
+      }
+
+      .feedback-content h3 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 20px;
+        text-align: center;
+      }
+
+      .feedback-content > p {
+        margin-bottom: 20px;
+        font-size: 16px;
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      .explanation-box {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 15px 0;
+        text-align: left;
+      }
+
+      .explanation-box h4 {
+        color: #4d36db;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+
+      .explanation-box p {
+        margin: 5px 0;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .close-feedback-btn,
+      .try-again-btn {
+        display: block;
+        margin: 10px auto;
+        padding: 10px 30px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .close-feedback-btn {
+        background: #4d36db;
+        color: white;
+      }
+
+      .close-feedback-btn:hover {
+        background: #3626aa;
+      }
+
+      .try-again-btn {
+        background: #ffc107;
+        color: #212529;
+      }
+
+      .try-again-btn:hover {
+        background: #ffca2c;
+        transform: translateY(-2px);
+      }
+
+      .feedback-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        display: none;
+      }
+
+      .feedback-overlay.active {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .question-container {
+          flex-direction: column;
+          gap: 20px;
+          padding: 20px;
+        }
+
+        .question-image {
+          max-width: 220px;
+        }
+
+        .question-section h2 {
+          font-size: 20px;
+        }
+
+        .option-text {
+          font-size: 16px;
+        }
+
+        .hint-box {
+          padding: 12px;
+        }
+
+        .feedback-modal {
+          padding: 20px;
+          margin: 20px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        let correctAnswered = false;
+        let attemptCount = 0;
+
+        document.querySelectorAll('.answer-option').forEach(option => {
+          option.addEventListener('click', function () {
+            if (correctAnswered) return;
+
+            const isCorrect = this.dataset.correct === 'true';
+            const feedback = this.dataset.feedback;
+            attemptCount++;
+
+            if (isCorrect) {
+              // Правильный ответ
+              this.classList.add('correct');
+              correctAnswered = true;
+
+              // Отключаем все варианты
+              document.querySelectorAll('.answer-option').forEach(opt => {
+                opt.classList.add('disabled');
+              });
+
+              setTimeout(() => {
+                showFeedback('Правильно! 🎉', feedback, true);
+              }, 1000);
+            } else {
+              // Неправильный ответ
+              this.classList.add('incorrect');
+
+              // Показываем счетчик попыток
+              const counter = document.getElementById('attemptCounter');
+              counter.style.display = 'block';
+              if (attemptCount === 1) {
+                counter.textContent =
+                  'Подумай еще! 💭 Нужны ли оба компонента?';
+              } else if (attemptCount === 2) {
+                counter.textContent =
+                  'Попытка ' + attemptCount + '. Вспомни подсказку! 💡';
+              } else {
+                counter.textContent =
+                  'Попытка ' + attemptCount + '. Ты справишься! 💪';
+              }
+
+              setTimeout(() => {
+                showFeedback('Неправильно 😅', feedback, false);
+              }, 1000);
+            }
+          });
+        });
+
+        function showFeedback(title, text, isCorrect) {
+          document.getElementById('feedbackTitle').textContent = title;
+          document.getElementById('feedbackText').textContent = text;
+
+          const tryAgainBtn = document.getElementById('tryAgain');
+          const closeBtn = document.getElementById('closeFeedback');
+
+          if (isCorrect) {
+            // Правильный ответ - показываем только кнопку "Понятно"
+            tryAgainBtn.style.display = 'none';
+            closeBtn.textContent = 'Отлично!';
+          } else {
+            // Неправильный ответ - показываем кнопку "Попробовать снова"
+            tryAgainBtn.style.display = 'block';
+            closeBtn.textContent = 'Понятно';
+          }
+
+          document.getElementById('feedbackModal').classList.add('active');
+          document.getElementById('feedbackOverlay').classList.add('active');
+        }
+
+        function closeFeedback() {
+          document.getElementById('feedbackModal').classList.remove('active');
+          document.getElementById('feedbackOverlay').classList.remove('active');
+
+          if (correctAnswered) {
+            // Показываем стрелку для перехода дальше только после правильного ответа
+            document.getElementById('next-arrow').style.display = 'block';
+          }
+        }
+
+        function resetOptions() {
+          // Сбрасываем состояние неправильных ответов
+          document.querySelectorAll('.answer-option').forEach(opt => {
+            opt.classList.remove('incorrect');
+          });
+          closeFeedback();
+        }
+
+        // Обработчики событий
+        document
+          .getElementById('closeFeedback')
+          .addEventListener('click', closeFeedback);
+        document
+          .getElementById('tryAgain')
+          .addEventListener('click', resetOptions);
+        document
+          .getElementById('feedbackOverlay')
+          .addEventListener('click', function () {
+            if (!correctAnswered) {
+              resetOptions();
+            } else {
+              closeFeedback();
+            }
+          });
+      });
+    </script>
+    <script src="js/video-modal.js"></script>
+    <!-- Подключаем видео-плеер -->
+    <script src="js/main.js"></script>
+
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5800.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+      STORYHUB - 6 класс: Тест Ввод, Хранение, Обработка и Вывод данных
+    </title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="js/test-export.js"></script>
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html">Урок 2. Бит и Байт</li>
+              <li data-href="2lesson3.html">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html" class="active">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <div class="data-processing-test">
+              <div class="test-header">
+                <div class="test-intro">
+                  <h2>
+                    🖥️ Итоговый тест: Ввод, Хранение, Обработка и Вывод данных
+                  </h2>
+                  <p>
+                    Проверь свои знания о том, как компьютер работает с
+                    информацией!
+                  </p>
+                  <button id="startDataProcessingTest" class="start-test-btn">
+                    Начать тест
+                  </button>
+                </div>
+              </div>
+
+              <div
+                id="dataProcessingTestContainer"
+                class="test-container"
+                style="display: none"
+              >
+                <div class="test-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="testProgressFill"></div>
+                  </div>
+                  <p>
+                    Вопрос <span id="currentTestQ">1</span> из
+                    <span id="totalTestQ">6</span>
+                  </p>
+                </div>
+
+                <div id="testQuestionContainer" class="question-container">
+                  <!-- Вопросы будут добавлены через JavaScript -->
+                </div>
+
+                <div
+                  id="dataProcessingTestResult"
+                  class="test-result"
+                  style="display: none"
+                >
+                  <h3 id="testResultTitle">Результат</h3>
+                  <p id="testResultText">Текст результата</p>
+                  <div id="testResultDetails" class="result-details"></div>
+                  <div
+                    id="bonusDemo"
+                    class="bonus-section"
+                    style="display: none"
+                  >
+                    <h4>🎁 Бонус: Интерактивная демонстрация!</h4>
+                    <p>
+                      Попробуй интерактивную демонстрацию процесса обработки
+                      данных в компьютере:
+                    </p>
+                  </div>
+                  <button id="nextStageBtn" class="complete-course-btn" style="display: none">Перейти к тесту мотивации</button>
+<button
+                    id="completeCourseBtn"
+                    class="complete-course-btn"
+                    style="display: none"
+                  >
+                    Завершить курс 6 класса
+                  </button>
+                  <button
+                    id="retryTestBtn"
+                    class="retry-btn"
+                    style="display: none"
+                  >
+                    Попробовать снова
+                  </button>
+                </div>
+              </div>
+
+              <!-- Интерактивная демонстрация обработки данных -->
+              <div class="interactive-demo" style="display: none" id="dataDemo">
+                <h3>🎮 Интерактивная демонстрация работы компьютера</h3>
+                <p>Посмотри, как компьютер обрабатывает информацию поэтапно!</p>
+
+                <div class="demo-container">
+                  <div class="data-flow">
+                    <div class="stage input-stage">
+                      <h5>📥 1. Ввод</h5>
+                      <div class="stage-description">
+                        Устройства ввода передают данные
+                      </div>
+                      <div class="input-devices">
+                        <button class="device-btn" data-device="keyboard">
+                          ⌨️ Клавиатура
+                        </button>
+                        <button class="device-btn" data-device="mouse">
+                          🖱️ Мышь
+                        </button>
+                        <button class="device-btn" data-device="microphone">
+                          🎤 Микрофон
+                        </button>
+                      </div>
+                      <div class="device-output" id="inputResult"></div>
+                    </div>
+
+                    <div class="arrow-down">↓</div>
+
+                    <div class="stage storage-stage">
+                      <h5>💾 2. Хранение</h5>
+                      <div class="stage-description">
+                        Данные сохраняются в памяти
+                      </div>
+                      <div class="memory-visualization">
+                        <div class="memory-type">
+                          <div class="memory-block ram">RAM</div>
+                          <div class="memory-info">Временное хранение</div>
+                        </div>
+                        <div class="memory-type">
+                          <div class="memory-block storage">SSD/HDD</div>
+                          <div class="memory-info">Постоянное хранение</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="arrow-down">↓</div>
+
+                    <div class="stage process-stage">
+                      <h5>⚙️ 3. Обработка</h5>
+                      <div class="stage-description">
+                        Процессор выполняет вычисления
+                      </div>
+                      <div class="cpu-visualization">
+                        <div class="cpu-unit">
+                          <div class="cpu-core"></div>
+                          <div class="cpu-name">CPU</div>
+                        </div>
+                        <div class="process-info" id="processInfo">
+                          Ожидание задачи...
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="arrow-down">↓</div>
+
+                    <div class="stage output-stage">
+                      <h5>📤 4. Вывод</h5>
+                      <div class="stage-description">
+                        Результат выводится пользователю
+                      </div>
+                      <div class="output-devices">
+                        <div class="output-device monitor">
+                          <div class="screen">
+                            <div class="screen-content" id="screenOutput">
+                              Результат
+                            </div>
+                          </div>
+                          <div class="device-label">🖥️ Монитор</div>
+                        </div>
+                        <div class="output-device printer">
+                          <div class="printer-icon">🖨️</div>
+                          <div class="device-label">Принтер</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="demo-controls">
+                    <button id="startDemo" class="demo-btn">
+                      Запустить демонстрацию
+                    </button>
+                    <button id="resetDemo" class="demo-btn secondary">
+                      Сбросить
+                    </button>
+                  </div>
+                </div>
+
+                <div class="examples-section">
+                  <h4>📋 Примеры процессов:</h4>
+                  <div class="examples-grid">
+                    <div class="example-card">
+                      <div class="example-title">Набор текста</div>
+                      <div class="example-flow">
+                        Клавиатура → RAM → CPU → Монитор
+                      </div>
+                    </div>
+                    <div class="example-card">
+                      <div class="example-title">Воспроизведение музыки</div>
+                      <div class="example-flow">SSD → RAM → CPU → Колонки</div>
+                    </div>
+                    <div class="example-card">
+                      <div class="example-title">Печать документа</div>
+                      <div class="example-flow">HDD → RAM → CPU → Принтер</div>
+                    </div>
+                    <div class="example-card">
+                      <div class="example-title">Запись голоса</div>
+                      <div class="example-flow">Микрофон → CPU → RAM → SSD</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .data-processing-test {
+        padding: 40px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 20px;
+        margin: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .test-header {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .test-intro h2 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 28px;
+      }
+
+      .test-intro p {
+        margin-bottom: 25px;
+        font-size: 16px;
+        color: #666;
+      }
+
+      .start-test-btn {
+        padding: 20px 40px;
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 4px 15px rgba(77, 54, 219, 0.3);
+      }
+
+      .start-test-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(77, 54, 219, 0.4);
+      }
+
+      .test-container {
+        margin-top: 30px;
+      }
+
+      .test-progress {
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4d36db, #6b46c1);
+        transition: width 0.5s ease;
+        width: 16.67%;
+      }
+
+      .question-container {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .question-title {
+        color: #4d36db;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      .question-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .option-btn {
+        padding: 15px 20px;
+        background: #f8f9fa;
+        border: 2px solid #dee2e6;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        text-align: left;
+        transition: all 0.3s ease;
+      }
+
+      .option-btn:hover {
+        background: #e9ecef;
+        border-color: #4d36db;
+        transform: translateX(5px);
+      }
+
+      .option-btn.selected {
+        border-color: #4d36db;
+        background: #e8f0fe;
+      }
+
+      .option-btn.correct {
+        background: #d4edda;
+        border-color: #28a745;
+        color: #155724;
+        animation: correctPulse 1s ease-in-out;
+      }
+
+      .option-btn.incorrect {
+        background: #f8d7da;
+        border-color: #dc3545;
+        color: #721c24;
+        animation: shake 0.5s ease-in-out;
+      }
+
+      @keyframes correctPulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.02);
+          box-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        75% {
+          transform: translateX(5px);
+        }
+      }
+
+      .option-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .test-result {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .test-result.success {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        border: 2px solid #28a745;
+      }
+
+      .test-result.partial {
+        background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+        border: 2px solid #ffc107;
+      }
+
+      .test-result.failed {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        border: 2px solid #dc3545;
+      }
+
+      .result-details {
+        margin: 20px 0;
+        text-align: left;
+      }
+
+      .result-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        margin: 8px 0;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
+        border-left: 4px solid transparent;
+      }
+
+      .result-item.correct {
+        border-left-color: #28a745;
+      }
+
+      .result-item.incorrect {
+        border-left-color: #dc3545;
+      }
+
+      .bonus-section {
+        background: rgba(23, 162, 184, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border: 2px solid #17a2b8;
+      }
+
+      .bonus-section h4 {
+        color: #17a2b8;
+        margin-bottom: 10px;
+      }
+
+      .complete-course-btn,
+      .retry-btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        margin: 10px;
+      }
+
+      .complete-course-btn {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+      }
+
+      .retry-btn {
+        background: linear-gradient(135deg, #ffc107, #ffca2c);
+        color: #212529;
+      }
+
+      .complete-course-btn:hover,
+      .retry-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .interactive-demo {
+        background: linear-gradient(135deg, #e8f4fd, #f0f8ff);
+        padding: 25px;
+        border-radius: 15px;
+        margin-top: 20px;
+        border: 2px solid #17a2b8;
+      }
+
+      .interactive-demo h3 {
+        color: #17a2b8;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      .demo-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .data-flow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .stage {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        border: 2px solid #17a2b8;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+      }
+
+      .stage h5 {
+        color: #17a2b8;
+        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .stage-description {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
+
+      .arrow-down {
+        font-size: 24px;
+        color: #17a2b8;
+        font-weight: bold;
+      }
+
+      .input-devices {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+      }
+
+      .device-btn {
+        padding: 8px 12px;
+        background: #17a2b8;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .device-btn:hover {
+        background: #138496;
+        transform: scale(1.05);
+      }
+
+      .device-output {
+        min-height: 20px;
+        color: #17a2b8;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .memory-visualization {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .memory-type {
+        text-align: center;
+      }
+
+      .memory-block {
+        width: 60px;
+        height: 40px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+
+      .memory-block.ram {
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        color: #721c24;
+      }
+
+      .memory-block.storage {
+        background: linear-gradient(135deg, #a8edea, #fed6e3);
+        color: #155724;
+      }
+
+      .memory-info {
+        font-size: 10px;
+        color: #666;
+      }
+
+      .cpu-visualization {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .cpu-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .cpu-core {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 8px;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 0.8;
+        }
+      }
+
+      .cpu-name {
+        font-size: 12px;
+        font-weight: 600;
+        color: #17a2b8;
+      }
+
+      .process-info {
+        font-size: 12px;
+        color: #666;
+        min-height: 15px;
+      }
+
+      .output-devices {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .output-device {
+        text-align: center;
+      }
+
+      .screen {
+        width: 80px;
+        height: 50px;
+        background: #000;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #333;
+        margin-bottom: 5px;
+      }
+
+      .screen-content {
+        color: #00ff00;
+        font-family: 'Courier New', monospace;
+        font-size: 10px;
+        font-weight: bold;
+      }
+
+      .printer-icon {
+        font-size: 30px;
+        margin-bottom: 5px;
+      }
+
+      .device-label {
+        font-size: 10px;
+        color: #666;
+      }
+
+      .demo-controls {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .demo-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-family: 'Montserrat', sans-serif;
+        transition: all 0.3s ease;
+      }
+
+      .demo-btn:not(.secondary) {
+        background: #17a2b8;
+        color: white;
+      }
+
+      .demo-btn.secondary {
+        background: #f8f9fa;
+        color: #17a2b8;
+        border: 2px solid #17a2b8;
+      }
+
+      .demo-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .examples-section {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #17a2b8;
+        margin-top: 20px;
+      }
+
+      .examples-section h4 {
+        color: #17a2b8;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      .examples-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      .example-card {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #17a2b8;
+        text-align: center;
+      }
+
+      .example-title {
+        font-weight: 600;
+        color: #17a2b8;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .example-flow {
+        font-family: monospace;
+        font-size: 12px;
+        color: #666;
+        word-break: break-all;
+      }
+
+      @media (max-width: 768px) {
+        .data-processing-test {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .test-header {
+          flex-direction: column;
+          text-align: center;
+          gap: 20px;
+        }
+
+        .test-intro h2 {
+          font-size: 24px;
+        }
+
+        .question-container {
+          padding: 20px;
+        }
+
+        .option-btn {
+          padding: 12px 15px;
+        }
+
+        .start-test-btn {
+          padding: 15px 30px;
+          font-size: 16px;
+        }
+
+        .stage {
+          max-width: 100%;
+        }
+
+        .memory-visualization {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .output-devices {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .examples-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .demo-controls {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        
+        if (window.TestResults) { try { window.TestResults.init({ lessonId: 606, requireAuth: true }); } catch(e) { console.warn(e); } }
+const questions = [
+          {
+            question: 'Что делает устройство ввода?',
+            options: [
+              'Показывает результат',
+              'Сохраняет файлы',
+              'Передает данные в компьютер',
+            ],
+            correct: 2,
+            explanation:
+              'Устройства ввода передают информацию от пользователя в компьютер для обработки.',
+          },
+          {
+            question: 'Пример устройства вывода:',
+            options: ['Принтер', 'Клавиатура', 'Флешка'],
+            correct: 0,
+            explanation:
+              'Принтер является устройством вывода, так как он выводит информацию из компьютера на бумагу.',
+          },
+          {
+            question: 'Что делает процессор?',
+            options: ['Хранит фото', 'Обрабатывает данные', 'Показывает звук'],
+            correct: 1,
+            explanation:
+              'Процессор (CPU) - это "мозг" компьютера, который обрабатывает все данные и выполняет вычисления.',
+          },
+          {
+            question: 'Что относится к хранению?',
+            options: ['RAM', 'Микрофон', 'Монитор'],
+            correct: 0,
+            explanation:
+              'RAM (оперативная память) предназначена для временного хранения данных во время работы программ.',
+          },
+          {
+            question: 'Что такое вывод данных?',
+            options: [
+              'Получение команды',
+              'Сохранение текста',
+              'Показ результата на экране',
+            ],
+            correct: 2,
+            explanation:
+              'Вывод данных - это представление обработанной информации пользователю через устройства вывода.',
+          },
+          {
+            question: 'Какой этап идет после обработки?',
+            options: ['Хранение', 'Ввод', 'Вывод'],
+            correct: 2,
+            explanation:
+              'После обработки данных процессором следует этап вывода - представление результата пользователю.',
+          },
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answers = [];
+
+        document
+          .getElementById('startDataProcessingTest')
+          .addEventListener('click', startTest);
+        document
+          .getElementById('retryTestBtn')
+          .addEventListener('click', retryTest);
+        document
+          .getElementById('completeCourseBtn')
+          .addEventListener('click', completeCourse);
+        document.getElementById('nextStageBtn').addEventListener('click', function(){ window.location.href = '2lesson6-12.html'; });
+
+        function startTest() {
+          document.querySelector('.test-header').style.display = 'none';
+          document.getElementById('dataProcessingTestContainer').style.display =
+            'block';
+          document.getElementById('totalTestQ').textContent = questions.length;
+          showQuestion();
+        }
+
+        function showQuestion() {
+          const question = questions[currentQuestion];
+          document.getElementById('currentTestQ').textContent =
+            currentQuestion + 1;
+
+          const progress = ((currentQuestion + 1) / questions.length) * 100;
+          document.getElementById('testProgressFill').style.width =
+            progress + '%';
+
+          const container = document.getElementById('testQuestionContainer');
+          container.innerHTML = `
+            <div class="question-title">${question.question}</div>
+            <div class="question-options">
+              ${question.options
+                .map(
+                  (option, index) =>
+                    `<button class="option-btn" data-index="${index}">${option}</button>`
+                )
+                .join('')}
+            </div>
+          `;
+
+          container.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+              selectAnswer(parseInt(this.dataset.index));
+            });
+          });
+        }
+
+        function selectAnswer(selectedIndex) {
+          const question = questions[currentQuestion];
+          const isCorrect = selectedIndex === question.correct;
+
+          answers.push({
+            question: question.question,
+            selected: selectedIndex,
+            correct: question.correct,
+            isCorrect: isCorrect,
+            explanation: question.explanation,
+          });
+
+          if (isCorrect) score++;
+
+          const options = document.querySelectorAll('.option-btn');
+          options.forEach((btn, index) => {
+            btn.disabled = true;
+            if (index === question.correct) {
+              btn.classList.add('correct');
+            } else if (index === selectedIndex && !isCorrect) {
+              btn.classList.add('incorrect');
+            }
+          });
+
+          setTimeout(() => {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+              showQuestion();
+            } else {
+              showResults();
+            }
+          }, 2000);
+        }
+
+        function showResults() {
+          document.getElementById('testQuestionContainer').style.display =
+            'none';
+          const resultDiv = document.getElementById('dataProcessingTestResult');
+          resultDiv.style.display = 'block';
+
+          const percentage = Math.round((score / questions.length) * 100);
+          let resultClass, title, text;
+
+          if (percentage >= 80) {
+            resultClass = 'success';
+            title = '🎉 Отлично!';
+            text = `Ты правильно ответил на ${score} из ${questions.length} вопросов (${percentage}%). Ты отлично понимаешь работу компьютера с данными!`;
+            document.getElementById('completeCourseBtn').style.display =
+              'inline-block';
+            document.getElementById('retryTestBtn').style.display =
+              'inline-block';
+            document.getElementById('bonusDemo').style.display = 'block';
+            document.getElementById('nextStageBtn').style.display = 'inline-block';
+            document.getElementById('completeCourseBtn').style.display = 'none';
+            document.getElementById('dataDemo').style.display = 'block';
+            initInteractiveDemo();
+          } else {
+            resultClass = 'failed';
+            title = '😔 Нужно повторить';
+            text = `Ты правильно ответил на ${score} из ${questions.length} вопросов (${percentage}%). Изучи материал еще раз и попробуй снова!`;
+            document.getElementById('retryTestBtn').style.display =
+              'inline-block';
+          }
+
+          resultDiv.className = `test-result ${resultClass}`;
+          document.getElementById('testResultTitle').textContent = title;
+          document.getElementById('testResultText').textContent = text;
+
+          const detailsDiv = document.getElementById('testResultDetails');
+          detailsDiv.innerHTML =
+            '<h4>Разбор ответов:</h4>' +
+            answers
+              .map(
+                (answer, index) => `
+              <div class="result-item ${
+                answer.isCorrect ? 'correct' : 'incorrect'
+              }">
+                <div>
+                  <strong>Вопрос ${index + 1}:</strong> ${
+                  answer.isCorrect ? '✅ Правильно' : '❌ Неправильно'
+                }<br>
+                  <small>${answer.explanation}</small>
+                </div>
+              </div>
+            `
+              )
+              .join('');
+          // === Экспорт для Excel (лист "Знания") ===
+          try {
+            if (window.TestResults) {
+              const exportQuestions = (answers || []).map((a, i) => ({
+                index: i + 1,
+                question: a.question,
+                answer: String((questions[i] && questions[i].options) ? questions[i].options[a.selected] : a.selected),
+                correct: !!a.isCorrect,
+                correctAnswer: String((questions[i] && questions[i].options) ? questions[i].options[a.correct] : '')
+              }));
+              const percentage = Math.round((score / questions.length) * 100);
+              window.TestResults.saveTest({
+                testType: 'knowledge',
+                questions: exportQuestions,
+                meta: { percentage }
+              });
+            }
+          } catch (e) { console.warn('saveTest knowledge failed', e); }
+
+        }
+
+        function retryTest() {
+          currentQuestion = 0;
+          score = 0;
+          answers = [];
+          document.getElementById('dataProcessingTestResult').style.display =
+            'none';
+          document.getElementById('testQuestionContainer').style.display =
+            'block';
+          document.getElementById('testProgressFill').style.width = '16.67%';
+          document.getElementById('dataDemo').style.display = 'none';
+          showQuestion();
+        }
+
+        function completeCourse() {
+          showCourseCompletionModal();
+        }
+
+        function showCourseCompletionModal() {
+          const modal = document.createElement('div');
+          modal.innerHTML = `
+            <div class="completion-overlay">
+              <div class="completion-modal">
+                <div class="completion-content">
+                  <div class="completion-icon">🎓</div>
+                  <h2>Поздравляем!</h2>
+                  <p>Ты успешно завершил курс информатики для 6 класса!</p>
+                  <div class="achievements">
+                    <div class="achievement">✅ Изучил двоичную систему счисления</div>
+                    <div class="achievement">✅ Понял принципы работы компьютера</div>
+                    <div class="achievement">✅ Освоил обработку данных</div>
+                    <div class="achievement">✅ Изучил единицы измерения информации</div>
+                    <div class="achievement">✅ Прошел все тесты успешно</div>
+                  </div>
+                  <p class="final-message">Теперь ты готов к изучению более сложных тем по информатике!</p>
+                  <div class="completion-buttons">
+                    <button id="backToMenu" class="completion-btn primary">Вернуться в меню</button>
+                    <button id="restartCourse" class="completion-btn secondary">Пройти курс заново</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+
+          // Применяем стили к модальному окну
+          const styles = `
+            .completion-overlay {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: rgba(0, 0, 0, 0.8);
+              z-index: 10000;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .completion-modal {
+              background: white;
+              border-radius: 20px;
+              padding: 40px;
+              max-width: 500px;
+              width: 90%;
+              text-align: center;
+              box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+              animation: modalAppear 0.5s ease-out;
+            }
+            .completion-icon {
+              font-size: 64px;
+              margin-bottom: 20px;
+              animation: bounce 2s infinite;
+            }
+            .completion-modal h2 {
+              color: #4d36db;
+              font-size: 32px;
+              margin-bottom: 20px;
+              font-weight: 700;
+            }
+            .completion-modal p {
+              color: #555;
+              font-size: 18px;
+              margin-bottom: 25px;
+              line-height: 1.6;
+            }
+            .achievements {
+              background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+              padding: 20px;
+              border-radius: 15px;
+              margin: 25px 0;
+              text-align: left;
+            }
+            .achievement {
+              padding: 8px 0;
+              color: #28a745;
+              font-weight: 600;
+              font-size: 16px;
+            }
+            .final-message {
+              color: #4d36db;
+              font-weight: 600;
+              font-size: 16px;
+              margin: 25px 0;
+            }
+            .completion-buttons {
+              display: flex;
+              gap: 15px;
+              justify-content: center;
+              margin-top: 30px;
+            }
+            .completion-btn {
+              padding: 12px 25px;
+              border: none;
+              border-radius: 10px;
+              font-family: 'Montserrat', sans-serif;
+              font-weight: 600;
+              font-size: 16px;
+              cursor: pointer;
+              transition: all 0.3s ease;
+            }
+            .completion-btn.primary {
+              background: linear-gradient(135deg, #4d36db, #6b46c1);
+              color: white;
+            }
+            .completion-btn.secondary {
+              background: #f8f9fa;
+              color: #4d36db;
+              border: 2px solid #4d36db;
+            }
+            .completion-btn:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
+            @keyframes modalAppear {
+              from {
+                opacity: 0;
+                transform: scale(0.8) translateY(-50px);
+              }
+              to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+              }
+            }
+            @keyframes bounce {
+              0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+              }
+              40% {
+                transform: translateY(-10px);
+              }
+              60% {
+                transform: translateY(-5px);
+              }
+            }
+          `;
+
+          const styleSheet = document.createElement('style');
+          styleSheet.textContent = styles;
+          document.head.appendChild(styleSheet);
+
+          document.body.appendChild(modal);
+
+          // Обработчики кнопок
+          modal.querySelector('#backToMenu').addEventListener('click', () => {
+            window.location.href = '2lesson.html';
+          });
+
+          modal
+            .querySelector('#restartCourse')
+            .addEventListener('click', () => {
+              window.location.href = '2lesson.html';
+            });
+        }
+
+        // Инициализация интерактивной демонстрации
+        function initInteractiveDemo() {
+          const deviceButtons = document.querySelectorAll('.device-btn');
+          const startDemoBtn = document.getElementById('startDemo');
+          const resetDemoBtn = document.getElementById('resetDemo');
+
+          deviceButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+              const device = this.dataset.device;
+              const inputResult = document.getElementById('inputResult');
+
+              switch (device) {
+                case 'keyboard':
+                  inputResult.textContent = 'Получен текст: "Привет!"';
+                  simulateDataFlow('текст');
+                  break;
+                case 'mouse':
+                  inputResult.textContent =
+                    'Получен клик: координаты (150, 200)';
+                  simulateDataFlow('координаты');
+                  break;
+                case 'microphone':
+                  inputResult.textContent = 'Получен звук: аудиосигнал';
+                  simulateDataFlow('звук');
+                  break;
+              }
+            });
+          });
+
+          if (startDemoBtn) {
+            startDemoBtn.addEventListener('click', function () {
+              runAutomaticDemo();
+            });
+          }
+
+          if (resetDemoBtn) {
+            resetDemoBtn.addEventListener('click', function () {
+              resetDemo();
+            });
+          }
+        }
+
+        function simulateDataFlow(dataType) {
+          const ramBlock = document.querySelector('.memory-block.ram');
+          const storageBlock = document.querySelector('.memory-block.storage');
+          const processInfo = document.getElementById('processInfo');
+          const screenOutput = document.getElementById('screenOutput');
+
+          // Этап 2: Хранение в RAM
+          setTimeout(() => {
+            ramBlock.style.background =
+              'linear-gradient(135deg, #28a745, #20c997)';
+            ramBlock.style.color = 'white';
+            ramBlock.textContent = 'Данные';
+          }, 500);
+
+          // Этап 3: Обработка
+          setTimeout(() => {
+            processInfo.textContent = `Обрабатываю ${dataType}...`;
+            document.querySelector('.cpu-core').style.animationDuration =
+              '0.5s';
+          }, 1500);
+
+          // Этап 4: Вывод
+          setTimeout(() => {
+            screenOutput.textContent = `${dataType.toUpperCase()}`;
+            processInfo.textContent = 'Обработка завершена';
+          }, 3000);
+
+          // Сохранение в постоянную память
+          setTimeout(() => {
+            storageBlock.style.background =
+              'linear-gradient(135deg, #17a2b8, #138496)';
+            storageBlock.style.color = 'white';
+            storageBlock.textContent = 'Сохранено';
+          }, 4000);
+        }
+
+        function runAutomaticDemo() {
+          const steps = [
+            {
+              delay: 0,
+              action: () =>
+                document.querySelector('[data-device="keyboard"]').click(),
+            },
+            {
+              delay: 5000,
+              action: () =>
+                document.querySelector('[data-device="mouse"]').click(),
+            },
+            {
+              delay: 10000,
+              action: () =>
+                document.querySelector('[data-device="microphone"]').click(),
+            },
+          ];
+
+          steps.forEach(step => {
+            setTimeout(step.action, step.delay);
+          });
+        }
+
+        function resetDemo() {
+          document.getElementById('inputResult').textContent = '';
+          document.getElementById('processInfo').textContent =
+            'Ожидание задачи...';
+          document.getElementById('screenOutput').textContent = 'Результат';
+
+          const ramBlock = document.querySelector('.memory-block.ram');
+          const storageBlock = document.querySelector('.memory-block.storage');
+
+          ramBlock.style.background =
+            'linear-gradient(135deg, #ff9a9e, #fad0c4)';
+          ramBlock.style.color = '#721c24';
+          ramBlock.textContent = 'RAM';
+
+          storageBlock.style.background =
+            'linear-gradient(135deg, #a8edea, #fed6e3)';
+          storageBlock.style.color = '#155724';
+          storageBlock.textContent = 'SSD/HDD';
+
+          document.querySelector('.cpu-core').style.animationDuration = '2s';
+        }
+      });
+    </script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

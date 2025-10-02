@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - Урок 1: Оценка участия</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="js/test-export.js"></script>
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html">Урок 2. Бит и Байт</li>
+              <li data-href="2lesson3.html">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html" class="active">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <div class="engagement-survey">
+              <div class="survey-header">
+                <div class="survey-intro">
+                  <h2>🎯 Расскажи о своем участии в уроке!</h2>
+                  <p>Помоги нам понять, как ты взаимодействовал с заданиями</p>
+                  <button id="startEngagementSurvey" class="start-survey-btn">
+                    Поделиться опытом
+                  </button>
+                </div>
+              </div>
+
+              <div
+                id="engagementSurveyContainer"
+                class="survey-container"
+                style="display: none"
+              >
+                <div class="survey-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="surveyProgressFill"></div>
+                  </div>
+                  <p>
+                    Вопрос <span id="currentSurveyQ">1</span> из
+                    <span id="totalSurveyQ">5</span>
+                  </p>
+                </div>
+
+                <div id="surveyQuestionContainer" class="question-container">
+                  <!-- Вопросы будут добавлены через JavaScript -->
+                </div>
+
+                <div
+                  id="engagementResult"
+                  class="survey-result"
+                  style="display: none"
+                >
+                  <h3 id="surveyResultTitle">Анализ твоего участия! 📊</h3>
+                  <p id="surveyResultText">
+                    Вот что мы узнали о твоей вовлеченности
+                  </p>
+                  <div
+                    id="engagementInsights"
+                    class="engagement-insights"
+                  ></div>
+                  <div id="engagementLevel" class="engagement-level"></div>
+                  <button id="completeLesson" class="complete-lesson-btn">
+                    Завершить 5 урок
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .engagement-survey {
+        padding: 40px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 20px;
+        margin: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .survey-header {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .survey-intro h2 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 28px;
+      }
+
+      .survey-intro p {
+        margin-bottom: 25px;
+        font-size: 16px;
+        color: #666;
+      }
+
+      .start-survey-btn {
+        padding: 20px 40px;
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 4px 15px rgba(77, 54, 219, 0.3);
+      }
+
+      .start-survey-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(77, 54, 219, 0.4);
+      }
+
+      .survey-container {
+        margin-top: 30px;
+      }
+
+      .survey-progress {
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4d36db, #6b46c1);
+        transition: width 0.5s ease;
+        width: 20%;
+      }
+
+      .question-container {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .question-title {
+        color: #4d36db;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      .question-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .option-btn {
+        padding: 15px 20px;
+        background: #f8f9fa;
+        border: 2px solid #dee2e6;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        text-align: left;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .option-btn:hover {
+        background: #e9ecef;
+        border-color: #4d36db;
+        transform: translateX(5px);
+      }
+
+      .option-btn.selected {
+        border-color: #4d36db;
+        background: linear-gradient(135deg, #e8f0fe, #f3e5f5);
+        transform: translateX(5px);
+        box-shadow: 0 4px 12px rgba(77, 54, 219, 0.2);
+      }
+
+      /* Специальные стили для разных типов вопросов */
+      .difficulty-option {
+        border-left: 4px solid transparent;
+      }
+
+      .difficulty-option.easy {
+        border-left-color: #28a745;
+      }
+
+      .difficulty-option.medium {
+        border-left-color: #ffc107;
+      }
+
+      .difficulty-option.hard {
+        border-left-color: #dc3545;
+      }
+
+      .engagement-option {
+        border-left: 4px solid transparent;
+      }
+
+      .engagement-option.high {
+        border-left-color: #17a2b8;
+      }
+
+      .engagement-option.low {
+        border-left-color: #6c757d;
+      }
+
+      .engagement-option.medium {
+        border-left-color: #fd7e14;
+      }
+
+      .survey-result {
+        background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+        border: 2px solid #17a2b8;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .survey-result h3 {
+        color: #0c5460;
+        margin-bottom: 15px;
+        font-size: 24px;
+      }
+
+      .survey-result p {
+        color: #0c5460;
+        margin-bottom: 20px;
+        font-size: 16px;
+      }
+
+      .engagement-insights {
+        background: rgba(255, 255, 255, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        text-align: left;
+      }
+
+      .insight-item {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+        padding: 12px;
+        background: white;
+        border-radius: 8px;
+        border-left: 4px solid #17a2b8;
+      }
+
+      .insight-emoji {
+        font-size: 24px;
+        margin-right: 15px;
+      }
+
+      .engagement-level {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border: 2px solid #17a2b8;
+      }
+
+      .level-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        margin: 15px 0;
+      }
+
+      .level-bar {
+        width: 200px;
+        height: 20px;
+        background: #e9ecef;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .level-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #dc3545, #ffc107, #28a745);
+        transition: width 0.8s ease;
+        border-radius: 10px;
+      }
+
+      .level-text {
+        font-weight: bold;
+        font-size: 18px;
+        color: #0c5460;
+      }
+
+      .complete-lesson-btn {
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      .complete-lesson-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        .engagement-survey {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .survey-header {
+          flex-direction: column;
+          text-align: center;
+          gap: 20px;
+        }
+
+        .survey-intro h2 {
+          font-size: 24px;
+        }
+
+        .question-container {
+          padding: 20px;
+        }
+
+        .level-bar {
+          width: 150px;
+        }
+
+        .start-survey-btn {
+          padding: 15px 30px;
+          font-size: 16px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        
+        if (window.TestResults) { try { window.TestResults.init({ lessonId: 605, requireAuth: true }); } catch(e) { console.warn(e); } }
+const questions = [
+          {
+            question: 'Насколько тебе было легко или сложно выполнять задания?',
+            type: 'difficulty',
+            options: [
+              { text: 'Очень легко', value: 'easy', class: 'easy' },
+              {
+                text: 'Немного сложно, но я справился',
+                value: 'medium',
+                class: 'medium',
+              },
+              {
+                text: 'Очень сложно, мне нужна помощь',
+                value: 'hard',
+                class: 'hard',
+              },
+            ],
+          },
+          {
+            question:
+              'Ты сам пробовал нажимать на интерактивные элементы или только смотрел анимации?',
+            type: 'interaction',
+            options: [
+              { text: 'Да, я пробовал', value: 'high', class: 'high' },
+              { text: 'Нет, просто смотрел', value: 'low', class: 'low' },
+              { text: 'Иногда пробовал', value: 'medium', class: 'medium' },
+            ],
+          },
+          {
+            question:
+              'Ты бы хотел, чтобы в следующих уроках было больше заданий или меньше?',
+            type: 'preference',
+            options: [
+              { text: 'Больше', value: 'more', class: 'high' },
+              { text: 'Меньше', value: 'less', class: 'low' },
+              { text: 'Столько же', value: 'same', class: 'medium' },
+            ],
+          },
+          {
+            question:
+              'Были ли моменты, когда ты чувствовал, что тебе скучно? Почему?',
+            type: 'boredom',
+            options: [
+              {
+                text: 'Нет, было интересно',
+                value: 'interesting',
+                class: 'high',
+              },
+              {
+                text: 'Было скучно, мало заданий',
+                value: 'few_tasks',
+                class: 'low',
+              },
+              { text: 'Слишком просто', value: 'too_easy', class: 'medium' },
+            ],
+          },
+          {
+            question:
+              'Ты бы мог объяснить этот урок другу, который его не смотрел или не делал?',
+            type: 'understanding',
+            options: [
+              { text: 'Да, легко', value: 'confident', class: 'high' },
+              { text: 'Наверное, да', value: 'maybe', class: 'medium' },
+              { text: 'Не уверен', value: 'unsure', class: 'low' },
+            ],
+          },
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+
+        document
+          .getElementById('startEngagementSurvey')
+          .addEventListener('click', startSurvey);
+        document
+          .getElementById('completeLesson')
+          .addEventListener('click', () => {
+            window.location.href = '2lesson6.html';
+          });
+
+        function startSurvey() {
+          document.querySelector('.survey-header').style.display = 'none';
+          document.getElementById('engagementSurveyContainer').style.display =
+            'block';
+          document.getElementById('totalSurveyQ').textContent =
+            questions.length;
+          showQuestion();
+        }
+
+        function showQuestion() {
+          const question = questions[currentQuestion];
+          document.getElementById('currentSurveyQ').textContent =
+            currentQuestion + 1;
+
+          const progress = ((currentQuestion + 1) / questions.length) * 100;
+          document.getElementById('surveyProgressFill').style.width =
+            progress + '%';
+
+          const container = document.getElementById('surveyQuestionContainer');
+
+          container.innerHTML = `
+            <div class="question-title">${question.question}</div>
+            <div class="question-options">
+              ${question.options
+                .map(
+                  (option, index) =>
+                    `<button class="option-btn ${question.type}-option ${option.class}" data-index="${index}" data-value="${option.value}">
+                  ${option.text}
+                </button>`
+                )
+                .join('')}
+            </div>
+          `;
+
+          container.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+              // Убираем выделение с других вариантов
+              container
+                .querySelectorAll('.option-btn')
+                .forEach(opt => opt.classList.remove('selected'));
+              // Выделяем выбранный
+              this.classList.add('selected');
+
+              setTimeout(() => {
+                selectAnswer(parseInt(this.dataset.index), this.dataset.value);
+              }, 300);
+            });
+          });
+        }
+
+        function selectAnswer(selectedIndex, value) {
+          const question = questions[currentQuestion];
+
+          answers.push({
+            question: question.question,
+            selected: selectedIndex,
+            answer: question.options[selectedIndex].text,
+            value: value,
+            type: question.type,
+          });
+
+          setTimeout(() => {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+              showQuestion();
+            } else {
+              showResults();
+            }
+          }, 500);
+        }
+
+        function showResults() {
+          document.getElementById('surveyQuestionContainer').style.display =
+            'none';
+          const resultDiv = document.getElementById('engagementResult');
+          resultDiv.style.display = 'block';
+
+          // Анализируем уровень вовлеченности
+          const engagementScore = calculateEngagementScore(answers);
+          const insights = generateEngagementInsights(answers, engagementScore);
+
+          const insightsDiv = document.getElementById('engagementInsights');
+          insightsDiv.innerHTML =
+            '<h4>🔍 Анализ твоего участия:</h4>' +
+            insights
+              .map(
+                insight => `
+              <div class="insight-item">
+                <div class="insight-emoji">${insight.emoji}</div>
+                <div>${insight.text}</div>
+              </div>
+            `
+              )
+              .join('');
+
+          // Показываем уровень вовлеченности
+          showEngagementLevel(engagementScore);
+          // === Сохранение для Excel (лист "Вовлечённость") и кнопка скачивания ===
+          try {
+            if (window.TestResults) {
+              const exportQuestions = (typeof answers !== 'undefined' ? answers : []).map((a, i) => ({
+                index: i + 1,
+                question: a.question,
+                answer: String(a.answer),
+                correct: true,
+                correctAnswer: ''
+              }));
+              if (exportQuestions.length) {
+                window.TestResults.saveTest({
+                  testType: 'engagement',
+                  questions: exportQuestions
+                });
+              }
+              // Кнопка скачивания под уровнем вовлеченности
+              window.TestResults.renderDownloadUI('#engagementLevel', { showDialogAfterSave: true, autoEnableWhenAllDone: true });
+            }
+          } catch (e) { console.warn('saveTest engagement failed', e); }
+
+        }
+
+        function calculateEngagementScore(answers) {
+          let score = 0;
+          const maxScore = 100;
+
+          answers.forEach(answer => {
+            switch (answer.value) {
+              case 'easy':
+              case 'high':
+              case 'more':
+              case 'interesting':
+              case 'confident':
+                score += 20;
+                break;
+              case 'medium':
+              case 'same':
+              case 'too_easy':
+              case 'maybe':
+                score += 12;
+                break;
+              case 'hard':
+              case 'low':
+              case 'less':
+              case 'few_tasks':
+              case 'unsure':
+                score += 5;
+                break;
+            }
+          });
+
+          return Math.min(score, maxScore);
+        }
+
+        function generateEngagementInsights(answers, score) {
+          const insights = [];
+
+          // Анализ сложности заданий
+          const difficulty = answers[0]?.value;
+          if (difficulty === 'easy') {
+            insights.push({
+              emoji: '😊',
+              text: 'Отлично! Задания были для тебя понятными и доступными.',
+            });
+          } else if (difficulty === 'medium') {
+            insights.push({
+              emoji: '💪',
+              text: 'Хорошо! Ты справился с заданиями, несмотря на некоторые трудности.',
+            });
+          } else {
+            insights.push({
+              emoji: '🤝',
+              text: 'Не переживай! В следующих уроках мы сделаем объяснения еще понятнее.',
+            });
+          }
+
+          // Анализ интерактивности
+          const interaction = answers[1]?.value;
+          if (interaction === 'high') {
+            insights.push({
+              emoji: '🎮',
+              text: 'Замечательно! Ты активно взаимодействовал с интерактивными элементами.',
+            });
+          } else if (interaction === 'medium') {
+            insights.push({
+              emoji: '👆',
+              text: 'Хорошо! Попробуй еще больше экспериментировать с интерактивными элементами.',
+            });
+          } else {
+            insights.push({
+              emoji: '✨',
+              text: 'Рекомендуем активнее участвовать - это поможет лучше усвоить материал!',
+            });
+          }
+
+          // Анализ предпочтений по количеству заданий
+          const preference = answers[2]?.value;
+          if (preference === 'more') {
+            insights.push({
+              emoji: '📚',
+              text: 'Здорово! Твое желание больше практиковаться поможет в обучении.',
+            });
+          }
+
+          // Анализ понимания материала
+          const understanding = answers[4]?.value;
+          if (understanding === 'confident') {
+            insights.push({
+              emoji: '🎓',
+              text: 'Превосходно! Ты хорошо усвоил материал и можешь поделиться знаниями.',
+            });
+          } else if (understanding === 'maybe') {
+            insights.push({
+              emoji: '🤔',
+              text: 'Неплохо! Продолжай изучать материал для большей уверенности.',
+            });
+          }
+
+          return insights;
+        }
+
+        function showEngagementLevel(score) {
+          const levelDiv = document.getElementById('engagementLevel');
+          let level, color, description;
+
+          if (score >= 80) {
+            level = 'Высокая вовлеченность';
+            color = '#28a745';
+            description = 'Ты очень активно участвовал в уроке!';
+          } else if (score >= 60) {
+            level = 'Средняя вовлеченность';
+            color = '#ffc107';
+            description = 'Хороший уровень участия, можно еще активнее!';
+          } else {
+            level = 'Низкая вовлеченность';
+            color = '#dc3545';
+            description = 'Рекомендуем больше взаимодействовать с заданиями.';
+          }
+
+          levelDiv.innerHTML = `
+            <h4>📊 Уровень твоей вовлеченности:</h4>
+            <div class="level-indicator">
+              <div class="level-bar">
+                <div class="level-fill" style="width: ${score}%; background: ${color};"></div>
+              </div>
+              <div class="level-text">${score}%</div>
+            </div>
+            <p><strong>${level}</strong></p>
+            <p>${description}</p>
+          `;
+        }
+      });
+    </script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

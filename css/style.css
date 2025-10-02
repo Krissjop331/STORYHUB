@@ -1,0 +1,610 @@
+/* Основные стили */
+.container {
+  max-width: 1700px;
+  padding: 0 50px;
+  margin: 0 auto;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Основные стили для стрелки "Назад" */
+.arrow-back {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  transform: scaleX(-1); /* Отражаем стрелку */
+}
+
+.arrow-back:hover {
+  transform: scaleX(-1) scale(1.1);
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+}
+
+/* CSS-версия стрелки как резерв */
+.arrow-back-css {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #4d36db, #6c5ce7);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(77, 54, 219, 0.3);
+}
+
+.arrow-back-css::before {
+  content: '←';
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Header */
+.header {
+  margin-top: 25px;
+  border-bottom: 1px solid #e1e1e1;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+}
+
+.header_inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.logo span {
+  color: #4d36db;
+}
+
+.exit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.nameuser {
+  font-weight: 500;
+}
+
+.iconexit {
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Content */
+.content_inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  align-items: stretch;
+}
+
+.menu,
+.content_games {
+  flex: 1;
+}
+
+.menu {
+  max-width: 400px;
+}
+
+/* Class switch buttons */
+.class-switch {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.switch-btn {
+  padding: 10px 20px;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  transition: background 0.3s, color 0.3s;
+}
+
+.switch-btn:hover,
+.switch-btn.active {
+  background-color: #4d36db;
+  color: #fff;
+  border-color: #4d36db;
+}
+
+/* Lesson list */
+.lesson-list {
+  font-size: 18px;
+  font-weight: 500;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lesson-list li {
+  padding: 15px 20px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 70px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.lesson-list li::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  border: 1px solid black;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.lesson-list li:hover {
+  background-color: #f8f8f8;
+}
+
+.lesson-list li.active {
+  background-color: #e6f435;
+}
+
+.lesson-list li.active::before {
+  background-color: white;
+}
+
+/* Content games area */
+.content_games {
+  position: relative;
+  padding: 20px;
+  border: 3px solid #582ff5;
+  border-radius: 20px;
+  min-height: 400px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: visible;
+}
+
+.content_games_img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+}
+
+/* .content_games_img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(77, 54, 219, 0.2);
+} */
+
+.arrow {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.arrow:hover {
+  transform: scale(1.1);
+}
+
+.yes-button {
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.yes-button:hover {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+/* Test and interactive elements */
+.test {
+  text-align: center;
+  color: #fff;
+  padding: 40px 50px;
+  background-color: #4d36db;
+  border-radius: 20px;
+  margin-bottom: 30px;
+}
+
+.test h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.start-test-btn,
+.submit-test-btn,
+.next-lesson-btn {
+  padding: 12px 20px;
+  background-color: #4d36db;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 10px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.start-test-btn:hover,
+.submit-test-btn:hover,
+.next-lesson-btn:hover {
+  background-color: #3626aa;
+}
+
+.test-block {
+  display: none;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+.test-block h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.test-block label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.test-block label:hover {
+  background-color: #f5f5f5;
+}
+
+.test-block input[type='radio'] {
+  margin-right: 10px;
+}
+
+.test-result {
+  display: none;
+  background: #d4edda;
+  color: #155724;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Sliders for computer components */
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slider-block {
+  position: absolute;
+  width: 250px;
+  background: white;
+  border: 2px solid #4d36db;
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.slider-block button {
+  background-color: #4d36db;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.slider-block button:hover {
+  background-color: #3626aa;
+}
+
+.slider-block span.component {
+  display: inline-block;
+  min-width: 120px;
+  text-align: center;
+}
+
+.tooltip-btn {
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 5px;
+  color: #4d36db;
+}
+
+.tooltip-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  z-index: 999;
+}
+
+.tooltip-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  z-index: 1000;
+  max-width: 400px;
+  text-align: center;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.tooltip-modal.active,
+.tooltip-overlay.active {
+  display: block;
+}
+
+/* Algorithm and input forms */
+.steps-form input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  border: 2px solid #4d36db;
+  border-radius: 10px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.steps-form input::placeholder {
+  color: #4d36db;
+  font-weight: bold;
+}
+
+.algorithm-task {
+  display: flex;
+  align-items: flex-start;
+  padding: 30px;
+}
+
+/* Binary check task */
+.binary-check-task {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 16px;
+  max-width: 600px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  background: white;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.binary-check-task h2 {
+  margin-bottom: 20px;
+  color: #4d36db;
+}
+
+.binary-check-task input {
+  padding: 12px 16px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 2px solid #4d36db;
+  width: 60%;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.binary-check-task button {
+  padding: 12px 20px;
+  background-color: #4d36db;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.binary-check-task button:hover {
+  background-color: #3626aa;
+}
+
+.binary-result {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+/* Game grid */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+.game-item {
+  text-align: center;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  transition: transform 0.3s ease;
+  background-color: #4d36db;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.game-item:hover {
+  transform: scale(1.05);
+  background-color: #3626aa;
+}
+
+/* Video layouts for lessons */
+.content_games_inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 35px;
+  padding: 30px;
+  height: 100%;
+}
+
+.content_games_inner2 {
+  display: flex;
+}
+
+.Video5_4 {
+  width: 300px;
+  margin-left: 400px;
+}
+
+#Video4_2 {
+  bottom: 130px;
+  left: 400px;
+}
+
+#Video1_4 {
+  position: absolute;
+  bottom: 50px;
+  left: 370px;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 100%;
+    padding: 0 30px;
+  }
+
+  .content_inner {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .menu {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .header_inner {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .class-switch {
+    justify-content: center;
+  }
+
+  .lesson-list li {
+    font-size: 16px;
+    padding: 12px 15px;
+    padding-left: 50px;
+  }
+
+  .content_games {
+    padding: 20px;
+    min-height: 400px;
+  }
+
+  .test {
+    padding: 30px 20px;
+  }
+
+  .algorithm-task {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .binary-check-task {
+    position: static;
+    transform: none;
+    margin: 20px auto;
+    max-width: 90%;
+  }
+
+  .binary-check-task input {
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .lesson-list li {
+    font-size: 14px;
+    padding: 10px;
+    padding-left: 40px;
+  }
+
+  .switch-btn {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+
+  .content_games {
+    padding: 15px;
+    min-height: 300px;
+  }
+}

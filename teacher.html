@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+  <meta name="project-key" content="quiz28">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Teacher Admin</title>
+
+    <!-- База как у админа -->
+    <link rel="stylesheet" href="assets/css/admin.css" />
+    <!-- Отдельные правки для учителя -->
+    <link rel="stylesheet" href="assets/css/teacher.css" />
+
+    <!-- Библиотеки -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  </head>
+  <body class="bg">
+    <header class="topbar teacher-topbar">
+      <div class="topbar__left">
+        <div class="brand">
+          <span class="brand__dot"></span>
+          <span class="brand__name">Quiz Dashboard</span>
+        </div>
+        <nav class="tabs" role="tablist" aria-label="Teacher tabs">
+          <button class="tab is-active" data-view="dashboard">Dashboard</button>
+          <button class="tab" data-view="students">Ученики</button>
+          <button class="tab" data-view="lessons">Уроки</button>
+          <button class="tab" data-view="docs">Документация</button>
+        </nav>
+      </div>
+      <div class="topbar__right">
+        <button id="logoutBtn" class="btn btn-outline">Выйти</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar__section">
+          <p class="sidebar__title">Навигация</p>
+          <a class="side-link is-active" data-view="dashboard">Dashboard</a>
+          <a class="side-link" data-view="students">Ученики</a>
+          <a class="side-link" data-view="lessons">Уроки</a>
+          <a class="side-link" data-view="docs">Документация</a>
+        </div>
+      </aside>
+
+      <main id="app" class="content" tabindex="-1"></main>
+    </div>
+
+    <script src="assets/js/teacher.js"></script>
+    <script src="assets/js/results-store.js?v=1758280301"></script>
+    <script src="assets/js/admin-results.js?v=1758280301"></script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - 6 класс: Бит и Байт</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="index.html">5 класс</button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html" class="active">
+                Урок 2. Бит и Байт
+              </li>
+              <li data-href="2lesson3.html">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <!-- Интерактивное задание -->
+            <div class="binary-check-task">
+              <h3>🧮 Задание: Обратный перевод</h3>
+              <p>Переведи двоичное число в десятичную систему</p>
+              <div class="task-display">
+                <span class="calculation">1101₂ = ?₁₀</span>
+              </div>
+              <input
+                type="number"
+                id="decimalInput"
+                placeholder="Введи десятичное число"
+                min="0"
+                max="255"
+              />
+              <button id="checkButton">Проверить</button>
+              <div class="binary-result" id="binaryResult"></div>
+
+              <div class="hint-section" id="hintSection" style="display: none">
+                <h4>💡 Подсказка:</h4>
+                <p>
+                  Для перевода 1101₂ в десятичную систему нужно умножить каждую
+                  цифру на степень двойки:
+                </p>
+                <div class="hint-steps">
+                  <p>1101₂ = 1×2³ + 1×2² + 0×2¹ + 1×2⁰</p>
+                  <p>= 1×8 + 1×4 + 0×2 + 1×1</p>
+                  <p>= 8 + 4 + 0 + 1</p>
+                  <p><strong>= 13₁₀</strong></p>
+                </div>
+              </div>
+
+              <button id="hintButton" class="hint-btn">
+                Показать подсказку
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .binary-check-task {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border-radius: 16px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        font-family: 'Montserrat', sans-serif;
+        padding: 30px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        border: 3px solid #4d36db;
+      }
+
+      .binary-check-task h3 {
+        margin-bottom: 10px;
+        color: #4d36db;
+        font-size: 20px;
+      }
+
+      .binary-check-task p {
+        margin-bottom: 20px;
+        color: #666;
+        font-size: 16px;
+      }
+
+      .task-display {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 12px;
+        margin: 20px 0;
+        border: 2px solid #e9ecef;
+      }
+
+      .calculation {
+        font-size: 24px;
+        font-weight: bold;
+        color: #4d36db;
+      }
+
+      .binary-check-task input {
+        padding: 12px 16px;
+        font-size: 18px;
+        border-radius: 10px;
+        border: 2px solid #4d36db;
+        width: 80%;
+        margin-bottom: 20px;
+        font-family: 'Montserrat', sans-serif;
+        text-align: center;
+      }
+
+      .binary-check-task button {
+        padding: 12px 20px;
+        background-color: #4d36db;
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-family: 'Montserrat', sans-serif;
+        margin: 5px;
+      }
+
+      .binary-check-task button:hover {
+        background-color: #3626aa;
+        transform: translateY(-2px);
+      }
+
+      .hint-btn {
+        background-color: #17a2b8 !important;
+      }
+
+      .hint-btn:hover {
+        background-color: #138496 !important;
+      }
+
+      .binary-result {
+        margin-top: 15px;
+        font-weight: bold;
+        padding: 15px;
+        border-radius: 10px;
+        min-height: 20px;
+      }
+
+      .hint-section {
+        background: #e8f4fd;
+        padding: 20px;
+        border-radius: 12px;
+        margin: 20px 0;
+        text-align: left;
+        border: 2px solid #17a2b8;
+      }
+
+      .hint-section h4 {
+        color: #17a2b8;
+        margin-bottom: 10px;
+      }
+
+      .hint-steps {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 15px;
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+      }
+
+      .hint-steps p {
+        margin: 8px 0;
+        font-size: 16px;
+      }
+
+      @media (max-width: 768px) {
+        .binary-check-task {
+          position: static;
+          transform: none;
+          margin: 20px auto;
+          max-width: 95%;
+          padding: 20px;
+        }
+
+        .binary-check-task input {
+          width: 90%;
+        }
+
+        .calculation {
+          font-size: 20px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const input = document.getElementById('decimalInput');
+        const checkButton = document.getElementById('checkButton');
+        const result = document.getElementById('binaryResult');
+        const hintButton = document.getElementById('hintButton');
+        const hintSection = document.getElementById('hintSection');
+
+        let attempts = 0;
+
+        // Проверка ответа
+        checkButton.addEventListener('click', function () {
+          const userAnswer = parseInt(input.value);
+          const correctAnswer = 13; // 1101₂ = 13₁₀
+
+          attempts++;
+
+          if (userAnswer === correctAnswer) {
+            result.textContent = '🎉 Правильно! 1101₂ = 13₁₀';
+            result.style.color = '#155724';
+            result.style.backgroundColor = '#d4edda';
+            result.style.border = '2px solid #28a745';
+
+            setTimeout(() => {
+              window.location.href = '2lesson2-4.html';
+            }, 2000);
+          } else if (isNaN(userAnswer) || input.value.trim() === '') {
+            result.textContent = '❌ Введи число';
+            result.style.color = '#721c24';
+            result.style.backgroundColor = '#f8d7da';
+            result.style.border = '2px solid #dc3545';
+          } else {
+            let feedback = `❌ Неправильно. Ты ответил ${userAnswer}, а правильный ответ 13. `;
+
+            // Подсказка после 2 попыток
+            if (attempts >= 2) {
+              feedback += 'Попробуй воспользоваться подсказкой!';
+              hintButton.style.display = 'inline-block';
+            } else {
+              feedback += 'Попробуй ещё раз!';
+            }
+
+            result.textContent = feedback;
+            result.style.color = '#721c24';
+            result.style.backgroundColor = '#f8d7da';
+            result.style.border = '2px solid #dc3545';
+          }
+        });
+
+        // Показать подсказку
+        hintButton.addEventListener('click', function () {
+          hintSection.style.display =
+            hintSection.style.display === 'none' ? 'block' : 'none';
+          hintButton.textContent =
+            hintSection.style.display === 'none'
+              ? 'Показать подсказку'
+              : 'Скрыть подсказку';
+        });
+
+        // Enter для проверки
+        input.addEventListener('keypress', function (e) {
+          if (e.key === 'Enter') {
+            checkButton.click();
+          }
+        });
+      });
+    </script>
+    <script src="js/video-modal.js"></script>
+    <!-- Подключаем видео-плеер -->
+    <script src="js/main.js"></script>
+
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5806.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

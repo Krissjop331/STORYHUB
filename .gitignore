@@ -1,0 +1,38 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors/IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Node/Build (на будущее)
+node_modules/
+dist/
+build/
+.cache/
+.tmp/
+coverage/
+
+# Env/Secrets
+.env
+.env.*
+*.local
+
+# Misc
+*.zip
+*.tar
+*.tgz
+*.rar
+.sass-cache/
+.cache-loader/
+
+videos/

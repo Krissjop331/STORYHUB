@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - Урок 3: Кибер-гигиена и защита личных данных</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn active" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+            <ul class="lesson-list">
+              <li data-href="lesson0.html">Введение</li>
+              <li data-href="lesson1.html">
+                Урок 1. Базовые правила безопасности в кабинете информатики
+              </li>
+              <li data-href="lesson2.html">Урок 2. Эргономика</li>
+              <li data-href="lesson3.html" class="active">
+                Урок 3. Кибер-гигиена и защита личных данных
+              </li>
+              <li data-href="lesson4.html">
+                Урок 4. Как работают компьютеры: Аппаратное обеспечение
+              </li>
+              <li data-href="lesson5.html">
+                Урок 5. Как работают компьютеры: Программное обеспечение
+              </li>
+              <li data-href="lesson6.html">Урок 6. Алгоритмы</li>
+            </ul>
+          </div>
+
+          <div class="content_games" id="center">
+            <div class="password-security-game">
+              <div class="game-content">
+                <img
+                  src="images/Video3_6.png"
+                  alt="Выбор надежного пароля"
+                  class="game-image"
+                />
+                <div class="game-info">
+                  <h3>🔐 Какой пароль самый надежный?</h3>
+                  <p>
+                    Выбери самый безопасный пароль из предложенных вариантов:
+                  </p>
+                  <div class="password-options">
+                    <div
+                      class="password-option"
+                      data-correct="false"
+                      data-feedback="❌ Очень слабый! Простые числа легко взломать. Никогда не используй такие пароли!"
+                    >
+                      <span class="password-text">123456</span>
+                      <div class="strength-indicator weak">
+                        <span class="strength-text">Очень слабый</span>
+                        <div class="strength-bar">
+                          <div class="strength-fill" style="width: 10%"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="password-option"
+                      data-correct="false"
+                      data-feedback="⚠️ Средний уровень. Лучше чем простые числа, но всё ещё предсказуемый. Хакеры знают популярные слова!"
+                    >
+                      <span class="password-text">Qwerty2024</span>
+                      <div class="strength-indicator medium">
+                        <span class="strength-text">Средний</span>
+                        <div class="strength-bar">
+                          <div class="strength-fill" style="width: 50%"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="password-option"
+                      data-correct="true"
+                      data-feedback="✅ Отлично! Этот пароль содержит заглавные и строчные буквы, цифры и спецсимволы. Его очень сложно взломать!"
+                    >
+                      <span class="password-text">R3!kT#dN9p</span>
+                      <div class="strength-indicator strong">
+                        <span class="strength-text">Очень надёжный</span>
+                        <div class="strength-bar">
+                          <div class="strength-fill" style="width: 100%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <img
+                src="images/arrow.png"
+                alt="Далее"
+                class="arrow"
+                id="next-arrow"
+                style="display: none"
+              />
+              <img
+                src="images/arrow.png"
+                alt="Назад"
+                class="arrow-back"
+                id="back-arrow"
+                title="Вернуться к предыдущей странице"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for feedback -->
+    <div id="feedbackModal" class="feedback-modal">
+      <div class="feedback-content">
+        <h3 id="feedbackTitle">Результат</h3>
+        <p id="feedbackText">Текст обратной связи</p>
+        <div class="password-tips" id="passwordTips" style="display: none">
+          <h4>💡 Советы для создания надёжного пароля:</h4>
+          <ul>
+            <li>Используй минимум 8 символов</li>
+            <li>Добавляй заглавные и строчные буквы</li>
+            <li>Включай цифры и спецсимволы (!@#$%)</li>
+            <li>Не используй личную информацию</li>
+            <li>Создавай уникальный пароль для каждого сайта</li>
+          </ul>
+        </div>
+        <button id="closeFeedback" class="close-feedback-btn">Понятно</button>
+      </div>
+    </div>
+
+    <div id="feedbackOverlay" class="feedback-overlay"></div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .password-security-game {
+        padding: 30px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .game-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 50px;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .game-image {
+        max-width: 550px;
+        max-height: 400px;
+        object-fit: contain;
+        border-radius: 15px;
+      }
+
+      .game-info {
+        max-width: 450px;
+      }
+
+      .game-info h3 {
+        color: #4d36db;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      .game-info p {
+        color: #666;
+        font-size: 16px;
+        margin-bottom: 25px;
+        text-align: center;
+      }
+
+      .password-options {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .password-option {
+        padding: 20px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border: 2px solid #ddd;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .password-option:hover:not(.selected) {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        border-color: #4d36db;
+      }
+
+      .password-text {
+        font-family: 'Courier New', monospace;
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        display: block;
+        margin-bottom: 10px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .strength-indicator {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .strength-text {
+        font-size: 14px;
+        font-weight: 600;
+        min-width: 120px;
+      }
+
+      .strength-bar {
+        flex: 1;
+        height: 8px;
+        background: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .strength-fill {
+        height: 100%;
+        transition: width 0.3s ease;
+        border-radius: 4px;
+      }
+
+      .weak .strength-text {
+        color: #dc3545;
+      }
+
+      .weak .strength-fill {
+        background: linear-gradient(90deg, #dc3545, #fd7e7e);
+      }
+
+      .medium .strength-text {
+        color: #ffc107;
+      }
+
+      .medium .strength-fill {
+        background: linear-gradient(90deg, #ffc107, #ffdb4d);
+      }
+
+      .strong .strength-text {
+        color: #28a745;
+      }
+
+      .strong .strength-fill {
+        background: linear-gradient(90deg, #28a745, #5cbf60);
+      }
+
+      .password-option.selected {
+        pointer-events: none;
+        opacity: 0.7;
+        transform: scale(0.95);
+      }
+
+      .password-option.correct {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        border-color: #28a745;
+        animation: correctPulse 1s ease-in-out;
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .password-option.incorrect {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        border-color: #dc3545;
+        animation: incorrectShake 0.6s ease-in-out;
+      }
+
+      @keyframes correctPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+          box-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
+        }
+      }
+
+      @keyframes incorrectShake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        75% {
+          transform: translateX(5px);
+        }
+      }
+
+      .feedback-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border-radius: 20px;
+        padding: 35px;
+        z-index: 1001;
+        max-width: 550px;
+        width: 90%;
+        display: none;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        border: 3px solid #4d36db;
+      }
+
+      .feedback-modal.active {
+        display: block;
+        animation: modalAppear 0.3s ease-out;
+      }
+
+      @keyframes modalAppear {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      .feedback-content h3 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 22px;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .feedback-content p {
+        margin-bottom: 20px;
+        font-size: 16px;
+        line-height: 1.6;
+        text-align: center;
+        color: #333;
+      }
+
+      .password-tips {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 4px solid #4d36db;
+        margin-bottom: 20px;
+      }
+
+      .password-tips h4 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 16px;
+      }
+
+      .password-tips ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .password-tips li {
+        margin-bottom: 8px;
+        color: #555;
+        font-size: 14px;
+      }
+
+      .close-feedback-btn {
+        display: block;
+        margin: 0 auto;
+        padding: 12px 35px;
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+
+      .close-feedback-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(77, 54, 219, 0.4);
+      }
+
+      .feedback-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        display: none;
+      }
+
+      .feedback-overlay.active {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .game-content {
+          flex-direction: column;
+          gap: 25px;
+          padding: 25px;
+        }
+
+        .game-image {
+          max-width: 100%;
+          max-height: 250px;
+        }
+
+        .game-info {
+          max-width: 100%;
+        }
+
+        .game-info h3 {
+          font-size: 20px;
+        }
+
+        .password-option {
+          padding: 15px;
+        }
+
+        .password-text {
+          font-size: 16px;
+        }
+
+        .strength-text {
+          min-width: 100px;
+          font-size: 13px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        let correctAnswered = false;
+        let selectedOptions = new Set();
+
+        document.querySelectorAll('.password-option').forEach(option => {
+          option.addEventListener('click', function () {
+            // Если уже правильно ответили, не реагируем
+            if (correctAnswered) return;
+
+            // Если эта опция уже была выбрана, не реагируем
+            if (selectedOptions.has(this)) return;
+
+            const isCorrect = this.dataset.correct === 'true';
+            const feedback = this.dataset.feedback;
+
+            // Добавляем в список выбранных
+            selectedOptions.add(this);
+
+            // Подсвечиваем выбранный ответ
+            if (isCorrect) {
+              this.classList.add('correct');
+              correctAnswered = true;
+
+              // Отключаем все варианты
+              document.querySelectorAll('.password-option').forEach(opt => {
+                opt.classList.add('selected');
+              });
+
+              // Показываем стрелку через небольшую задержку
+              setTimeout(() => {
+                document.getElementById('next-arrow').style.display = 'block';
+              }, 3000); // Даем время прочитать советы
+            } else {
+              this.classList.add('incorrect');
+              this.classList.add('selected'); // Отключаем только неправильный ответ
+            }
+
+            // Показываем обратную связь
+            setTimeout(() => {
+              showFeedback(
+                isCorrect ? '🎉 Правильно!' : '❌ Неправильно!',
+                feedback,
+                isCorrect
+              );
+            }, 1000);
+          });
+        });
+
+        function showFeedback(title, text, isCorrect) {
+          document.getElementById('feedbackTitle').textContent = title;
+          document.getElementById('feedbackText').textContent = text;
+
+          // Показываем советы только при правильном ответе
+          if (isCorrect) {
+            document.getElementById('passwordTips').style.display = 'block';
+          }
+
+          document.getElementById('feedbackModal').classList.add('active');
+          document.getElementById('feedbackOverlay').classList.add('active');
+        }
+
+        function closeFeedback() {
+          document.getElementById('feedbackModal').classList.remove('active');
+          document.getElementById('feedbackOverlay').classList.remove('active');
+          document.getElementById('passwordTips').style.display = 'none';
+        }
+
+        document
+          .getElementById('closeFeedback')
+          .addEventListener('click', closeFeedback);
+        document
+          .getElementById('feedbackOverlay')
+          .addEventListener('click', closeFeedback);
+      });
+    </script>
+    <script src="js/video-modal.js"></script>
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5806.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

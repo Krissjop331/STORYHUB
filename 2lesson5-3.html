@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - 6 класс: Игра "Программы"</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="index.html">5 класс</button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html">Урок 2. Бит и Байт</li>
+              <li data-href="2lesson3.html">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html" class="active">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <div class="software-game">
+              <h2>🎮 Игра: Типы программ</h2>
+              <p>Определи к какому типу относится каждая программа!</p>
+
+              <div class="game-container">
+                <img
+                  src="images/Video5_4.png"
+                  alt="Компьютер с программами"
+                  class="game-bg"
+                />
+
+                <div class="game-grid">
+                  <div class="game-item" data-type="system" data-name="Windows">
+                    <img src="images/game1.png" alt="Операционная система" />
+                    <div class="item-label">Windows</div>
+                  </div>
+
+                  <div
+                    class="game-item"
+                    data-type="application"
+                    data-name="Word"
+                  >
+                    <img src="images/game2.png" alt="Текстовый редактор" />
+                    <div class="item-label">Microsoft Word</div>
+                  </div>
+
+                  <div
+                    class="game-item"
+                    data-type="application"
+                    data-name="Chrome"
+                  >
+                    <img src="images/game3.png" alt="Браузер" />
+                    <div class="item-label">Google Chrome</div>
+                  </div>
+
+                  <div
+                    class="game-item"
+                    data-type="system"
+                    data-name="Antivirus"
+                  >
+                    <img src="images/game4.png" alt="Антивирус" />
+                    <div class="item-label">Антивирус</div>
+                  </div>
+
+                  <div
+                    class="game-item"
+                    data-type="application"
+                    data-name="Photoshop"
+                  >
+                    <img src="images/game5.png" alt="Графический редактор" />
+                    <div class="item-label">Photoshop</div>
+                  </div>
+
+                  <div
+                    class="game-item"
+                    data-type="application"
+                    data-name="Game"
+                  >
+                    <img src="images/game6.png" alt="Игра" />
+                    <div class="item-label">Игра</div>
+                  </div>
+                </div>
+
+                <div class="categories">
+                  <div class="category-box" id="system-box">
+                    <h3>🔧 Системные программы</h3>
+                    <p>Управляют работой компьютера</p>
+                    <div class="drop-zone" data-category="system"></div>
+                  </div>
+
+                  <div class="category-box" id="application-box">
+                    <h3>📱 Прикладные программы</h3>
+                    <p>Решают пользовательские задачи</p>
+                    <div class="drop-zone" data-category="application"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="game-controls">
+                <button id="check-game" class="check-btn">Проверить</button>
+                <button id="reset-game" class="reset-btn">Сбросить</button>
+              </div>
+
+              <div class="game-result" id="gameResult" style="display: none">
+                <h3>🎉 Отлично!</h3>
+                <p>Ты правильно распределил все программы по категориям!</p>
+              </div>
+            </div>
+
+            <img
+              src="images/arrow.png"
+              alt="Далее"
+              class="arrow"
+              id="next-arrow"
+              style="display: none"
+            />
+            <img
+              src="images/arrow.png"
+              alt="Назад"
+              class="arrow-back"
+              id="back-arrow"
+              title="Вернуться к предыдущей странице"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .software-game {
+        padding: 20px;
+        text-align: center;
+        background: white;
+        border-radius: 15px;
+        margin: 10px;
+        position: relative;
+      }
+
+      .software-game h2 {
+        color: #4d36db;
+        margin-bottom: 10px;
+        font-size: 22px;
+      }
+
+      .software-game p {
+        margin-bottom: 20px;
+        color: #666;
+        font-size: 16px;
+      }
+
+      .game-container {
+        position: relative;
+        min-height: 400px;
+      }
+
+      .game-bg {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 200px;
+        opacity: 0.3;
+        z-index: 1;
+      }
+
+      .game-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin: 20px 0;
+        z-index: 2;
+        position: relative;
+      }
+
+      .game-item {
+        background: white;
+        border: 2px solid #4d36db;
+        border-radius: 10px;
+        padding: 10px;
+        cursor: grab;
+        transition: all 0.3s ease;
+        user-select: none;
+        min-height: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .game-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(77, 54, 219, 0.3);
+      }
+
+      .game-item.dragging {
+        opacity: 0.5;
+        transform: rotate(5deg);
+        cursor: grabbing;
+      }
+
+      .game-item img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        margin-bottom: 5px;
+      }
+
+      .item-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .categories {
+        display: flex;
+        gap: 20px;
+        margin-top: 30px;
+        justify-content: center;
+      }
+
+      .category-box {
+        background: #f8f9fa;
+        border: 2px dashed #4d36db;
+        border-radius: 15px;
+        padding: 15px;
+        width: 250px;
+        min-height: 120px;
+      }
+
+      .category-box h3 {
+        color: #4d36db;
+        margin-bottom: 5px;
+        font-size: 16px;
+      }
+
+      .category-box p {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .drop-zone {
+        min-height: 60px;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        padding: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .drop-zone.drag-over {
+        border-color: #4d36db;
+        background-color: rgba(77, 54, 219, 0.1);
+      }
+
+      .drop-zone .game-item {
+        width: calc(50% - 5px);
+        min-height: 60px;
+        font-size: 10px;
+      }
+
+      .drop-zone .game-item img {
+        width: 30px;
+        height: 30px;
+      }
+
+      .game-controls {
+        margin: 20px 0;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .check-btn,
+      .reset-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      .check-btn {
+        background: #4d36db;
+        color: white;
+      }
+
+      .check-btn:hover {
+        background: #3626aa;
+      }
+
+      .reset-btn {
+        background: #6c757d;
+        color: white;
+      }
+
+      .reset-btn:hover {
+        background: #545b62;
+      }
+
+      .game-result {
+        background: #d4edda;
+        color: #155724;
+        padding: 20px;
+        border-radius: 10px;
+        border: 2px solid #28a745;
+        margin-top: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .game-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+        }
+
+        .categories {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .category-box {
+          width: 100%;
+          max-width: 300px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        let draggedElement = null;
+        let gameCompleted = false;
+
+        // Добавляем drag and drop functionality
+        const gameItems = document.querySelectorAll('.game-item');
+        const dropZones = document.querySelectorAll('.drop-zone');
+
+        gameItems.forEach(item => {
+          item.draggable = true;
+
+          item.addEventListener('dragstart', function (e) {
+            draggedElement = this;
+            this.classList.add('dragging');
+          });
+
+          item.addEventListener('dragend', function (e) {
+            this.classList.remove('dragging');
+            draggedElement = null;
+          });
+        });
+
+        dropZones.forEach(zone => {
+          zone.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            this.classList.add('drag-over');
+          });
+
+          zone.addEventListener('dragleave', function (e) {
+            this.classList.remove('drag-over');
+          });
+
+          zone.addEventListener('drop', function (e) {
+            e.preventDefault();
+            this.classList.remove('drag-over');
+
+            if (draggedElement) {
+              this.appendChild(draggedElement);
+            }
+          });
+        });
+
+        // Проверка правильности
+        document
+          .getElementById('check-game')
+          .addEventListener('click', function () {
+            const systemZone = document.querySelector(
+              '[data-category="system"]'
+            );
+            const applicationZone = document.querySelector(
+              '[data-category="application"]'
+            );
+
+            const systemItems = systemZone.querySelectorAll('.game-item');
+            const applicationItems =
+              applicationZone.querySelectorAll('.game-item');
+
+            let correct = 0;
+            let total = 0;
+
+            // Проверяем системные программы
+            systemItems.forEach(item => {
+              total++;
+              if (item.dataset.type === 'system') {
+                correct++;
+                item.style.border = '2px solid #28a745';
+              } else {
+                item.style.border = '2px solid #dc3545';
+              }
+            });
+
+            // Проверяем прикладные программы
+            applicationItems.forEach(item => {
+              total++;
+              if (item.dataset.type === 'application') {
+                correct++;
+                item.style.border = '2px solid #28a745';
+              } else {
+                item.style.border = '2px solid #dc3545';
+              }
+            });
+
+            if (correct === 6 && total === 6) {
+              gameCompleted = true;
+              document.getElementById('gameResult').style.display = 'block';
+              document.getElementById('next-arrow').style.display = 'block';
+              this.textContent = 'Игра пройдена!';
+              this.disabled = true;
+            } else {
+              alert(`Правильно: ${correct} из ${total}. Попробуй еще раз!`);
+            }
+          });
+
+        // Сброс игры
+        document
+          .getElementById('reset-game')
+          .addEventListener('click', function () {
+            const gameGrid = document.querySelector('.game-grid');
+            const allItems = document.querySelectorAll('.game-item');
+
+            // Возвращаем все элементы в исходную позицию
+            allItems.forEach(item => {
+              item.style.border = '2px solid #4D36DB';
+              gameGrid.appendChild(item);
+            });
+
+            gameCompleted = false;
+            document.getElementById('gameResult').style.display = 'none';
+            document.getElementById('next-arrow').style.display = 'none';
+            document.getElementById('check-game').textContent = 'Проверить';
+            document.getElementById('check-game').disabled = false;
+          });
+
+        // Touch support для мобильных устройств
+        let touchItem = null;
+
+        gameItems.forEach(item => {
+          item.addEventListener('touchstart', function (e) {
+            touchItem = this;
+            this.classList.add('dragging');
+          });
+
+          item.addEventListener('touchmove', function (e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const elementBelow = document.elementFromPoint(
+              touch.clientX,
+              touch.clientY
+            );
+
+            // Подсвечиваем drop zone
+            dropZones.forEach(zone => zone.classList.remove('drag-over'));
+            if (elementBelow && elementBelow.classList.contains('drop-zone')) {
+              elementBelow.classList.add('drag-over');
+            }
+          });
+
+          item.addEventListener('touchend', function (e) {
+            const touch = e.changedTouches[0];
+            const elementBelow = document.elementFromPoint(
+              touch.clientX,
+              touch.clientY
+            );
+
+            if (elementBelow && elementBelow.classList.contains('drop-zone')) {
+              elementBelow.appendChild(this);
+            }
+
+            this.classList.remove('dragging');
+            dropZones.forEach(zone => zone.classList.remove('drag-over'));
+            touchItem = null;
+          });
+        });
+      });
+    </script>
+    <script src="js/video-modal.js"></script>
+    <!-- Подключаем видео-плеер -->
+    <script src="js/main.js"></script>
+
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5785.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

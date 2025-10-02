@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - 6 класс: Двоичная игра</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="index.html">5 класс</button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html" class="active">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html">Урок 2. Бит и Байт</li>
+              <li data-href="2lesson3.html">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <div class="binary-game-container">
+              <h2>🎮 Двоичная игра</h2>
+              <p>Преврати десятичное число в двоичное!</p>
+
+              <div class="game-area">
+                <div class="challenge">
+                  <h3>
+                    Задание: Преврати число <span id="target-number">5</span> в
+                    двоичную систему
+                  </h3>
+
+                  <div class="binary-builder">
+                    <div class="bit-position">
+                      <div class="bit-value">8</div>
+                      <button
+                        class="bit-button"
+                        data-value="8"
+                        data-position="3"
+                      >
+                        0
+                      </button>
+                    </div>
+                    <div class="bit-position">
+                      <div class="bit-value">4</div>
+                      <button
+                        class="bit-button"
+                        data-value="4"
+                        data-position="2"
+                      >
+                        0
+                      </button>
+                    </div>
+                    <div class="bit-position">
+                      <div class="bit-value">2</div>
+                      <button
+                        class="bit-button"
+                        data-value="2"
+                        data-position="1"
+                      >
+                        0
+                      </button>
+                    </div>
+                    <div class="bit-position">
+                      <div class="bit-value">1</div>
+                      <button
+                        class="bit-button"
+                        data-value="1"
+                        data-position="0"
+                      >
+                        0
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="result-area">
+                    <p>Двоичное число: <span id="binary-result">0000</span></p>
+                    <p>
+                      Десятичное значение: <span id="decimal-result">0</span>
+                    </p>
+                  </div>
+
+                  <button id="check-answer" class="check-btn">
+                    Проверить ответ
+                  </button>
+                  <button
+                    id="next-challenge"
+                    class="next-btn"
+                    style="display: none"
+                  >
+                    Следующее задание
+                  </button>
+                </div>
+
+                <div class="score-area">
+                  <p>Правильных ответов: <span id="score">0</span>/5</p>
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <img
+              src="images/arrow.png"
+              alt="Далее"
+              class="arrow"
+              id="next-arrow"
+              style="display: none"
+            />
+            <img
+              src="images/arrow.png"
+              alt="Назад"
+              class="arrow-back"
+              id="back-arrow"
+              title="Вернуться к предыдущей странице"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div id="resultModal" class="result-modal">
+      <div class="result-content">
+        <h3 id="resultTitle">Результат</h3>
+        <p id="resultText">Текст результата</p>
+        <button id="closeResult" class="close-result-btn">Продолжить</button>
+      </div>
+    </div>
+
+    <div id="resultOverlay" class="result-overlay"></div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .binary-game-container {
+        padding: 30px;
+        text-align: center;
+        background: white;
+        border-radius: 15px;
+        margin: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .binary-game-container h2 {
+        color: #4d36db;
+        margin-bottom: 10px;
+        font-size: 24px;
+      }
+
+      .binary-game-container p {
+        margin-bottom: 30px;
+        font-size: 16px;
+        color: #666;
+      }
+
+      .challenge h3 {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 20px;
+      }
+
+      .challenge h3 span {
+        color: #4d36db;
+        font-weight: bold;
+        font-size: 24px;
+      }
+
+      .binary-builder {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+
+      .bit-position {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .bit-value {
+        background: #f8f9fa;
+        color: #4d36db;
+        padding: 10px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 18px;
+        min-width: 60px;
+      }
+
+      .bit-button {
+        background: #e9ecef;
+        border: 2px solid #4d36db;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: #333;
+      }
+
+      .bit-button:hover {
+        transform: scale(1.1);
+      }
+
+      .bit-button.active {
+        background: #4d36db;
+        color: white;
+      }
+
+      .result-area {
+        margin: 30px 0;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+      }
+
+      .result-area p {
+        margin: 5px 0;
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      .result-area span {
+        color: #4d36db;
+        font-weight: bold;
+      }
+
+      .check-btn,
+      .next-btn {
+        padding: 12px 30px;
+        background: #4d36db;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 5px;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      .check-btn:hover,
+      .next-btn:hover {
+        background: #3626aa;
+        transform: translateY(-2px);
+      }
+
+      .next-btn {
+        background: #28a745;
+      }
+
+      .next-btn:hover {
+        background: #218838;
+      }
+
+      .score-area {
+        margin-top: 30px;
+        padding: 20px;
+        background: #e8f5e8;
+        border-radius: 10px;
+      }
+
+      .score-area p {
+        margin-bottom: 15px;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 20px;
+        background: #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4d36db, #6b46c1);
+        width: 0%;
+        transition: width 0.5s ease;
+      }
+
+      .result-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        z-index: 1001;
+        max-width: 400px;
+        width: 90%;
+        display: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .result-modal.active {
+        display: block;
+      }
+
+      .result-content h3 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 20px;
+        text-align: center;
+      }
+
+      .result-content p {
+        margin-bottom: 20px;
+        font-size: 16px;
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      .close-result-btn {
+        display: block;
+        margin: 0 auto;
+        padding: 10px 30px;
+        background: #4d36db;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+      }
+
+      .close-result-btn:hover {
+        background: #3626aa;
+      }
+
+      .result-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        display: none;
+      }
+
+      .result-overlay.active {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .binary-game-container {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .binary-builder {
+          gap: 15px;
+        }
+
+        .bit-button {
+          width: 50px;
+          height: 50px;
+          font-size: 20px;
+        }
+
+        .bit-value {
+          min-width: 50px;
+          font-size: 16px;
+          padding: 8px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        let currentChallenge = 0;
+        let score = 0;
+        let currentTarget = 5;
+        let currentBinary = [0, 0, 0, 0]; // 4-битное число
+
+        const challenges = [5, 3, 7, 2, 6]; // Числа для преобразования
+
+        const bitButtons = document.querySelectorAll('.bit-button');
+        const targetNumber = document.getElementById('target-number');
+        const binaryResult = document.getElementById('binary-result');
+        const decimalResult = document.getElementById('decimal-result');
+        const checkBtn = document.getElementById('check-answer');
+        const nextBtn = document.getElementById('next-challenge');
+        const scoreSpan = document.getElementById('score');
+        const progressFill = document.getElementById('progress-fill');
+
+        // Инициализация
+        function initGame() {
+          currentTarget = challenges[currentChallenge];
+          targetNumber.textContent = currentTarget;
+          resetBinary();
+          updateDisplay();
+        }
+
+        function resetBinary() {
+          currentBinary = [0, 0, 0, 0];
+          bitButtons.forEach((btn, index) => {
+            btn.textContent = '0';
+            btn.classList.remove('active');
+          });
+        }
+
+        function updateDisplay() {
+          binaryResult.textContent = currentBinary.join('');
+
+          // Вычисляем десятичное значение
+          let decimal = 0;
+          currentBinary.forEach((bit, index) => {
+            if (bit === 1) {
+              decimal += Math.pow(2, 3 - index);
+            }
+          });
+
+          decimalResult.textContent = decimal;
+        }
+
+        // Обработчики кликов по битам
+        bitButtons.forEach((btn, index) => {
+          btn.addEventListener('click', function () {
+            const position = parseInt(this.dataset.position);
+
+            // Переключаем бит
+            currentBinary[3 - position] =
+              currentBinary[3 - position] === 0 ? 1 : 0;
+
+            // Обновляем внешний вид кнопки
+            if (currentBinary[3 - position] === 1) {
+              this.textContent = '1';
+              this.classList.add('active');
+            } else {
+              this.textContent = '0';
+              this.classList.remove('active');
+            }
+
+            updateDisplay();
+          });
+        });
+
+        // Проверка ответа
+        checkBtn.addEventListener('click', function () {
+          let decimal = 0;
+          currentBinary.forEach((bit, index) => {
+            if (bit === 1) {
+              decimal += Math.pow(2, 3 - index);
+            }
+          });
+
+          if (decimal === currentTarget) {
+            score++;
+            showResult(
+              '🎉 Правильно!',
+              `Отлично! ${currentTarget} в двоичной системе действительно ${currentBinary.join(
+                ''
+              )}`
+            );
+            this.style.display = 'none';
+            nextBtn.style.display = 'inline-block';
+          } else {
+            showResult(
+              '❌ Неправильно',
+              `Попробуй ещё раз. Твой ответ ${currentBinary.join(
+                ''
+              )} = ${decimal}, а нужно ${currentTarget}`
+            );
+          }
+
+          updateScore();
+        });
+
+        // Следующее задание
+        nextBtn.addEventListener('click', function () {
+          currentChallenge++;
+
+          if (currentChallenge >= challenges.length) {
+            // Игра закончена
+            if (score >= 4) {
+              showResult(
+                '🏆 Поздравляем!',
+                'Ты отлично освоил двоичную систему! Можешь переходить дальше.'
+              );
+              document.getElementById('next-arrow').style.display = 'block';
+            } else {
+              showResult(
+                '📚 Нужно потренироваться',
+                'Попробуй ещё раз! Двоичная система требует практики.'
+              );
+              // Перезапускаем игру
+              currentChallenge = 0;
+              score = 0;
+            }
+          } else {
+            initGame();
+            checkBtn.style.display = 'inline-block';
+            this.style.display = 'none';
+          }
+        });
+
+        function updateScore() {
+          scoreSpan.textContent = score;
+          const progress = (score / challenges.length) * 100;
+          progressFill.style.width = progress + '%';
+        }
+
+        function showResult(title, text) {
+          document.getElementById('resultTitle').textContent = title;
+          document.getElementById('resultText').textContent = text;
+          document.getElementById('resultModal').classList.add('active');
+          document.getElementById('resultOverlay').classList.add('active');
+        }
+
+        function closeResult() {
+          document.getElementById('resultModal').classList.remove('active');
+          document.getElementById('resultOverlay').classList.remove('active');
+        }
+
+        document
+          .getElementById('closeResult')
+          .addEventListener('click', closeResult);
+        document
+          .getElementById('resultOverlay')
+          .addEventListener('click', closeResult);
+
+        // Запускаем игру
+        initGame();
+      });
+    </script>
+    <script src="js/video-modal.js"></script>
+    <!-- Подключаем видео-плеер -->
+    <script src="js/main.js"></script>
+
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5789.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

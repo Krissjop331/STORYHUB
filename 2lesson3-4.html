@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - 6 класс: Задание по преобразованию</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html">Урок 2. Бит и Байт</li>
+              <li data-href="2lesson3.html" class="active">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <div class="conversion-challenge">
+              <div class="challenge-header">
+                <div class="header-content">
+                  <h2>🎯 Практическое задание</h2>
+                  <p>Преобразование между системами счисления</p>
+                </div>
+                <div class="challenge-image"></div>
+              </div>
+
+              <div class="task-container">
+                <div class="task-card">
+                  <div class="task-title">
+                    <span class="task-icon">🔢</span>
+                    <h3>Преобразуй 5₁₀ в двоичную систему</h3>
+                  </div>
+
+                  <div class="task-description">
+                    <p>
+                      Введи результат преобразования числа <strong>5</strong> из
+                      десятичной системы в двоичную:
+                    </p>
+                  </div>
+
+                  <div class="input-section">
+                    <div class="input-wrapper">
+                      <label for="binaryInput">Двоичное число:</label>
+                      <input
+                        type="text"
+                        id="binaryInput"
+                        placeholder="только 0 и 1"
+                        maxlength="8"
+                        class="binary-input"
+                      />
+                      <button id="checkBtn" class="check-button">
+                        <span class="check-icon">✓</span>
+                        Проверить
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="hint-section">
+                    <button id="hintBtn" class="hint-toggle">
+                      <span class="hint-icon">💡</span>
+                      Показать подсказку
+                    </button>
+
+                    <div
+                      id="hintContent"
+                      class="hint-content"
+                      style="display: none"
+                    >
+                      <div class="hint-steps">
+                        <h4>Алгоритм преобразования:</h4>
+                        <div class="step">
+                          <span class="step-number">1</span>
+                          <span class="step-text"
+                            >5 ÷ 2 = 2 (остаток <strong>1</strong>)</span
+                          >
+                        </div>
+                        <div class="step">
+                          <span class="step-number">2</span>
+                          <span class="step-text"
+                            >2 ÷ 2 = 1 (остаток <strong>0</strong>)</span
+                          >
+                        </div>
+                        <div class="step">
+                          <span class="step-number">3</span>
+                          <span class="step-text"
+                            >1 ÷ 2 = 0 (остаток <strong>1</strong>)</span
+                          >
+                        </div>
+                        <div class="result-hint">
+                          <span class="arrow-up">↑</span>
+
+                          <p>
+                            Читаем остатки снизу вверх: <strong>101</strong>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="task-status" id="taskStatus">
+                    <div class="status-waiting">
+                      <span class="status-icon">⏳</span>
+                      <span>Ждем твой ответ...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Стрелка появляется после выполнения задания -->
+              <div
+                class="navigation-arrow"
+                id="navigationArrow"
+                style="display: none"
+              >
+                <img src="images/arrow.png" alt="Далее" class="arrow" />
+              </div>
+              <img
+                src="images/arrow.png"
+                alt="Назад"
+                class="arrow-back"
+                id="back-arrow"
+                style="bottom: 60px"
+                title="Вернуться к предыдущей странице"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div id="resultModal" class="result-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="resultTitle">Результат</h3>
+        </div>
+        <div class="modal-body">
+          <p id="resultText">Текст результата</p>
+        </div>
+        <div class="modal-footer">
+          <button id="closeResult" class="modal-button">Продолжить</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="resultOverlay" class="modal-overlay"></div>
+
+    <style>
+      .conversion-challenge {
+        padding: 40px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 20px;
+        margin: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .challenge-header {
+        display: flex;
+        gap: 40px;
+        align-items: center;
+        margin-bottom: 40px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #e9ecef;
+      }
+
+      .header-content h2 {
+        color: #4d36db;
+        font-size: 32px;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+
+      .header-content p {
+        color: #666;
+        font-size: 18px;
+        margin: 0;
+      }
+
+      .challenge-image {
+        flex-shrink: 0;
+      }
+
+      .task-image {
+        max-width: 200px;
+        height: auto;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .task-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .task-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 3px solid #4d36db;
+        max-width: 600px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .task-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #4d36db, #6b46c1, #8b5cf6);
+      }
+
+      .task-title {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .task-icon {
+        font-size: 28px;
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .task-title h3 {
+        color: #4d36db;
+        font-size: 24px;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .task-description {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .task-description p {
+        font-size: 18px;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .input-section {
+        margin-bottom: 30px;
+      }
+
+      .input-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .input-wrapper label {
+        font-weight: 600;
+        color: #4d36db;
+        font-size: 16px;
+      }
+
+      .binary-input {
+        padding: 15px 20px;
+        font-size: 20px;
+        border: 3px solid #4d36db;
+        border-radius: 12px;
+        width: 200px;
+        text-align: center;
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif;
+        background: #f8f9fa;
+        transition: all 0.3s ease;
+      }
+
+      .binary-input:focus {
+        outline: none;
+        border-color: #6b46c1;
+        box-shadow: 0 0 15px rgba(77, 54, 219, 0.3);
+        background: white;
+        transform: scale(1.02);
+      }
+
+      .binary-input:disabled {
+        background: #e9ecef;
+        color: #6c757d;
+        cursor: not-allowed;
+      }
+
+      .check-button {
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 15px rgba(77, 54, 219, 0.3);
+      }
+
+      .check-button:hover:not(:disabled) {
+        background: linear-gradient(135deg, #3626aa, #553c9a);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(77, 54, 219, 0.4);
+      }
+
+      .check-button:disabled {
+        background: #28a745;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .check-icon {
+        font-size: 18px;
+      }
+
+      .hint-section {
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .hint-toggle {
+        padding: 12px 24px;
+        background: #17a2b8;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 auto;
+        transition: all 0.3s ease;
+      }
+
+      .hint-toggle:hover {
+        background: #138496;
+        transform: translateY(-1px);
+      }
+
+      .hint-icon {
+        font-size: 16px;
+      }
+
+      .hint-content {
+        background: linear-gradient(135deg, #e8f4fd, #d4edda);
+        padding: 25px;
+        border-radius: 15px;
+        margin-top: 15px;
+        border: 2px solid #17a2b8;
+        text-align: left;
+        animation: slideDown 0.3s ease-out;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hint-steps h4 {
+        color: #17a2b8;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 18px;
+      }
+
+      .step {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 12px;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
+      }
+
+      .step-number {
+        background: #17a2b8;
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+
+      .step-text {
+        font-size: 14px;
+        color: #333;
+      }
+
+      .result-hint {
+        margin-top: 15px;
+        padding: 15px;
+        background: rgba(40, 167, 69, 0.1);
+        border-radius: 10px;
+        border-left: 4px solid #28a745;
+        text-align: center;
+      }
+
+      .arrow-up {
+        font-size: 20px;
+        color: #28a745;
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .result-hint p {
+        margin: 0;
+        font-weight: 600;
+        color: #28a745;
+      }
+
+      .task-status {
+        text-align: center;
+        padding: 20px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .status-waiting {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: #6c757d;
+        font-weight: 500;
+      }
+
+      .status-icon {
+        font-size: 20px;
+      }
+
+      .task-status.success {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        border: 2px solid #28a745;
+        color: #155724;
+      }
+
+      .task-status.error {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        border: 2px solid #dc3545;
+        color: #721c24;
+      }
+
+      .navigation-arrow {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        animation: bounce 2s infinite;
+      }
+
+      .arrow {
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+      }
+
+      .arrow:hover {
+        transform: scale(1.1);
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      /* Modal Styles */
+      .result-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1001;
+        max-width: 450px;
+        width: 90%;
+        display: none;
+        animation: modalSlideIn 0.3s ease-out;
+      }
+
+      .result-modal.active {
+        display: block;
+      }
+
+      @keyframes modalSlideIn {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -60%) scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        border: 3px solid #4d36db;
+      }
+
+      .modal-header {
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        color: white;
+        padding: 25px;
+        text-align: center;
+      }
+
+      .modal-header h3 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 700;
+      }
+
+      .modal-body {
+        padding: 30px;
+        text-align: center;
+      }
+
+      .modal-body p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+      }
+
+      .modal-footer {
+        padding: 20px 30px;
+        background: #f8f9fa;
+        text-align: center;
+      }
+
+      .modal-button {
+        padding: 12px 30px;
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+
+      .modal-button:hover {
+        background: linear-gradient(135deg, #3626aa, #553c9a);
+        transform: translateY(-1px);
+      }
+
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        display: none;
+        backdrop-filter: blur(3px);
+      }
+
+      .modal-overlay.active {
+        display: block;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .conversion-challenge {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .challenge-header {
+          flex-direction: column;
+          gap: 20px;
+          text-align: center;
+        }
+
+        .header-content h2 {
+          font-size: 28px;
+        }
+
+        .task-card {
+          padding: 25px;
+        }
+
+        .task-title {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .task-title h3 {
+          font-size: 20px;
+        }
+
+        .binary-input {
+          width: 100%;
+          max-width: 250px;
+        }
+
+        .input-wrapper {
+          width: 100%;
+        }
+
+        .navigation-arrow {
+          bottom: 15px;
+          right: 15px;
+        }
+
+        .arrow {
+          width: 50px;
+          height: auto;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const binaryInput = document.getElementById('binaryInput');
+        const checkBtn = document.getElementById('checkBtn');
+        const hintBtn = document.getElementById('hintBtn');
+        const hintContent = document.getElementById('hintContent');
+        const taskStatus = document.getElementById('taskStatus');
+        const navigationArrow = document.getElementById('navigationArrow');
+
+        let taskCompleted = false;
+        let hintShown = false;
+
+        // Валидация ввода - только 0 и 1
+        binaryInput.addEventListener('input', function (e) {
+          e.target.value = e.target.value.replace(/[^01]/g, '');
+
+          // Анимация при вводе
+          if (e.target.value) {
+            e.target.style.borderColor = '#6b46c1';
+          } else {
+            e.target.style.borderColor = '#4d36db';
+          }
+        });
+
+        // Показать/скрыть подсказку
+        hintBtn.addEventListener('click', function () {
+          if (!hintShown) {
+            hintContent.style.display = 'block';
+            hintBtn.innerHTML =
+              '<span class="hint-icon">🙈</span> Скрыть подсказку';
+            hintShown = true;
+          } else {
+            hintContent.style.display = 'none';
+            hintBtn.innerHTML =
+              '<span class="hint-icon">💡</span> Показать подсказку';
+            hintShown = false;
+          }
+        });
+
+        // Проверка ответа
+        checkBtn.addEventListener('click', function () {
+          const input = binaryInput.value.trim();
+
+          if (!input) {
+            showResult('❌ Ошибка', 'Введи двоичное число!');
+            updateTaskStatus('error', '❌ Введи ответ');
+            return;
+          }
+
+          if (input === '101') {
+            taskCompleted = true;
+            showResult(
+              '🎉 Правильно!',
+              'Отлично! 5₁₀ = 101₂. Теперь ты можешь перейти к следующему заданию.'
+            );
+
+            // Обновляем статус задания
+            updateTaskStatus('success', '✅ Задание выполнено!');
+
+            // Отключаем элементы управления
+            checkBtn.disabled = true;
+            checkBtn.innerHTML =
+              '<span class="check-icon">✅</span> Выполнено!';
+            binaryInput.disabled = true;
+          } else {
+            // Подсказка для неправильного ответа
+            const decimal = parseInt(input, 2);
+            showResult(
+              '❌ Попробуй еще раз',
+              `Твой ответ ${input}₂ = ${decimal}₁₀. Нужно получить 5₁₀. Попробуй еще раз!`
+            );
+            updateTaskStatus('error', `❌ ${input}₂ = ${decimal}₁₀ ≠ 5₁₀`);
+          }
+        });
+
+        // Enter для отправки
+        binaryInput.addEventListener('keypress', function (e) {
+          if (e.key === 'Enter') {
+            checkBtn.click();
+          }
+        });
+
+        function updateTaskStatus(type, message) {
+          taskStatus.className = `task-status ${type}`;
+          taskStatus.innerHTML = `
+            <div class="status-${
+              type === 'success'
+                ? 'success'
+                : type === 'error'
+                ? 'error'
+                : 'waiting'
+            }">
+              <span class="status-icon">${
+                type === 'success' ? '✅' : type === 'error' ? '❌' : '⏳'
+              }</span>
+              <span>${message}</span>
+            </div>
+          `;
+        }
+
+        function showResult(title, text) {
+          document.getElementById('resultTitle').textContent = title;
+          document.getElementById('resultText').textContent = text;
+          document.getElementById('resultModal').classList.add('active');
+          document.getElementById('resultOverlay').classList.add('active');
+        }
+
+        function closeResult() {
+          document.getElementById('resultModal').classList.remove('active');
+          document.getElementById('resultOverlay').classList.remove('active');
+
+          // Если задание выполнено, показываем стрелку
+          if (taskCompleted) {
+            navigationArrow.style.display = 'block';
+            console.log('Задание выполнено, стрелка показана');
+          }
+        }
+
+        // Обработчик клика по стрелке
+        navigationArrow.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (!taskCompleted) {
+            alert('Сначала выполни задание!');
+            return;
+          }
+
+          console.log('Переход к следующей странице...');
+          window.location.href = '2lesson3-3.html';
+        });
+
+        // Обработчики модального окна
+        document
+          .getElementById('closeResult')
+          .addEventListener('click', closeResult);
+        document
+          .getElementById('resultOverlay')
+          .addEventListener('click', closeResult);
+
+        // Анимация при загрузке страницы
+        setTimeout(() => {
+          document.querySelector('.task-card').style.transform =
+            'translateY(0)';
+          document.querySelector('.task-card').style.opacity = '1';
+        }, 100);
+      });
+    </script>
+    <script src="js/video-modal.js"></script>
+    <!-- Подключаем видео-плеер -->
+    <script src="js/main.js"></script>
+
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5796.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

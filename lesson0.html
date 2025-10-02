@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - Введение</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <!-- Скрипт авторизации должен быть первым -->
+    <script>
+      // Утилиты для работы с sessionStorage (копируем из index.html)
+      const SessionUtils = {
+        set: function (name, value) {
+          try {
+            sessionStorage.setItem(name, value);
+            return true;
+          } catch (error) {
+            console.error('Ошибка записи в sessionStorage:', error);
+            return false;
+          }
+        },
+
+        get: function (name) {
+          try {
+            return sessionStorage.getItem(name);
+          } catch (error) {
+            console.error('Ошибка чтения из sessionStorage:', error);
+            return null;
+          }
+        },
+
+        remove: function (name) {
+          try {
+            sessionStorage.removeItem(name);
+            return true;
+          } catch (error) {
+            console.error('Ошибка удаления из sessionStorage:', error);
+            return false;
+          }
+        },
+
+        clear: function () {
+          try {
+            sessionStorage.clear();
+            return true;
+          } catch (error) {
+            console.error('Ошибка очистки sessionStorage:', error);
+            return false;
+          }
+        },
+      };
+
+      // Константы
+      const AUTH_TOKEN = 'STORYHUB_auth_token';
+      const USER_DATA = 'STORYHUB_user_data';
+      const SESSION_START = 'STORYHUB_session_start';
+
+      // Проверка валидности сессионного токена
+      function validateSessionToken(token) {
+        if (!token) {
+          console.log('Токен отсутствует');
+          return false;
+        }
+
+        try {
+          const tokenData = JSON.parse(atob(token));
+
+          if (
+            !tokenData.sessionId ||
+            !tokenData.username ||
+            !tokenData.createdAt
+          ) {
+            console.log('Токен имеет неверную структуру');
+            return false;
+          }
+
+          const sessionStart = SessionUtils.get(SESSION_START);
+          if (!sessionStart || tokenData.createdAt < sessionStart) {
+            console.log('Токен создан в предыдущей сессии браузера');
+            return false;
+          }
+
+          return true;
+        } catch (error) {
+          console.error('Ошибка валидации токена:', error);
+          return false;
+        }
+      }
+
+      // Очистка сессии
+      function clearSession() {
+        SessionUtils.remove(AUTH_TOKEN);
+        SessionUtils.remove(USER_DATA);
+        console.log('Сессия очищена');
+      }
+
+      // Проверка авторизации
+      function requireAuth() {
+        const token = SessionUtils.get(AUTH_TOKEN);
+        const userData = SessionUtils.get(USER_DATA);
+
+        console.log('Проверка авторизации на странице lesson0.html...');
+
+        if (!token || !userData || !validateSessionToken(token)) {
+          console.log(
+            'Пользователь не авторизован, перенаправление на страницу входа'
+          );
+          clearSession();
+          window.location.href = 'index.html';
+          return false;
+        }
+
+        console.log('Авторизация подтверждена');
+        return true;
+      }
+
+      // Получение данных текущего пользователя
+      function getCurrentUser() {
+        const token = SessionUtils.get(AUTH_TOKEN);
+        const userData = SessionUtils.get(USER_DATA);
+
+        if (token && userData && validateSessionToken(token)) {
+          try {
+            return JSON.parse(userData);
+          } catch (error) {
+            console.error('Ошибка получения данных пользователя:', error);
+            return null;
+          }
+        }
+        return null;
+      }
+
+      // Выход из системы
+      function logout() {
+        console.log('Выход из системы...');
+        clearSession();
+        window.location.href = 'index.html';
+      }
+
+      // КРИТИЧНО: Проверяем авторизацию сразу при загрузке скрипта
+      if (!requireAuth()) {
+        // Если пользователь не авторизован, скрываем страницу
+        document.documentElement.style.display = 'none';
+      }
+    </script>
+
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn active" data-href="lesson0.html">
+                5 класс
+              </button>
+              <button class="switch-btn" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="lesson0.html" class="active">Введение</li>
+              <li data-href="lesson1.html">
+                Урок 1. Базовые правила безопасности в кабинете информатики
+              </li>
+              <li data-href="lesson2.html">Урок 2. Эргономика</li>
+              <li data-href="lesson3.html">
+                Урок 3. Кибер-гигиена и защита личных данных
+              </li>
+              <li data-href="lesson4.html">
+                Урок 4. Как работают компьютеры: Аппаратное обеспечение
+              </li>
+              <li data-href="lesson5.html">
+                Урок 5. Как работают компьютеры: Программное обеспечение
+              </li>
+              <li data-href="lesson6.html">Урок 6. Алгоритмы</li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <img
+              src="images/Video0_1.png"
+              alt="Введение"
+              class="content_games_img"
+            />
+            <img src="images/arrow.png" alt="Далее" class="arrow" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно подтверждения выхода -->
+    <div id="logoutModal" class="logout-modal" style="display: none">
+      <div class="logout-modal-content">
+        <h3>Подтверждение выхода</h3>
+        <p>Вы действительно хотите выйти из системы?</p>
+        <div class="logout-modal-buttons">
+          <button id="confirmLogout" class="logout-confirm-btn">
+            Да, выйти
+          </button>
+          <button id="cancelLogout" class="logout-cancel-btn">Отмена</button>
+        </div>
+      </div>
+    </div>
+    <div id="logoutOverlay" class="logout-overlay" style="display: none"></div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      /* Стили для модального окна выхода */
+      .logout-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 9999;
+      }
+
+      .logout-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        z-index: 10000;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border: 3px solid #4d36db;
+      }
+
+      .logout-modal h3 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .logout-modal p {
+        color: #666;
+        margin-bottom: 25px;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .logout-modal-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+      }
+
+      .logout-confirm-btn,
+      .logout-cancel-btn {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 100px;
+      }
+
+      .logout-confirm-btn {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+      }
+
+      .logout-confirm-btn:hover {
+        background: linear-gradient(135deg, #c82333, #a71e2a);
+        transform: translateY(-2px);
+      }
+
+      .logout-cancel-btn {
+        background: #f8f9fa;
+        color: #4d36db;
+        border: 2px solid #4d36db;
+      }
+
+      .logout-cancel-btn:hover {
+        background: #e9ecef;
+        transform: translateY(-2px);
+      }
+
+      /* Улучшенные стили для кнопки выхода */
+      .iconexit {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: #f0f0f0;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        border: 2px solid transparent;
+      }
+
+      .iconexit:hover {
+        background-color: #dc3545;
+        color: white;
+        border-color: #dc3545;
+        transform: scale(1.1);
+      }
+
+      .nameuser {
+        font-weight: 600;
+        color: #4d36db;
+        margin-right: 15px;
+        font-size: 16px;
+      }
+
+      /* Анимация загрузки для имени пользователя */
+      .nameuser.loading {
+        color: #999;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      /* Адаптивность */
+      @media (max-width: 768px) {
+        .logout-modal {
+          padding: 20px;
+          margin: 20px;
+        }
+
+        .logout-modal-buttons {
+          flex-direction: column;
+        }
+
+        .logout-confirm-btn,
+        .logout-cancel-btn {
+          width: 100%;
+        }
+
+        .nameuser {
+          font-size: 14px;
+          margin-right: 10px;
+        }
+
+        .iconexit {
+          width: 35px;
+          height: 35px;
+          font-size: 16px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth-guard.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('🏠 Страница lesson0.html загружена');
+
+        // Еще раз проверяем авторизацию
+        if (!requireAuth()) {
+          return;
+        }
+
+        // Загружаем и отображаем данные пользователя
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+          const userNameElement = document.getElementById('userName');
+          userNameElement.textContent = currentUser.name;
+          userNameElement.classList.remove('loading');
+
+          console.log('Добро пожаловать,', currentUser.name);
+
+          // Дополнительная информация в консоль
+          console.log('Роль пользователя:', currentUser.role);
+          console.log('Класс:', currentUser.class);
+        } else {
+          console.error('Не удалось получить данные пользователя');
+          logout();
+        }
+
+        // Обработчик кнопки выхода
+        const logoutBtn = document.getElementById('logoutBtn');
+        const logoutModal = document.getElementById('logoutModal');
+        const logoutOverlay = document.getElementById('logoutOverlay');
+        const confirmLogout = document.getElementById('confirmLogout');
+        const cancelLogout = document.getElementById('cancelLogout');
+
+        // Показ модального окна выхода
+        logoutBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          logoutModal.style.display = 'block';
+          logoutOverlay.style.display = 'block';
+
+          // Анимация появления
+          setTimeout(() => {
+            logoutModal.style.animation = 'slideIn 0.3s ease-out';
+          }, 10);
+        });
+
+        // Подтверждение выхода
+        confirmLogout.addEventListener('click', function () {
+          console.log('Пользователь подтвердил выход');
+
+          // Показываем индикатор загрузки
+          confirmLogout.textContent = 'Выходим...';
+          confirmLogout.disabled = true;
+
+          // Небольшая задержка для UX
+          setTimeout(() => {
+            logout();
+          }, 500);
+        });
+
+        // Отмена выхода
+        function hideLogoutModal() {
+          logoutModal.style.display = 'none';
+          logoutOverlay.style.display = 'none';
+          confirmLogout.textContent = 'Да, выйти';
+          confirmLogout.disabled = false;
+        }
+
+        cancelLogout.addEventListener('click', hideLogoutModal);
+        logoutOverlay.addEventListener('click', hideLogoutModal);
+
+        // Закрытие модального окна по Escape
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && logoutModal.style.display === 'block') {
+            hideLogoutModal();
+          }
+        });
+
+        // Периодическая проверка авторизации (каждые 30 секунд)
+        setInterval(function () {
+          if (
+            !getCurrentUser() ||
+            !validateSessionToken(SessionUtils.get(AUTH_TOKEN))
+          ) {
+            console.log('Сессия истекла, принудительный выход');
+            alert('Ваша сессия истекла. Необходимо войти заново.');
+            logout();
+          }
+        }, 30000);
+
+        // Предупреждение при закрытии страницы (если пользователь находится в процессе обучения)
+        let hasUnsavedProgress = false;
+
+        window.addEventListener('beforeunload', function (e) {
+          if (hasUnsavedProgress) {
+            const confirmationMessage =
+              'У вас есть несохраненный прогресс. Вы уверены, что хотите покинуть страницу?';
+            e.returnValue = confirmationMessage;
+            return confirmationMessage;
+          }
+        });
+
+        console.log('✅ Система авторизации урока инициализирована');
+      });
+
+      // Глобальные функции для использования в других скриптах
+      window.logout = logout;
+      window.getCurrentUser = getCurrentUser;
+      window.requireAuth = requireAuth;
+    </script>
+    <script src="js/video-modal.js"></script>
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5780.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

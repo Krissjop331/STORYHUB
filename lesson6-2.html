@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - Урок 6: Конструктор алгоритмов</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <!-- Скрипт авторизации -->
+    <script>
+      const SessionUtils = {
+        get: function (name) {
+          try {
+            return sessionStorage.getItem(name);
+          } catch (error) {
+            return null;
+          }
+        },
+        remove: function (name) {
+          try {
+            sessionStorage.removeItem(name);
+          } catch (error) {
+            return false;
+          }
+        },
+      };
+
+      const AUTH_TOKEN = 'STORYHUB_auth_token';
+      const USER_DATA = 'STORYHUB_user_data';
+      const SESSION_START = 'STORYHUB_session_start';
+
+      function validateSessionToken(token) {
+        if (!token) return false;
+        try {
+          const tokenData = JSON.parse(atob(token));
+          if (
+            !tokenData.sessionId ||
+            !tokenData.username ||
+            !tokenData.createdAt
+          )
+            return false;
+          const sessionStart = SessionUtils.get(SESSION_START);
+          if (!sessionStart || tokenData.createdAt < sessionStart) return false;
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+
+      function requireAuth() {
+        const token = SessionUtils.get(AUTH_TOKEN);
+        const userData = SessionUtils.get(USER_DATA);
+        if (!token || !userData || !validateSessionToken(token)) {
+          SessionUtils.remove(AUTH_TOKEN);
+          SessionUtils.remove(USER_DATA);
+          window.location.href = 'index.html';
+          return false;
+        }
+        return true;
+      }
+
+      function getCurrentUser() {
+        const userData = SessionUtils.get(USER_DATA);
+        if (userData && validateSessionToken(SessionUtils.get(AUTH_TOKEN))) {
+          try {
+            return JSON.parse(userData);
+          } catch (error) {
+            return null;
+          }
+        }
+        return null;
+      }
+
+      function logout() {
+        SessionUtils.remove(AUTH_TOKEN);
+        SessionUtils.remove(USER_DATA);
+        window.location.href = 'index.html';
+      }
+
+      if (!requireAuth()) {
+        document.documentElement.style.display = 'none';
+      }
+    </script>
+
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn active" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+            <ul class="lesson-list">
+              <li data-href="lesson0.html">Введение</li>
+              <li data-href="lesson1.html">
+                Урок 1. Базовые правила безопасности в кабинете информатики
+              </li>
+              <li data-href="lesson2.html">Урок 2. Эргономика</li>
+              <li data-href="lesson3.html">
+                Урок 3. Кибер-гигиена и защита личных данных
+              </li>
+              <li data-href="lesson4.html">
+                Урок 4. Как работают компьютеры: Аппаратное обеспечение
+              </li>
+              <li data-href="lesson5.html">
+                Урок 5. Как работают компьютеры: Программное обеспечение
+              </li>
+              <li data-href="lesson6.html" class="active">Урок 6. Алгоритмы</li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <div class="algorithm-builder">
+              <h2>🧩 Конструктор алгоритмов</h2>
+              <p>
+                Создай алгоритм "Как приготовить чай", перетаскивая шаги в
+                правильном порядке!
+              </p>
+
+              <div class="algorithm-workspace">
+                <div class="steps-bank">
+                  <h3>📦 Доступные шаги:</h3>
+                  <div class="draggable-steps" id="stepsBank">
+                    <div
+                      class="step-card"
+                      draggable="true"
+                      data-step="1"
+                      data-original="true"
+                    >
+                      <span class="step-icon">💧</span>
+                      <span class="step-text">Налить воду в чайник</span>
+                    </div>
+                    <div
+                      class="step-card"
+                      draggable="true"
+                      data-step="2"
+                      data-original="true"
+                    >
+                      <span class="step-icon">🔥</span>
+                      <span class="step-text">Включить чайник</span>
+                    </div>
+                    <div
+                      class="step-card"
+                      draggable="true"
+                      data-step="3"
+                      data-original="true"
+                    >
+                      <span class="step-icon">☕</span>
+                      <span class="step-text"
+                        >Положить чайный пакетик в чашку</span
+                      >
+                    </div>
+                    <div
+                      class="step-card"
+                      draggable="true"
+                      data-step="4"
+                      data-original="true"
+                    >
+                      <span class="step-icon">⏰</span>
+                      <span class="step-text">Дождаться закипания воды</span>
+                    </div>
+                    <div
+                      class="step-card"
+                      draggable="true"
+                      data-step="5"
+                      data-original="true"
+                    >
+                      <span class="step-icon">🌊</span>
+                      <span class="step-text">Залить кипятком чашку</span>
+                    </div>
+                    <div
+                      class="step-card"
+                      draggable="true"
+                      data-step="6"
+                      data-original="true"
+                    >
+                      <span class="step-icon">⌛</span>
+                      <span class="step-text">Настоять чай 3-5 минут</span>
+                    </div>
+                    <div
+                      class="step-card"
+                      draggable="true"
+                      data-step="7"
+                      data-original="true"
+                    >
+                      <span class="step-icon">🗑️</span>
+                      <span class="step-text">Убрать чайный пакетик</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="algorithm-sequence">
+                  <h3>📋 Твой алгоритм:</h3>
+                  <div class="drop-zone" id="algorithmZone">
+                    <div class="empty-message" id="emptyMessage">
+                      Перетащи сюда шаги алгоритма в правильном порядке
+                    </div>
+                    <!-- Здесь будут появляться шаги алгоритма -->
+                  </div>
+                  <div class="algorithm-controls">
+                    <button id="checkAlgorithm" class="check-btn" disabled>
+                      Проверить алгоритм
+                    </button>
+                    <button id="clearAlgorithm" class="clear-btn">
+                      Очистить
+                    </button>
+                    <button
+                      id="tryAgainBtn"
+                      class="try-again-btn"
+                      style="display: none"
+                    >
+                      Попробовать еще раз
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="algorithm-result"
+                id="algorithmResult"
+                style="display: none"
+              >
+                <div class="result-content">
+                  <h3 id="resultTitle">Результат</h3>
+                  <p id="resultMessage">Сообщение</p>
+                  <div id="resultDetails"></div>
+                </div>
+              </div>
+            </div>
+
+            <img
+              src="images/arrow.png"
+              alt="Далее"
+              class="arrow"
+              id="next-arrow"
+              style="display: none"
+            />
+            <img
+              src="images/arrow.png"
+              alt="Назад"
+              class="arrow-back"
+              id="back-arrow"
+              title="Вернуться к предыдущей странице"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно выхода -->
+    <div id="logoutModal" class="logout-modal" style="display: none">
+      <div class="logout-modal-content">
+        <h3>Подтверждение выхода</h3>
+        <p>Вы действительно хотите выйти из системы?</p>
+        <div class="logout-modal-buttons">
+          <button id="confirmLogout" class="logout-confirm-btn">
+            Да, выйти
+          </button>
+          <button id="cancelLogout" class="logout-cancel-btn">Отмена</button>
+        </div>
+      </div>
+    </div>
+    <div id="logoutOverlay" class="logout-overlay" style="display: none"></div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .algorithm-builder {
+        padding: 30px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 20px;
+        margin: 20px;
+      }
+
+      .algorithm-builder h2 {
+        color: #4d36db;
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+
+      .algorithm-builder > p {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 16px;
+      }
+
+      .algorithm-workspace {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .steps-bank,
+      .algorithm-sequence {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .steps-bank h3,
+      .algorithm-sequence h3 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 18px;
+      }
+
+      .draggable-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .step-card {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        cursor: grab;
+        transition: all 0.3s ease;
+        user-select: none;
+        position: relative;
+      }
+
+      .step-card:hover {
+        border-color: #4d36db;
+        background: #e8f0fe;
+        transform: translateY(-2px);
+      }
+
+      .step-card:active {
+        cursor: grabbing;
+      }
+
+      .step-card.dragging {
+        opacity: 0.5;
+        transform: rotate(2deg) scale(1.05);
+        z-index: 1000;
+      }
+
+      .step-card[data-original='false'] {
+        background: #e8f5e8;
+        border-color: #28a745;
+      }
+
+      .step-icon {
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+
+      .step-text {
+        font-weight: 500;
+        color: #333;
+        flex: 1;
+      }
+
+      .drop-zone {
+        min-height: 350px;
+        border: 2px dashed #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        position: relative;
+      }
+
+      .drop-zone.drag-over {
+        border-color: #4d36db;
+        background: #e8f0fe;
+      }
+
+      .empty-message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #999;
+        text-align: center;
+        font-style: italic;
+        pointer-events: none;
+      }
+
+      .algorithm-step {
+        margin-bottom: 8px;
+        position: relative;
+        background: #e8f5e8;
+        border: 2px solid #28a745;
+      }
+
+      .algorithm-step::before {
+        content: counter(step-counter);
+        counter-increment: step-counter;
+        position: absolute;
+        left: -25px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #4d36db;
+        color: white;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .drop-zone {
+        counter-reset: step-counter;
+      }
+
+      .remove-step-btn {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .remove-step-btn:hover {
+        background: #c82333;
+        transform: scale(1.1);
+      }
+
+      .algorithm-controls {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .check-btn,
+      .clear-btn,
+      .try-again-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .check-btn {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+      }
+
+      .check-btn:disabled {
+        background: #e9ecef;
+        color: #6c757d;
+        cursor: not-allowed;
+      }
+
+      .check-btn:not(:disabled):hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+      }
+
+      .clear-btn {
+        background: #f8f9fa;
+        color: #6c757d;
+        border: 2px solid #dee2e6;
+      }
+
+      .clear-btn:hover {
+        background: #e9ecef;
+        transform: translateY(-2px);
+      }
+
+      .try-again-btn {
+        background: linear-gradient(135deg, #ffc107, #ffca2c);
+        color: #212529;
+      }
+
+      .try-again-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+      }
+
+      .algorithm-result {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        animation: resultSlideIn 0.5s ease-out;
+      }
+
+      @keyframes resultSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .algorithm-result.success {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        border: 2px solid #28a745;
+      }
+
+      .algorithm-result.error {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        border: 2px solid #dc3545;
+      }
+
+      .result-content h3 {
+        margin-bottom: 10px;
+        font-size: 22px;
+      }
+
+      .result-content p {
+        margin-bottom: 15px;
+        font-size: 16px;
+      }
+
+      #resultDetails {
+        text-align: left;
+        background: rgba(255, 255, 255, 0.7);
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+      }
+
+      #resultDetails ol {
+        padding-left: 20px;
+      }
+
+      #resultDetails li {
+        margin: 8px 0;
+        padding: 5px;
+        border-radius: 5px;
+      }
+
+      /* Стили авторизации */
+      .logout-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 9999;
+      }
+
+      .logout-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        z-index: 10000;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border: 3px solid #4d36db;
+      }
+
+      .logout-modal h3 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .logout-modal p {
+        color: #666;
+        margin-bottom: 25px;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .logout-modal-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+      }
+
+      .logout-confirm-btn,
+      .logout-cancel-btn {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 100px;
+      }
+
+      .logout-confirm-btn {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+      }
+
+      .logout-confirm-btn:hover {
+        background: linear-gradient(135deg, #c82333, #a71e2a);
+        transform: translateY(-2px);
+      }
+
+      .logout-cancel-btn {
+        background: #f8f9fa;
+        color: #4d36db;
+        border: 2px solid #4d36db;
+      }
+
+      .logout-cancel-btn:hover {
+        background: #e9ecef;
+        transform: translateY(-2px);
+      }
+
+      .iconexit {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: #f0f0f0;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        border: 2px solid transparent;
+      }
+
+      .iconexit:hover {
+        background-color: #dc3545;
+        color: white;
+        border-color: #dc3545;
+        transform: scale(1.1);
+      }
+
+      .nameuser {
+        font-weight: 600;
+        color: #4d36db;
+        margin-right: 15px;
+        font-size: 16px;
+      }
+
+      .nameuser.loading {
+        color: #999;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .algorithm-workspace {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .algorithm-builder {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .step-card {
+          padding: 10px;
+          gap: 8px;
+        }
+
+        .step-icon {
+          font-size: 18px;
+        }
+
+        .step-text {
+          font-size: 14px;
+        }
+
+        .algorithm-controls {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .check-btn,
+        .clear-btn,
+        .try-again-btn {
+          width: 100%;
+          max-width: 200px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Проверка авторизации и настройка пользователя
+        if (!requireAuth()) return;
+
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+          document.getElementById('userName').textContent = currentUser.name;
+          document.getElementById('userName').classList.remove('loading');
+        } else {
+          logout();
+        }
+
+        // Настройка кнопки выхода
+        const logoutBtn = document.getElementById('logoutBtn');
+        const logoutModal = document.getElementById('logoutModal');
+        const logoutOverlay = document.getElementById('logoutOverlay');
+        const confirmLogout = document.getElementById('confirmLogout');
+        const cancelLogout = document.getElementById('cancelLogout');
+
+        logoutBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          logoutModal.style.display = 'block';
+          logoutOverlay.style.display = 'block';
+        });
+
+        confirmLogout.addEventListener('click', function () {
+          confirmLogout.textContent = 'Выходим...';
+          confirmLogout.disabled = true;
+          setTimeout(() => logout(), 500);
+        });
+
+        function hideLogoutModal() {
+          logoutModal.style.display = 'none';
+          logoutOverlay.style.display = 'none';
+          confirmLogout.textContent = 'Да, выйти';
+          confirmLogout.disabled = false;
+        }
+
+        cancelLogout.addEventListener('click', hideLogoutModal);
+        logoutOverlay.addEventListener('click', hideLogoutModal);
+
+        // ОСНОВНАЯ ЛОГИКА КОНСТРУКТОРА АЛГОРИТМОВ
+        const correctOrder = [1, 3, 2, 4, 5, 6, 7]; // Правильная последовательность
+        let algorithmSteps = [];
+        let draggedElement = null;
+
+        // Инициализация drag & drop
+        initializeDragAndDrop();
+
+        function initializeDragAndDrop() {
+          const stepCards = document.querySelectorAll('.step-card');
+          const dropZone = document.getElementById('algorithmZone');
+
+          stepCards.forEach(card => {
+            card.addEventListener('dragstart', handleDragStart);
+            card.addEventListener('dragend', handleDragEnd);
+          });
+
+          dropZone.addEventListener('dragover', handleDragOver);
+          dropZone.addEventListener('drop', handleDrop);
+          dropZone.addEventListener('dragenter', handleDragEnter);
+          dropZone.addEventListener('dragleave', handleDragLeave);
+        }
+
+        function handleDragStart(e) {
+          draggedElement = this;
+          this.classList.add('dragging');
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/html', this.outerHTML);
+          e.dataTransfer.setData('text/plain', this.dataset.step);
+        }
+
+        function handleDragEnd(e) {
+          this.classList.remove('dragging');
+          draggedElement = null;
+        }
+
+        function handleDragOver(e) {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+
+          // Определяем позицию для вставки
+          const afterElement = getDragAfterElement(e.clientY);
+          const dropZone = document.getElementById('algorithmZone');
+
+          if (afterElement == null) {
+            dropZone.appendChild(createDropIndicator());
+          } else {
+            dropZone.insertBefore(createDropIndicator(), afterElement);
+          }
+        }
+
+        function handleDragEnter(e) {
+          e.preventDefault();
+          this.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+          if (!this.contains(e.relatedTarget)) {
+            this.classList.remove('drag-over');
+            removeDropIndicators();
+          }
+        }
+
+        function handleDrop(e) {
+          e.preventDefault();
+          this.classList.remove('drag-over');
+          removeDropIndicators();
+
+          const stepId = e.dataTransfer.getData('text/plain');
+          const afterElement = getDragAfterElement(e.clientY);
+
+          if (draggedElement && draggedElement.dataset.original === 'true') {
+            // Перетаскивание из банка шагов
+            addStepToAlgorithm(stepId, afterElement);
+          } else if (
+            draggedElement &&
+            draggedElement.dataset.original === 'false'
+          ) {
+            // Перестановка внутри алгоритма
+            reorderStepInAlgorithm(draggedElement, afterElement);
+          }
+        }
+
+        function getDragAfterElement(y) {
+          const dropZone = document.getElementById('algorithmZone');
+          const draggableElements = [
+            ...dropZone.querySelectorAll('.algorithm-step:not(.dragging)'),
+          ];
+
+          return draggableElements.reduce(
+            (closest, child) => {
+              const box = child.getBoundingClientRect();
+              const offset = y - box.top - box.height / 2;
+
+              if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+              } else {
+                return closest;
+              }
+            },
+            { offset: Number.NEGATIVE_INFINITY }
+          ).element;
+        }
+
+        function createDropIndicator() {
+          removeDropIndicators();
+          const indicator = document.createElement('div');
+          indicator.className = 'drop-indicator';
+          indicator.style.cssText = `
+            height: 2px;
+            background: #4d36db;
+            margin: 5px 0;
+            border-radius: 1px;
+            opacity: 0.8;
+          `;
+          return indicator;
+        }
+
+        function removeDropIndicators() {
+          document.querySelectorAll('.drop-indicator').forEach(indicator => {
+            indicator.remove();
+          });
+        }
+
+        function addStepToAlgorithm(stepId, afterElement) {
+          const dropZone = document.getElementById('algorithmZone');
+          const emptyMessage = document.getElementById('emptyMessage');
+
+          // Скрываем сообщение о пустоте
+          if (emptyMessage) {
+            emptyMessage.style.display = 'none';
+          }
+
+          // Создаем копию элемента для алгоритма
+          const originalStep = document.querySelector(
+            `.step-card[data-step="${stepId}"][data-original="true"]`
+          );
+          const algorithmStep = originalStep.cloneNode(true);
+
+          algorithmStep.dataset.original = 'false';
+          algorithmStep.className = 'step-card algorithm-step';
+          algorithmStep.draggable = true;
+
+          // Добавляем кнопку удаления
+          const removeBtn = document.createElement('button');
+          removeBtn.innerHTML = '✕';
+          removeBtn.className = 'remove-step-btn';
+          removeBtn.addEventListener('click', () =>
+            removeStepFromAlgorithm(algorithmStep, stepId)
+          );
+          algorithmStep.appendChild(removeBtn);
+
+          // Вставляем в нужное место
+          if (afterElement) {
+            dropZone.insertBefore(algorithmStep, afterElement);
+          } else {
+            dropZone.appendChild(algorithmStep);
+          }
+
+          // Скрываем оригинальный шаг
+          originalStep.style.display = 'none';
+
+          // Обновляем массив шагов
+          updateAlgorithmSteps();
+          updateCheckButton();
+
+          // Настраиваем drag & drop для нового элемента
+          algorithmStep.addEventListener('dragstart', handleDragStart);
+          algorithmStep.addEventListener('dragend', handleDragEnd);
+        }
+
+        function reorderStepInAlgorithm(draggedStep, afterElement) {
+          const dropZone = document.getElementById('algorithmZone');
+
+          if (afterElement) {
+            dropZone.insertBefore(draggedStep, afterElement);
+          } else {
+            dropZone.appendChild(draggedStep);
+          }
+
+          updateAlgorithmSteps();
+        }
+
+        function removeStepFromAlgorithm(stepElement, stepId) {
+          stepElement.remove();
+
+          // Показываем оригинальный шаг
+          const originalStep = document.querySelector(
+            `.step-card[data-step="${stepId}"][data-original="true"]`
+          );
+          if (originalStep) {
+            originalStep.style.display = 'flex';
+          }
+
+          updateAlgorithmSteps();
+          updateCheckButton();
+
+          // Показываем пустое сообщение если нет шагов
+          const dropZone = document.getElementById('algorithmZone');
+          const emptyMessage = document.getElementById('emptyMessage');
+          if (
+            dropZone.querySelectorAll('.algorithm-step').length === 0 &&
+            emptyMessage
+          ) {
+            emptyMessage.style.display = 'block';
+          }
+        }
+
+        function updateAlgorithmSteps() {
+          const dropZone = document.getElementById('algorithmZone');
+          const stepElements = dropZone.querySelectorAll('.algorithm-step');
+
+          algorithmSteps = [];
+          stepElements.forEach(element => {
+            algorithmSteps.push(parseInt(element.dataset.step));
+          });
+        }
+
+        function updateCheckButton() {
+          const checkBtn = document.getElementById('checkAlgorithm');
+          checkBtn.disabled = algorithmSteps.length === 0;
+        }
+
+        // Проверка алгоритма
+        document
+          .getElementById('checkAlgorithm')
+          .addEventListener('click', checkAlgorithm);
+
+        function checkAlgorithm() {
+          const resultDiv = document.getElementById('algorithmResult');
+          const isCorrect =
+            JSON.stringify(algorithmSteps) === JSON.stringify(correctOrder);
+
+          if (isCorrect) {
+            showResult(
+              true,
+              '🎉 Отлично!',
+              'Ты правильно составил алгоритм приготовления чая! Теперь ты понимаешь, как важна правильная последовательность шагов.'
+            );
+            document.getElementById('next-arrow').style.display = 'block';
+            document.getElementById('tryAgainBtn').style.display = 'none';
+          } else {
+            showResult(
+              false,
+              '🤔 Почти получилось!',
+              'Алгоритм составлен не совсем правильно. Подумай о логической последовательности: что нужно сделать сначала, а что потом?'
+            );
+            document.getElementById('tryAgainBtn').style.display =
+              'inline-block';
+          }
+
+          resultDiv.style.display = 'block';
+          resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function showResult(isSuccess, title, message) {
+          const resultDiv = document.getElementById('algorithmResult');
+          const resultTitle = document.getElementById('resultTitle');
+          const resultMessage = document.getElementById('resultMessage');
+          const resultDetails = document.getElementById('resultDetails');
+
+          resultDiv.className = `algorithm-result ${
+            isSuccess ? 'success' : 'error'
+          }`;
+          resultTitle.textContent = title;
+          resultMessage.textContent = message;
+
+          if (!isSuccess) {
+            // Показываем где ошибки и правильную последовательность
+            let detailsHTML = '<h4>🔍 Сравни свой алгоритм с правильным:</h4>';
+
+            detailsHTML +=
+              '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 15px 0;">';
+
+            // Твой алгоритм
+            detailsHTML +=
+              '<div><h5 style="color: #dc3545;">❌ Твой алгоритм:</h5><ol>';
+            algorithmSteps.forEach((stepId, index) => {
+              const stepText = getStepText(stepId);
+              const isCorrectPosition = correctOrder[index] === stepId;
+              detailsHTML += `<li style="color: ${
+                isCorrectPosition ? '#28a745' : '#dc3545'
+              }; margin: 5px 0;">${stepText}</li>`;
+            });
+            detailsHTML += '</ol></div>';
+
+            // Правильный алгоритм
+            detailsHTML +=
+              '<div><h5 style="color: #28a745;">✅ Правильный алгоритм:</h5><ol>';
+            correctOrder.forEach(stepId => {
+              const stepText = getStepText(stepId);
+              detailsHTML += `<li style="color: #28a745; margin: 5px 0;">${stepText}</li>`;
+            });
+            detailsHTML += '</ol></div>';
+
+            detailsHTML += '</div>';
+            detailsHTML +=
+              '<p style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.8); border-radius: 8px;"><strong>💡 Подсказка:</strong> Подумай о том, что нужно подготовить сначала, а что делать в процессе приготовления.</p>';
+
+            resultDetails.innerHTML = detailsHTML;
+          } else {
+            resultDetails.innerHTML = `
+              <div style="background: rgba(255,255,255,0.8); padding: 15px; border-radius: 8px;">
+                <p><strong>🎯 Отличная работа!</strong> Ты освоил основы составления алгоритмов:</p>
+                <ul style="text-align: left; margin: 10px 0; padding-left: 20px;">
+                  <li>✅ Определил все необходимые шаги</li>
+                  <li>✅ Разместил их в правильном порядке</li>
+                  <li>✅ Создал работающий алгоритм</li>
+                </ul>
+                <p>Теперь ты можешь применять эти навыки для решения других задач!</p>
+              </div>
+            `;
+          }
+        }
+
+        function getStepText(stepId) {
+          const stepTexts = {
+            1: '💧 Налить воду в чайник',
+            2: '☕ Положить чайный пакетик в чашку',
+            3: '🔥 Включить чайник',
+            4: '⏰ Дождаться закипания воды',
+            5: '🌊 Залить кипятком чашку',
+            6: '⌛ Настоять чай 3-5 минут',
+            7: '🗑️ Убрать чайный пакетик',
+          };
+          return stepTexts[stepId] || 'Неизвестный шаг';
+        }
+
+        // Кнопка "Попробовать еще раз"
+        document
+          .getElementById('tryAgainBtn')
+          .addEventListener('click', function () {
+            document.getElementById('algorithmResult').style.display = 'none';
+            document.getElementById('tryAgainBtn').style.display = 'none';
+
+            // Фокус на область алгоритма
+            document.getElementById('algorithmZone').scrollIntoView({
+              behavior: 'smooth',
+              block: 'center',
+            });
+
+            // Подсветка области для привлечения внимания
+            const dropZone = document.getElementById('algorithmZone');
+            dropZone.style.border = '3px solid #ffc107';
+            dropZone.style.background = '#fff3cd';
+
+            setTimeout(() => {
+              dropZone.style.border = '2px dashed #ddd';
+              dropZone.style.background = 'transparent';
+            }, 2000);
+          });
+
+        // Очистка алгоритма
+        document
+          .getElementById('clearAlgorithm')
+          .addEventListener('click', clearAlgorithm);
+
+        function clearAlgorithm() {
+          const dropZone = document.getElementById('algorithmZone');
+          const algorithmStepElements =
+            dropZone.querySelectorAll('.algorithm-step');
+
+          // Удаляем все шаги из алгоритма и возвращаем их в банк
+          algorithmStepElements.forEach(stepElement => {
+            const stepId = stepElement.dataset.step;
+            const originalStep = document.querySelector(
+              `.step-card[data-step="${stepId}"][data-original="true"]`
+            );
+            if (originalStep) {
+              originalStep.style.display = 'flex';
+            }
+            stepElement.remove();
+          });
+
+          // Сбрасываем состояние
+          algorithmSteps = [];
+          document.getElementById('emptyMessage').style.display = 'block';
+          document.getElementById('algorithmResult').style.display = 'none';
+          document.getElementById('tryAgainBtn').style.display = 'none';
+          document.getElementById('next-arrow').style.display = 'none';
+          updateCheckButton();
+
+          console.log('Алгоритм очищен, все шаги возвращены в банк');
+        }
+
+        // Обработчик стрелки "Далее"
+        document
+          .getElementById('next-arrow')
+          .addEventListener('click', function () {
+            // Переход к следующему уроку или завершению курса
+            alert(
+              'Поздравляем! Ты завершил изучение алгоритмов. Переход к следующему разделу...'
+            );
+            // window.location.href = 'next-lesson.html';
+          });
+
+        // Дополнительные улучшения UX
+
+        // Подсказки при наведении
+        const stepCards = document.querySelectorAll(
+          '.step-card[data-original="true"]'
+        );
+        stepCards.forEach(card => {
+          card.addEventListener('mouseenter', function () {
+            this.style.transform = 'translateY(-3px) scale(1.02)';
+            this.style.boxShadow = '0 6px 20px rgba(77, 54, 219, 0.2)';
+          });
+
+          card.addEventListener('mouseleave', function () {
+            this.style.transform = '';
+            this.style.boxShadow = '';
+          });
+        });
+
+        // Звуковые эффекты (опционально)
+        function playSound(type) {
+          // Можно добавить звуковые эффекты для улучшения UX
+          // const audio = new Audio(`sounds/${type}.mp3`);
+          // audio.play().catch(() => {}); // Игнорируем ошибки
+        }
+
+        // Анимация при добавлении шага
+        function animateStepAddition(element) {
+          element.style.transform = 'scale(0.8)';
+          element.style.opacity = '0';
+
+          setTimeout(() => {
+            element.style.transition = 'all 0.3s ease';
+            element.style.transform = 'scale(1)';
+            element.style.opacity = '1';
+          }, 50);
+        }
+
+        // Подсчет попыток для аналитики
+        let attemptCount = 0;
+
+        const originalCheckAlgorithm =
+          document.getElementById('checkAlgorithm').onclick;
+        document
+          .getElementById('checkAlgorithm')
+          .addEventListener('click', function () {
+            attemptCount++;
+            console.log(
+              `Попытка №${attemptCount}, шагов в алгоритме: ${algorithmSteps.length}`
+            );
+          });
+
+        // Автосохранение прогресса (в localStorage)
+        function saveProgress() {
+          const progress = {
+            algorithmSteps: algorithmSteps,
+            attemptCount: attemptCount,
+            completed:
+              document.getElementById('next-arrow').style.display === 'block',
+          };
+          localStorage.setItem(
+            'algorithm_builder_progress',
+            JSON.stringify(progress)
+          );
+        }
+
+        function loadProgress() {
+          const saved = localStorage.getItem('algorithm_builder_progress');
+          if (saved) {
+            const progress = JSON.parse(saved);
+            console.log('Загружен прогресс:', progress);
+            // Можно восстановить состояние если нужно
+          }
+        }
+
+        // Инициализация
+        loadProgress();
+        console.log('🧩 Конструктор алгоритмов инициализирован');
+        console.log('✨ Все системы готовы к работе!');
+      });
+
+      // Глобальные функции
+      window.logout = logout;
+      window.getCurrentUser = getCurrentUser;
+      window.requireAuth = requireAuth;
+    </script>
+    <script src="js/video-modal.js"></script>
+    <!-- Подключаем видео-плеер -->
+    <script src="js/main.js"></script>
+
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5805.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

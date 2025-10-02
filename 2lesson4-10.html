@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - 6 класс: Тест Шестнадцатеричная система счисления</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="js/test-export.js"></script>
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html">Урок 2. Бит и Байт</li>
+              <li data-href="2lesson3.html">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html" class="active">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <div class="hexadecimal-test">
+              <div class="test-header">
+                <div class="test-intro">
+                  <h2>📊 Итоговый тест: Шестнадцатеричная система счисления</h2>
+                  <p>Проверь свои знания о hex-системе!</p>
+                  <button id="startHexTest" class="start-test-btn">
+                    Начать тест
+                  </button>
+                </div>
+              </div>
+
+              <div
+                id="hexTestContainer"
+                class="test-container"
+                style="display: none"
+              >
+                <div class="test-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="testProgressFill"></div>
+                  </div>
+                  <p>
+                    Вопрос <span id="currentTestQ">1</span> из
+                    <span id="totalTestQ">6</span>
+                  </p>
+                </div>
+
+                <div id="testQuestionContainer" class="question-container">
+                  <!-- Вопросы будут добавлены через JavaScript -->
+                </div>
+
+                <div
+                  id="hexTestResult"
+                  class="test-result"
+                  style="display: none"
+                >
+                  <h3 id="testResultTitle">Результат</h3>
+                  <p id="testResultText">Текст результата</p>
+                  <div id="testResultDetails" class="result-details"></div>
+                  <div
+                    id="bonusConverter"
+                    class="bonus-section"
+                    style="display: none"
+                  >
+                    <h4>🎁 Бонус: Hex-калькулятор!</h4>
+                    <p>
+                      Теперь ты можешь переводить числа в шестнадцатеричную
+                      систему и обратно:
+                    </p>
+                  </div>
+                  <button
+                    id="nextLessonBtn"
+                    class="next-lesson-btn"
+                    style="display: none"
+                  >
+                    Перейти к следующему уроку
+                  </button>
+                  <button
+                    id="retryTestBtn"
+                    class="retry-btn"
+                    style="display: none"
+                  >
+                    Попробовать снова
+                  </button>
+                </div>
+              </div>
+
+              <!-- Интерактивный hex-калькулятор -->
+              <div class="hex-calculator" style="display: none" id="calculator">
+                <h3>🔄 Hex-калькулятор</h3>
+                <p>
+                  Переводи числа между десятичной и шестнадцатеричной системами!
+                </p>
+
+                <div class="converter-section">
+                  <div class="convert-input">
+                    <label for="inputValue">Число:</label>
+                    <input
+                      type="text"
+                      id="inputValue"
+                      placeholder="Введи число"
+                    />
+                    <select id="inputBase">
+                      <option value="10">Десятичная (10)</option>
+                      <option value="16">Шестнадцатеричная (16)</option>
+                    </select>
+                  </div>
+
+                  <div class="convert-arrow">⟷</div>
+
+                  <div class="convert-output">
+                    <label for="outputBase">Перевести в:</label>
+                    <select id="outputBase">
+                      <option value="16">Шестнадцатеричная (16)</option>
+                      <option value="10">Десятичная (10)</option>
+                    </select>
+                    <div class="result-display" id="convertResult">
+                      Результат
+                    </div>
+                  </div>
+                </div>
+
+                <button id="convertBtn">Конвертировать</button>
+
+                <div class="hex-examples">
+                  <h4>🎯 Примеры hex-преобразований:</h4>
+                  <div class="examples-grid">
+                    <div class="example-item">10₁₀ = A₁₆</div>
+                    <div class="example-item">15₁₀ = F₁₆</div>
+                    <div class="example-item">16₁₀ = 10₁₆</div>
+                    <div class="example-item">27₁₀ = 1B₁₆</div>
+                    <div class="example-item">47₁₀ = 2F₁₆</div>
+                    <div class="example-item">255₁₀ = FF₁₆</div>
+                  </div>
+
+                  <div class="hex-table">
+                    <h5>📋 Hex-таблица (0-15):</h5>
+                    <div class="table-grid">
+                      <div class="table-item">0₁₀ = 0₁₆</div>
+                      <div class="table-item">1₁₀ = 1₁₆</div>
+                      <div class="table-item">2₁₀ = 2₁₆</div>
+                      <div class="table-item">3₁₀ = 3₁₆</div>
+                      <div class="table-item">4₁₀ = 4₁₆</div>
+                      <div class="table-item">5₁₀ = 5₁₆</div>
+                      <div class="table-item">6₁₀ = 6₁₆</div>
+                      <div class="table-item">7₁₀ = 7₁₆</div>
+                      <div class="table-item">8₁₀ = 8₁₆</div>
+                      <div class="table-item">9₁₀ = 9₁₆</div>
+                      <div class="table-item">10₁₀ = A₁₆</div>
+                      <div class="table-item">11₁₀ = B₁₆</div>
+                      <div class="table-item">12₁₀ = C₁₆</div>
+                      <div class="table-item">13₁₀ = D₁₆</div>
+                      <div class="table-item">14₁₀ = E₁₆</div>
+                      <div class="table-item">15₁₀ = F₁₆</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .hexadecimal-test {
+        padding: 40px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 20px;
+        margin: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .test-header {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .test-intro h2 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 28px;
+      }
+
+      .test-intro p {
+        margin-bottom: 25px;
+        font-size: 16px;
+        color: #666;
+      }
+
+      .start-test-btn {
+        padding: 20px 40px;
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 4px 15px rgba(77, 54, 219, 0.3);
+      }
+
+      .start-test-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(77, 54, 219, 0.4);
+      }
+
+      .test-container {
+        margin-top: 30px;
+      }
+
+      .test-progress {
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4d36db, #6b46c1);
+        transition: width 0.5s ease;
+        width: 16.67%;
+      }
+
+      .question-container {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .question-title {
+        color: #4d36db;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      .question-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .option-btn {
+        padding: 15px 20px;
+        background: #f8f9fa;
+        border: 2px solid #dee2e6;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        text-align: left;
+        transition: all 0.3s ease;
+      }
+
+      .option-btn:hover {
+        background: #e9ecef;
+        border-color: #4d36db;
+        transform: translateX(5px);
+      }
+
+      .option-btn.selected {
+        border-color: #4d36db;
+        background: #e8f0fe;
+      }
+
+      .option-btn.correct {
+        background: #d4edda;
+        border-color: #28a745;
+        color: #155724;
+        animation: correctPulse 1s ease-in-out;
+      }
+
+      .option-btn.incorrect {
+        background: #f8d7da;
+        border-color: #dc3545;
+        color: #721c24;
+        animation: shake 0.5s ease-in-out;
+      }
+
+      @keyframes correctPulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.02);
+          box-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        75% {
+          transform: translateX(5px);
+        }
+      }
+
+      .option-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .test-result {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .test-result.success {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        border: 2px solid #28a745;
+      }
+
+      .test-result.partial {
+        background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+        border: 2px solid #ffc107;
+      }
+
+      .test-result.failed {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        border: 2px solid #dc3545;
+      }
+
+      .result-details {
+        margin: 20px 0;
+        text-align: left;
+      }
+
+      .result-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        margin: 8px 0;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
+        border-left: 4px solid transparent;
+      }
+
+      .result-item.correct {
+        border-left-color: #28a745;
+      }
+
+      .result-item.incorrect {
+        border-left-color: #dc3545;
+      }
+
+      .bonus-section {
+        background: rgba(23, 162, 184, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border: 2px solid #17a2b8;
+      }
+
+      .bonus-section h4 {
+        color: #17a2b8;
+        margin-bottom: 10px;
+      }
+
+      .next-lesson-btn,
+      .retry-btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        margin: 10px;
+      }
+
+      .next-lesson-btn {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+      }
+
+      .retry-btn {
+        background: linear-gradient(135deg, #ffc107, #ffca2c);
+        color: #212529;
+      }
+
+      .next-lesson-btn:hover,
+      .retry-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .hex-calculator {
+        background: #e8f4fd;
+        padding: 25px;
+        border-radius: 15px;
+        margin-top: 20px;
+        border: 2px solid #17a2b8;
+      }
+
+      .hex-calculator h3 {
+        color: #17a2b8;
+        margin-bottom: 15px;
+      }
+
+      .converter-section {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .convert-input,
+      .convert-output {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-width: 200px;
+      }
+
+      .convert-input label,
+      .convert-output label {
+        font-weight: 600;
+        color: #17a2b8;
+      }
+
+      .convert-input input,
+      .convert-input select,
+      .convert-output select {
+        padding: 8px 12px;
+        border: 2px solid #17a2b8;
+        border-radius: 8px;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      .convert-arrow {
+        font-size: 24px;
+        font-weight: bold;
+        color: #17a2b8;
+      }
+
+      .result-display {
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        border: 2px solid #17a2b8;
+        font-weight: bold;
+        min-height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: monospace;
+        font-size: 16px;
+      }
+
+      #convertBtn {
+        padding: 10px 20px;
+        background: #17a2b8;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-family: 'Montserrat', sans-serif;
+        margin-bottom: 20px;
+      }
+
+      #convertBtn:hover {
+        background: #138496;
+      }
+
+      .hex-examples {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #17a2b8;
+      }
+
+      .hex-examples h4 {
+        color: #17a2b8;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      .examples-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .example-item {
+        background: white;
+        padding: 8px;
+        border-radius: 8px;
+        font-weight: 500;
+        text-align: center;
+        border-left: 4px solid #17a2b8;
+        font-family: monospace;
+        font-size: 14px;
+      }
+
+      .hex-table {
+        margin-top: 15px;
+      }
+
+      .hex-table h5 {
+        color: #17a2b8;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .table-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 5px;
+      }
+
+      .table-item {
+        background: rgba(23, 162, 184, 0.1);
+        padding: 5px;
+        border-radius: 5px;
+        font-family: monospace;
+        font-size: 12px;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      @media (max-width: 768px) {
+        .hexadecimal-test {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .test-header {
+          flex-direction: column;
+          text-align: center;
+          gap: 20px;
+        }
+
+        .test-intro h2 {
+          font-size: 24px;
+        }
+
+        .question-container {
+          padding: 20px;
+        }
+
+        .option-btn {
+          padding: 12px 15px;
+        }
+
+        .start-test-btn {
+          padding: 15px 30px;
+          font-size: 16px;
+        }
+
+        .converter-section {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .convert-arrow {
+          transform: rotate(90deg);
+        }
+
+        .examples-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .table-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        
+        if (window.TestResults) { try { window.TestResults.init({ lessonId: 604, requireAuth: true }); } catch(e) { console.warn(e); } }
+const questions = [
+          {
+            question: 'Сколько символов в шестнадцатеричной системе?',
+            options: ['10', '2', '16'],
+            correct: 2,
+            explanation:
+              'В шестнадцатеричной системе используется 16 символов: 0-9 и A-F.',
+          },
+          {
+            question: 'Что такое F в шестнадцатеричной системе?',
+            options: ['10', '12', '15'],
+            correct: 2,
+            explanation:
+              'Символ F в шестнадцатеричной системе соответствует числу 15 в десятичной.',
+          },
+          {
+            question: 'Что такое 1B₁₆ в десятичной системе?',
+            options: ['27', '23', '29'],
+            correct: 0,
+            explanation: '1B₁₆ = 1×16¹ + 11×16⁰ = 16 + 11 = 27₁₀ (B = 11)',
+          },
+          {
+            question: 'Почему программисты используют Base-16?',
+            options: [
+              'Красиво смотрится',
+              'Числа короче, чем в двоичной',
+              'Это шифр',
+            ],
+            correct: 1,
+            explanation:
+              'Hex-система позволяет записывать большие числа короче, чем в двоичной системе. Один hex-символ заменяет 4 двоичных.',
+          },
+          {
+            question: 'Как перевести 47₁₀ в шестнадцатеричную?',
+            options: ['2F', '2E', '1F'],
+            correct: 0,
+            explanation:
+              '47₁₀ = 2×16 + 15 = 32 + 15, где 15 = F, поэтому 47₁₀ = 2F₁₆',
+          },
+          {
+            question: 'Что такое 255₁₀ в 16-ричной системе?',
+            options: ['1F', 'FF', 'EE'],
+            correct: 1,
+            explanation:
+              '255₁₀ = 15×16 + 15 = FF₁₆ (оба символа F означают 15)',
+          },
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answers = [];
+
+        document
+          .getElementById('startHexTest')
+          .addEventListener('click', startTest);
+        document
+          .getElementById('retryTestBtn')
+          .addEventListener('click', retryTest);
+        document
+          .getElementById('nextLessonBtn')
+          .addEventListener('click', () => {
+            window.location.href = '2lesson4-11.html';
+          });
+
+        function startTest() {
+          document.querySelector('.test-header').style.display = 'none';
+          document.getElementById('hexTestContainer').style.display = 'block';
+          document.getElementById('totalTestQ').textContent = questions.length;
+          showQuestion();
+        }
+
+        function showQuestion() {
+          const question = questions[currentQuestion];
+          document.getElementById('currentTestQ').textContent =
+            currentQuestion + 1;
+
+          const progress = ((currentQuestion + 1) / questions.length) * 100;
+          document.getElementById('testProgressFill').style.width =
+            progress + '%';
+
+          const container = document.getElementById('testQuestionContainer');
+          container.innerHTML = `
+            <div class="question-title">${question.question}</div>
+            <div class="question-options">
+              ${question.options
+                .map(
+                  (option, index) =>
+                    `<button class="option-btn" data-index="${index}">${option}</button>`
+                )
+                .join('')}
+            </div>
+          `;
+
+          container.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+              selectAnswer(parseInt(this.dataset.index));
+            });
+          });
+        }
+
+        function selectAnswer(selectedIndex) {
+          const question = questions[currentQuestion];
+          const isCorrect = selectedIndex === question.correct;
+
+          answers.push({
+            question: question.question,
+            selected: selectedIndex,
+            correct: question.correct,
+            isCorrect: isCorrect,
+            explanation: question.explanation,
+          });
+
+          if (isCorrect) score++;
+
+          const options = document.querySelectorAll('.option-btn');
+          options.forEach((btn, index) => {
+            btn.disabled = true;
+            if (index === question.correct) {
+              btn.classList.add('correct');
+            } else if (index === selectedIndex && !isCorrect) {
+              btn.classList.add('incorrect');
+            }
+          });
+
+          setTimeout(() => {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+              showQuestion();
+            } else {
+              showResults();
+            }
+          }, 2000);
+        }
+
+        function showResults() {
+          document.getElementById('testQuestionContainer').style.display =
+            'none';
+          const resultDiv = document.getElementById('hexTestResult');
+          resultDiv.style.display = 'block';
+
+          const percentage = Math.round((score / questions.length) * 100);
+          let resultClass, title, text;
+
+          if (percentage >= 80) {
+            resultClass = 'success';
+            title = '🎉 Отлично!';
+            text = `Ты правильно ответил на ${score} из ${questions.length} вопросов (${percentage}%). Ты отлично понимаешь шестнадцатеричную систему!`;
+            document.getElementById('nextLessonBtn').style.display =
+              'inline-block';
+            document.getElementById('retryTestBtn').style.display =
+              'inline-block';
+            document.getElementById('bonusConverter').style.display = 'block';
+            document.getElementById('calculator').style.display = 'block';
+          } else {
+            resultClass = 'failed';
+            title = '😔 Нужно повторить';
+            text = `Ты правильно ответил на ${score} из ${questions.length} вопросов (${percentage}%). Изучи материал еще раз и попробуй снова!`;
+            document.getElementById('retryTestBtn').style.display =
+              'inline-block';
+          }
+
+          resultDiv.className = `test-result ${resultClass}`;
+          document.getElementById('testResultTitle').textContent = title;
+          document.getElementById('testResultText').textContent = text;
+
+          const detailsDiv = document.getElementById('testResultDetails');
+          detailsDiv.innerHTML =
+            '<h4>Разбор ответов:</h4>' +
+            answers
+              .map(
+                (answer, index) => `
+              <div class="result-item ${
+                answer.isCorrect ? 'correct' : 'incorrect'
+              }">
+                <div>
+                  <strong>Вопрос ${index + 1}:</strong> ${
+                  answer.isCorrect ? '✅ Правильно' : '❌ Неправильно'
+                }<br>
+                  <small>${answer.explanation}</small>
+                </div>
+              </div>
+            `
+              )
+              .join('');
+          // === Экспорт для Excel (лист "Знания") ===
+          try {
+            if (window.TestResults) {
+              const exportQuestions = (answers || []).map((a, i) => ({
+                index: i + 1,
+                question: a.question,
+                answer: String((questions[i] && questions[i].options) ? questions[i].options[a.selected] : a.selected),
+                correct: !!a.isCorrect,
+                correctAnswer: String((questions[i] && questions[i].options) ? questions[i].options[a.correct] : '')
+              }));
+              const percentage = Math.round((score / questions.length) * 100);
+              window.TestResults.saveTest({
+                testType: 'knowledge',
+                questions: exportQuestions,
+                meta: { percentage }
+              });
+            }
+          } catch (e) { console.warn('saveTest knowledge (hex) failed', e); }
+
+        }
+
+        function retryTest() {
+          currentQuestion = 0;
+          score = 0;
+          answers = [];
+          document.getElementById('hexTestResult').style.display = 'none';
+          document.getElementById('testQuestionContainer').style.display =
+            'block';
+          document.getElementById('testProgressFill').style.width = '16.67%';
+          document.getElementById('calculator').style.display = 'none';
+          showQuestion();
+        }
+
+        // Hex-калькулятор
+        const inputValue = document.getElementById('inputValue');
+        const inputBase = document.getElementById('inputBase');
+        const outputBase = document.getElementById('outputBase');
+        const convertBtn = document.getElementById('convertBtn');
+        const convertResult = document.getElementById('convertResult');
+
+        function performConversion() {
+          const value = inputValue.value.trim().toUpperCase();
+          const fromBase = parseInt(inputBase.value);
+          const toBase = parseInt(outputBase.value);
+
+          if (!value) {
+            convertResult.textContent = 'Введи число для конвертации';
+            convertResult.style.color = '#6c757d';
+            return;
+          }
+
+          try {
+            let decimalValue;
+
+            if (fromBase === 10) {
+              // Из десятичной
+              decimalValue = parseInt(value, 10);
+              if (isNaN(decimalValue) || decimalValue < 0) {
+                throw new Error('Некорректное десятичное число');
+              }
+            } else if (fromBase === 16) {
+              // Из шестнадцатеричной
+              if (!/^[0-9A-F]+$/.test(value)) {
+                throw new Error('Hex число может содержать только 0-9 и A-F');
+              }
+              decimalValue = parseInt(value, 16);
+            }
+
+            let result;
+            if (toBase === 10) {
+              result = decimalValue.toString();
+            } else if (toBase === 16) {
+              result = decimalValue.toString(16).toUpperCase();
+            }
+
+            const subscript = toBase === 10 ? '₁₀' : '₁₆';
+            convertResult.innerHTML = `<strong>${result}${subscript}</strong>`;
+            convertResult.style.color = '#155724';
+          } catch (error) {
+            convertResult.textContent = error.message;
+            convertResult.style.color = '#dc3545';
+          }
+        }
+
+        if (convertBtn) {
+          convertBtn.addEventListener('click', performConversion);
+        }
+
+        if (inputValue) {
+          inputValue.addEventListener('keypress', e => {
+            if (e.key === 'Enter') {
+              performConversion();
+            }
+          });
+
+          inputValue.addEventListener('input', () => {
+            // Валидация ввода для hex
+            if (inputBase.value === '16') {
+              inputValue.value = inputValue.value
+                .toUpperCase()
+                .replace(/[^0-9A-F]/g, '');
+            } else if (inputBase.value === '10') {
+              inputValue.value = inputValue.value.replace(/[^0-9]/g, '');
+            }
+
+            if (inputValue.value) {
+              performConversion();
+            } else {
+              convertResult.textContent = 'Введи число для конвертации';
+              convertResult.style.color = '#6c757d';
+            }
+          });
+        }
+
+        // Автоматическое обновление при изменении систем счисления
+        if (inputBase) {
+          inputBase.addEventListener('change', () => {
+            // Очищаем поле при смене системы
+            inputValue.value = '';
+            convertResult.textContent = 'Введи число для конвертации';
+            convertResult.style.color = '#6c757d';
+          });
+        }
+
+        if (outputBase) {
+          outputBase.addEventListener('change', () => {
+            if (inputValue.value) performConversion();
+          });
+        }
+
+        // Инициализация калькулятора
+        if (convertResult) {
+          convertResult.textContent = 'Введи число для конвертации';
+          convertResult.style.color = '#6c757d';
+        }
+      });
+    </script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

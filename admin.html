@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta name="project-key" content="quiz28" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Админ-панель</title>
+    <link rel="stylesheet" href="assets/css/admin.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/results-ui.css" />
+    <link rel="stylesheet" href="assets/css/results-ui-extra.css" />
+  </head>
+  <body class="bg">
+    <header class="topbar">
+      <div class="topbar__left">
+        <div class="brand">
+          <span class="brand__dot"></span>
+          <span class="brand__name">Quiz Admin</span>
+        </div>
+        <nav class="tabs" role="tablist" aria-label="Главные вкладки">
+          <button class="tab is-active" data-view="dashboard">Dashboard</button>
+          <button class="tab" data-view="students">Ученики</button>
+          <button class="tab" data-view="teachers">Учителя</button>
+          <button class="tab" data-view="admins">Администраторы</button>
+          <button class="tab" data-view="lessons">Уроки</button>
+          <button class="tab" data-view="docs">Документация</button>
+        </nav>
+      </div>
+      <div class="topbar__right">
+        <button id="exportUsersBtn" class="btn btn-ghost" title="Экспортировать пользователей JSON">
+          Экспорт пользователей
+        </button>
+        <button id="exportLessonsBtn" class="btn btn-ghost" title="Экспортировать уроки JSON">
+          Экспорт уроков
+        </button>
+        <button id="logoutBtn" class="btn btn-outline">Выйти</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar__section">
+          <p class="sidebar__title">Навигация</p>
+          <a class="side-link is-active" data-view="dashboard">Главная</a>
+          <a class="side-link" data-view="students">Ученики</a>
+          <a class="side-link" data-view="teachers">Учителя</a>
+          <a class="side-link" data-view="admins">Администраторы</a>
+          <a class="side-link" data-view="lessons">Уроки</a>
+          <a class="side-link" data-view="docs">Документация</a>
+        </div>
+      </aside>
+      <main id="app" class="content" tabindex="-1"></main>
+    </div>
+
+    <!-- User Modal -->
+    <dialog id="userModal" class="modal">
+      <form method="dialog" class="modal__card" id="userForm">
+        <h3 id="userModalTitle">Добавить пользователя</h3>
+        <div class="grid grid-2">
+          <label class="field"
+            ><span>Имя пользователя</span><input name="username" required
+          /></label>
+          <label class="field"><span>Полное имя</span><input name="fullName" required /></label>
+        </div>
+        <div class="grid grid-2">
+          <label class="field"
+            ><span>Пароль</span><input name="password" type="password" required
+          /></label>
+          <label class="field"
+            ><span>Роль</span>
+            <select name="role" required>
+              <option value="user">Ученик</option>
+              <option value="teacher">Учитель</option>
+              <option value="admin">Администратор</option>
+            </select>
+          </label>
+        </div>
+        <div class="grid grid-2">
+          <label class="field"
+            ><span>Класс</span>
+            <select name="class" required>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </label>
+        </div>
+        <menu class="modal__actions">
+          <button value="cancel" class="btn btn-ghost">Отмена</button>
+          <button value="submit" class="btn btn-primary">Сохранить</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <!-- Lesson Modal -->
+    <dialog id="lessonModal" class="modal">
+      <form method="dialog" class="modal__card" id="lessonForm">
+        <h3 id="lessonModalTitle">Добавить урок</h3>
+        <div class="grid grid-2">
+          <label class="field"><span>Название</span><input name="title" required /></label>
+          <label class="field"
+            ><span>Статус</span>
+            <select name="status" required>
+              <option value="Готов">Готов</option>
+              <option value="Черновик">Черновик</option>
+            </select>
+          </label>
+        </div>
+        <label class="field"
+          ><span>Ссылка (URL)</span><input name="url" placeholder="например: lesson0.html"
+        /></label>
+        <label class="field"
+          ><span>Описание</span
+          ><textarea name="description" rows="3" placeholder="Кратко об уроке"></textarea>
+        </label>
+        <label class="field"
+          ><span>Кол-во тестов</span><input name="tests" type="number" min="0" value="0"
+        /></label>
+        <menu class="modal__actions">
+          <button value="cancel" class="btn btn-ghost">Отмена</button>
+          <button value="submit" class="btn btn-primary">Добавить</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="assets/js/results-store.js"></script>
+    <script src="assets/js/admin.js"></script>
+    <script src="assets/js/admin-results.js"></script>
+  </body>
+</html>

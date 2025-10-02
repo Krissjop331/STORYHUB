@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - Урок 1: Безопасность</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <!-- Скрипт авторизации должен быть первым -->
+    <script>
+      // Утилиты для работы с sessionStorage (копируем из index.html)
+      const SessionUtils = {
+        set: function (name, value) {
+          try {
+            sessionStorage.setItem(name, value);
+            return true;
+          } catch (error) {
+            console.error('Ошибка записи в sessionStorage:', error);
+            return false;
+          }
+        },
+
+        get: function (name) {
+          try {
+            return sessionStorage.getItem(name);
+          } catch (error) {
+            console.error('Ошибка чтения из sessionStorage:', error);
+            return null;
+          }
+        },
+
+        remove: function (name) {
+          try {
+            sessionStorage.removeItem(name);
+            return true;
+          } catch (error) {
+            console.error('Ошибка удаления из sessionStorage:', error);
+            return false;
+          }
+        },
+
+        clear: function () {
+          try {
+            sessionStorage.clear();
+            return true;
+          } catch (error) {
+            console.error('Ошибка очистки sessionStorage:', error);
+            return false;
+          }
+        },
+      };
+
+      // Константы
+      const AUTH_TOKEN = 'STORYHUB_auth_token';
+      const USER_DATA = 'STORYHUB_user_data';
+      const SESSION_START = 'STORYHUB_session_start';
+
+      // Проверка валидности сессионного токена
+      function validateSessionToken(token) {
+        if (!token) {
+          console.log('Токен отсутствует');
+          return false;
+        }
+
+        try {
+          const tokenData = JSON.parse(atob(token));
+
+          if (
+            !tokenData.sessionId ||
+            !tokenData.username ||
+            !tokenData.createdAt
+          ) {
+            console.log('Токен имеет неверную структуру');
+            return false;
+          }
+
+          const sessionStart = SessionUtils.get(SESSION_START);
+          if (!sessionStart || tokenData.createdAt < sessionStart) {
+            console.log('Токен создан в предыдущей сессии браузера');
+            return false;
+          }
+
+          return true;
+        } catch (error) {
+          console.error('Ошибка валидации токена:', error);
+          return false;
+        }
+      }
+
+      // Очистка сессии
+      function clearSession() {
+        SessionUtils.remove(AUTH_TOKEN);
+        SessionUtils.remove(USER_DATA);
+        console.log('Сессия очищена');
+      }
+
+      // Проверка авторизации
+      function requireAuth() {
+        const token = SessionUtils.get(AUTH_TOKEN);
+        const userData = SessionUtils.get(USER_DATA);
+
+        console.log('Проверка авторизации на странице lesson0.html...');
+
+        if (!token || !userData || !validateSessionToken(token)) {
+          console.log(
+            'Пользователь не авторизован, перенаправление на страницу входа'
+          );
+          clearSession();
+          window.location.href = 'index.html';
+          return false;
+        }
+
+        console.log('Авторизация подтверждена');
+        return true;
+      }
+
+      // Получение данных текущего пользователя
+      function getCurrentUser() {
+        const token = SessionUtils.get(AUTH_TOKEN);
+        const userData = SessionUtils.get(USER_DATA);
+
+        if (token && userData && validateSessionToken(token)) {
+          try {
+            return JSON.parse(userData);
+          } catch (error) {
+            console.error('Ошибка получения данных пользователя:', error);
+            return null;
+          }
+        }
+        return null;
+      }
+
+      // Выход из системы
+      function logout() {
+        console.log('Выход из системы...');
+        clearSession();
+        window.location.href = 'index.html';
+      }
+
+      // КРИТИЧНО: Проверяем авторизацию сразу при загрузке скрипта
+      if (!requireAuth()) {
+        // Если пользователь не авторизован, скрываем страницу
+        document.documentElement.style.display = 'none';
+      }
+    </script>
+
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn active" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+            <ul class="lesson-list">
+              <li data-href="lesson0.html">Введение</li>
+              <li data-href="lesson1.html" class="active">
+                Урок 1. Базовые правила безопасности в кабинете информатики
+              </li>
+              <li data-href="lesson2.html">Урок 2. Эргономика</li>
+              <li data-href="lesson3.html">
+                Урок 3. Кибер-гигиена и защита личных данных
+              </li>
+              <li data-href="lesson4.html">
+                Урок 4. Как работают компьютеры: Аппаратное обеспечение
+              </li>
+              <li data-href="lesson5.html">
+                Урок 5. Как работают компьютеры: Программное обеспечение
+              </li>
+              <li data-href="lesson6.html">Урок 6. Алгоритмы</li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <img
+              src="images/Video1_2.png"
+              alt="Урок 1 - часть 1"
+              class="content_games_img"
+            />
+            <img src="images/arrow.png" alt="Далее" class="arrow" />
+            <img
+              src="images/arrow.png"
+              alt="Назад"
+              class="arrow-back"
+              id="back-arrow"
+              title="Вернуться к предыдущей странице"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth-guard.js"></script>
+    <script src="js/video-modal.js"></script>
+
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5783.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - 6 класс: Тест Программное и аппаратное обеспечение</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="js/test-export.js"></script>
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html">Урок 2. Бит и Байт</li>
+              <li data-href="2lesson3.html">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html" class="active">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <div class="hardware-software-test">
+              <div class="test-header">
+                <div class="test-intro">
+                  <h2>
+                    📊 Итоговый тест: Программное и аппаратное обеспечение
+                  </h2>
+                  <p>Проверь свои знания о hardware и software!</p>
+                  <button id="startHardwareSoftwareTest" class="start-test-btn">
+                    Начать тест
+                  </button>
+                </div>
+              </div>
+
+              <div
+                id="hardwareSoftwareTestContainer"
+                class="test-container"
+                style="display: none"
+              >
+                <div class="test-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="testProgressFill"></div>
+                  </div>
+                  <p>
+                    Вопрос <span id="currentTestQ">1</span> из
+                    <span id="totalTestQ">6</span>
+                  </p>
+                </div>
+
+                <div id="testQuestionContainer" class="question-container">
+                  <!-- Вопросы будут добавлены через JavaScript -->
+                </div>
+
+                <div
+                  id="hardwareSoftwareTestResult"
+                  class="test-result"
+                  style="display: none"
+                >
+                  <h3 id="testResultTitle">Результат</h3>
+                  <p id="testResultText">Текст результата</p>
+                  <div id="testResultDetails" class="result-details"></div>
+                  <div
+                    id="bonusClassifier"
+                    class="bonus-section"
+                    style="display: none"
+                  >
+                    <h4>🎁 Бонус: Классификатор компонентов!</h4>
+                    <p>
+                      Теперь ты можешь различать hardware и software компоненты:
+                    </p>
+                  </div>
+                  <button
+                    id="nextLessonBtn"
+                    class="next-lesson-btn"
+                    style="display: none"
+                  >
+                    Перейти к следующему уроку
+                  </button>
+                  <button
+                    id="retryTestBtn"
+                    class="retry-btn"
+                    style="display: none"
+                  >
+                    Попробовать снова
+                  </button>
+                </div>
+              </div>
+
+              <!-- Интерактивный классификатор -->
+              <div
+                class="component-classifier"
+                style="display: none"
+                id="classifier"
+              >
+                <h3>🔄 Классификатор компонентов</h3>
+                <p>Перетаскивай компоненты в правильные категории!</p>
+
+                <div class="classifier-section">
+                  <div class="components-pool">
+                    <h4>📦 Компоненты для сортировки:</h4>
+                    <div class="pool-items">
+                      <div class="component-item" data-type="hardware">
+                        🖥️ Монитор
+                      </div>
+                      <div class="component-item" data-type="software">
+                        💻 Chrome браузер
+                      </div>
+                      <div class="component-item" data-type="hardware">
+                        ⌨️ Клавиатура
+                      </div>
+                      <div class="component-item" data-type="software">
+                        🎮 Minecraft
+                      </div>
+                      <div class="component-item" data-type="hardware">
+                        🖱️ Мышь
+                      </div>
+                      <div class="component-item" data-type="software">
+                        📝 Microsoft Word
+                      </div>
+                      <div class="component-item" data-type="hardware">
+                        💾 SSD диск
+                      </div>
+                      <div class="component-item" data-type="software">
+                        🎵 Spotify
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="categories">
+                    <div class="category-box" data-category="hardware">
+                      <h4>🔧 Hardware (Железо)</h4>
+                      <div class="drop-zone">
+                        <p>Перетащи сюда физические компоненты</p>
+                      </div>
+                    </div>
+
+                    <div class="category-box" data-category="software">
+                      <h4>💾 Software (Программы)</h4>
+                      <div class="drop-zone">
+                        <p>Перетащи сюда программные компоненты</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="classifier-controls">
+                  <button id="checkClassification">
+                    Проверить классификацию
+                  </button>
+                  <button id="resetClassification">Сбросить</button>
+                </div>
+
+                <div class="classification-examples">
+                  <h4>📋 Справка:</h4>
+                  <div class="examples-grid">
+                    <div class="example-group">
+                      <h5>🔧 Hardware примеры:</h5>
+                      <ul>
+                        <li>Процессор, память, диски</li>
+                        <li>Клавиатура, мышь, монитор</li>
+                        <li>Материнская плата, видеокарта</li>
+                      </ul>
+                    </div>
+                    <div class="example-group">
+                      <h5>💾 Software примеры:</h5>
+                      <ul>
+                        <li>Windows, macOS, Linux</li>
+                        <li>Браузеры, игры, редакторы</li>
+                        <li>Антивирусы, драйверы</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .hardware-software-test {
+        padding: 40px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 20px;
+        margin: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .test-header {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .test-intro h2 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 28px;
+      }
+
+      .test-intro p {
+        margin-bottom: 25px;
+        font-size: 16px;
+        color: #666;
+      }
+
+      .start-test-btn {
+        padding: 20px 40px;
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 4px 15px rgba(77, 54, 219, 0.3);
+      }
+
+      .start-test-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(77, 54, 219, 0.4);
+      }
+
+      .test-container {
+        margin-top: 30px;
+      }
+
+      .test-progress {
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4d36db, #6b46c1);
+        transition: width 0.5s ease;
+        width: 16.67%;
+      }
+
+      .question-container {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .question-title {
+        color: #4d36db;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      .question-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .option-btn {
+        padding: 15px 20px;
+        background: #f8f9fa;
+        border: 2px solid #dee2e6;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        text-align: left;
+        transition: all 0.3s ease;
+      }
+
+      .option-btn:hover {
+        background: #e9ecef;
+        border-color: #4d36db;
+        transform: translateX(5px);
+      }
+
+      .option-btn.selected {
+        border-color: #4d36db;
+        background: #e8f0fe;
+      }
+
+      .option-btn.correct {
+        background: #d4edda;
+        border-color: #28a745;
+        color: #155724;
+        animation: correctPulse 1s ease-in-out;
+      }
+
+      .option-btn.incorrect {
+        background: #f8d7da;
+        border-color: #dc3545;
+        color: #721c24;
+        animation: shake 0.5s ease-in-out;
+      }
+
+      @keyframes correctPulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.02);
+          box-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        75% {
+          transform: translateX(5px);
+        }
+      }
+
+      .option-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .test-result {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .test-result.success {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        border: 2px solid #28a745;
+      }
+
+      .test-result.failed {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        border: 2px solid #dc3545;
+      }
+
+      .result-details {
+        margin: 20px 0;
+        text-align: left;
+      }
+
+      .result-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        margin: 8px 0;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
+        border-left: 4px solid transparent;
+      }
+
+      .result-item.correct {
+        border-left-color: #28a745;
+      }
+
+      .result-item.incorrect {
+        border-left-color: #dc3545;
+      }
+
+      .bonus-section {
+        background: rgba(23, 162, 184, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border: 2px solid #17a2b8;
+      }
+
+      .bonus-section h4 {
+        color: #17a2b8;
+        margin-bottom: 10px;
+      }
+
+      .next-lesson-btn,
+      .retry-btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        margin: 10px;
+      }
+
+      .next-lesson-btn {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+      }
+
+      .retry-btn {
+        background: linear-gradient(135deg, #ffc107, #ffca2c);
+        color: #212529;
+      }
+
+      .next-lesson-btn:hover,
+      .retry-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .component-classifier {
+        background: #e8f4fd;
+        padding: 25px;
+        border-radius: 15px;
+        margin-top: 20px;
+        border: 2px solid #17a2b8;
+      }
+
+      .component-classifier h3 {
+        color: #17a2b8;
+        margin-bottom: 15px;
+      }
+
+      .classifier-section {
+        margin-bottom: 20px;
+      }
+
+      .components-pool {
+        margin-bottom: 20px;
+      }
+
+      .components-pool h4 {
+        color: #17a2b8;
+        margin-bottom: 15px;
+      }
+
+      .pool-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        border: 2px dashed #17a2b8;
+        min-height: 80px;
+      }
+
+      .component-item {
+        background: white;
+        border: 2px solid #17a2b8;
+        border-radius: 8px;
+        padding: 8px 12px;
+        cursor: grab;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        user-select: none;
+        font-size: 14px;
+      }
+
+      .component-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 2px 8px rgba(23, 162, 184, 0.3);
+      }
+
+      .component-item.dragging {
+        opacity: 0.5;
+        cursor: grabbing;
+      }
+
+      .categories {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .category-box {
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid #17a2b8;
+        border-radius: 10px;
+        padding: 15px;
+        width: 300px;
+        min-height: 150px;
+      }
+
+      .category-box h4 {
+        color: #17a2b8;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .drop-zone {
+        min-height: 100px;
+        border: 2px dashed #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .drop-zone.drag-over {
+        border-color: #17a2b8;
+        background-color: rgba(23, 162, 184, 0.1);
+      }
+
+      .drop-zone p {
+        color: #6c757d;
+        font-style: italic;
+        text-align: center;
+        margin: 0;
+      }
+
+      .drop-zone:not(:empty) p {
+        display: none;
+      }
+
+      .classifier-controls {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .classifier-controls button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-family: 'Montserrat', sans-serif;
+        transition: all 0.3s ease;
+      }
+
+      #checkClassification {
+        background: #28a745;
+        color: white;
+      }
+
+      #checkClassification:hover {
+        background: #218838;
+      }
+
+      #resetClassification {
+        background: #6c757d;
+        color: white;
+      }
+
+      #resetClassification:hover {
+        background: #5a6268;
+      }
+
+      .classification-examples {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #17a2b8;
+      }
+
+      .classification-examples h4 {
+        color: #17a2b8;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      .examples-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      .example-group {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #17a2b8;
+      }
+
+      .example-group h5 {
+        color: #17a2b8;
+        margin-bottom: 10px;
+      }
+
+      .example-group ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .example-group li {
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+
+      @media (max-width: 768px) {
+        .hardware-software-test {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .test-header {
+          flex-direction: column;
+          text-align: center;
+          gap: 20px;
+        }
+
+        .test-intro h2 {
+          font-size: 24px;
+        }
+
+        .question-container {
+          padding: 20px;
+        }
+
+        .option-btn {
+          padding: 12px 15px;
+        }
+
+        .start-test-btn {
+          padding: 15px 30px;
+          font-size: 16px;
+        }
+
+        .categories {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .category-box {
+          width: 100%;
+          max-width: 400px;
+        }
+
+        .pool-items {
+          justify-content: center;
+        }
+
+        .examples-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        
+        if (window.TestResults) { try { window.TestResults.init({ lessonId: 605, requireAuth: true }); } catch(e) { console.warn(e); } }
+const questions = [
+          {
+            question: 'Что такое hardware?',
+            options: ['Программа', 'Физические части компьютера', 'Интернет'],
+            correct: 1,
+            explanation:
+              'Hardware (аппаратное обеспечение) — это физические компоненты компьютера: процессор, память, диски и др.',
+          },
+          {
+            question: 'Что относится к software?',
+            options: ['Мышь', 'Операционная система', 'Клавиатура'],
+            correct: 1,
+            explanation:
+              'Software (программное обеспечение) — это программы, включая операционные системы, приложения и игры.',
+          },
+          {
+            question: 'Без чего компьютер не будет работать?',
+            options: ['hardware', 'software', 'Нужны оба'],
+            correct: 2,
+            explanation:
+              'Для работы компьютера необходимы и аппаратное (hardware), и программное (software) обеспечение.',
+          },
+          {
+            question: 'Что такое процессор?',
+            options: ['Программа', 'Hardware', 'Интернет'],
+            correct: 1,
+            explanation:
+              'Процессор — это аппаратный компонент (hardware), который выполняет вычисления в компьютере.',
+          },
+          {
+            question: 'Что делает software?',
+            options: ['Ничего', 'Управляет компьютером', 'Переносит данные'],
+            correct: 1,
+            explanation:
+              'Software управляет работой компьютера, выполняет задачи пользователя и координирует работу hardware.',
+          },
+          {
+            question: 'Пример software:',
+            options: ['Вентилятор', 'Windows', 'Экран'],
+            correct: 1,
+            explanation:
+              'Windows — это операционная система, которая является примером программного обеспечения (software).',
+          },
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answers = [];
+
+        document
+          .getElementById('startHardwareSoftwareTest')
+          .addEventListener('click', startTest);
+        document
+          .getElementById('retryTestBtn')
+          .addEventListener('click', retryTest);
+        document
+          .getElementById('nextLessonBtn')
+          .addEventListener('click', () => {
+            window.location.href = '2lesson5-9.html';
+          });
+
+        function startTest() {
+          document.querySelector('.test-header').style.display = 'none';
+          document.getElementById(
+            'hardwareSoftwareTestContainer'
+          ).style.display = 'block';
+          document.getElementById('totalTestQ').textContent = questions.length;
+          showQuestion();
+        }
+
+        function showQuestion() {
+          const question = questions[currentQuestion];
+          document.getElementById('currentTestQ').textContent =
+            currentQuestion + 1;
+
+          const progress = ((currentQuestion + 1) / questions.length) * 100;
+          document.getElementById('testProgressFill').style.width =
+            progress + '%';
+
+          const container = document.getElementById('testQuestionContainer');
+          container.innerHTML = `
+            <div class="question-title">${question.question}</div>
+            <div class="question-options">
+              ${question.options
+                .map(
+                  (option, index) =>
+                    `<button class="option-btn" data-index="${index}">${option}</button>`
+                )
+                .join('')}
+            </div>
+          `;
+
+          container.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+              selectAnswer(parseInt(this.dataset.index));
+            });
+          });
+        }
+
+        function selectAnswer(selectedIndex) {
+          const question = questions[currentQuestion];
+          const isCorrect = selectedIndex === question.correct;
+
+          answers.push({
+            question: question.question,
+            selected: selectedIndex,
+            correct: question.correct,
+            isCorrect: isCorrect,
+            explanation: question.explanation,
+          });
+
+          if (isCorrect) score++;
+
+          const options = document.querySelectorAll('.option-btn');
+          options.forEach((btn, index) => {
+            btn.disabled = true;
+            if (index === question.correct) {
+              btn.classList.add('correct');
+            } else if (index === selectedIndex && !isCorrect) {
+              btn.classList.add('incorrect');
+            }
+          });
+
+          setTimeout(() => {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+              showQuestion();
+            } else {
+              showResults();
+            }
+          }, 2000);
+        }
+
+        function showResults() {
+          document.getElementById('testQuestionContainer').style.display =
+            'none';
+          const resultDiv = document.getElementById(
+            'hardwareSoftwareTestResult'
+          );
+          resultDiv.style.display = 'block';
+
+          const percentage = Math.round((score / questions.length) * 100);
+          let resultClass, title, text;
+
+          if (percentage >= 80) {
+            resultClass = 'success';
+            title = '🎉 Отлично!';
+            text = `Ты правильно ответил на ${score} из ${questions.length} вопросов (${percentage}%). Ты отлично понимаешь разницу между hardware и software!`;
+            document.getElementById('nextLessonBtn').style.display =
+              'inline-block';
+            document.getElementById('retryTestBtn').style.display =
+              'inline-block';
+            document.getElementById('bonusClassifier').style.display = 'block';
+            document.getElementById('classifier').style.display = 'block';
+          } else {
+            resultClass = 'failed';
+            title = '😔 Нужно повторить';
+            text = `Ты правильно ответил на ${score} из ${questions.length} вопросов (${percentage}%). Изучи материал еще раз и попробуй снова!`;
+            document.getElementById('retryTestBtn').style.display =
+              'inline-block';
+          }
+
+          resultDiv.className = `test-result ${resultClass}`;
+          document.getElementById('testResultTitle').textContent = title;
+          document.getElementById('testResultText').textContent = text;
+
+          const detailsDiv = document.getElementById('testResultDetails');
+          detailsDiv.innerHTML =
+            '<h4>Разбор ответов:</h4>' +
+            answers
+              .map(
+                (answer, index) => `
+              <div class="result-item ${
+                answer.isCorrect ? 'correct' : 'incorrect'
+              }">
+                <div>
+                  <strong>Вопрос ${index + 1}:</strong> ${
+                  answer.isCorrect ? '✅ Правильно' : '❌ Неправильно'
+                }<br>
+                  <small>${answer.explanation}</small>
+                </div>
+              </div>
+            `
+              )
+              .join('');
+          // === Экспорт для Excel (лист "Знания") ===
+          try {
+            if (window.TestResults) {
+              const exportQuestions = (answers || []).map((a, i) => ({
+                index: i + 1,
+                question: a.question,
+                answer: String((questions[i] && questions[i].options) ? questions[i].options[a.selected] : a.selected),
+                correct: !!a.isCorrect,
+                correctAnswer: String((questions[i] && questions[i].options) ? questions[i].options[a.correct] : '')
+              }));
+              const percentage = Math.round((score / questions.length) * 100);
+              window.TestResults.saveTest({
+                testType: 'knowledge',
+                questions: exportQuestions,
+                meta: { percentage }
+              });
+            }
+          } catch (e) { console.warn('saveTest knowledge failed', e); }
+
+        }
+
+        function retryTest() {
+          currentQuestion = 0;
+          score = 0;
+          answers = [];
+          document.getElementById('hardwareSoftwareTestResult').style.display =
+            'none';
+          document.getElementById('testQuestionContainer').style.display =
+            'block';
+          document.getElementById('testProgressFill').style.width = '16.67%';
+          document.getElementById('classifier').style.display = 'none';
+          showQuestion();
+        }
+
+        // Классификатор компонентов
+        initClassifier();
+
+        function initClassifier() {
+          const componentItems = document.querySelectorAll('.component-item');
+          const dropZones = document.querySelectorAll('.drop-zone');
+          const poolItems = document.querySelector('.pool-items');
+          let draggedElement = null;
+
+          // Делаем элементы перетаскиваемыми
+          componentItems.forEach(item => {
+            item.draggable = true;
+
+            item.addEventListener('dragstart', function (e) {
+              draggedElement = this;
+              this.classList.add('dragging');
+              e.dataTransfer.effectAllowed = 'move';
+            });
+
+            item.addEventListener('dragend', function (e) {
+              this.classList.remove('dragging');
+              draggedElement = null;
+            });
+          });
+
+          // Настраиваем зоны сброса
+          dropZones.forEach(zone => {
+            zone.addEventListener('dragover', function (e) {
+              e.preventDefault();
+              e.dataTransfer.dropEffect = 'move';
+              this.classList.add('drag-over');
+            });
+
+            zone.addEventListener('dragleave', function (e) {
+              if (!this.contains(e.relatedTarget)) {
+                this.classList.remove('drag-over');
+              }
+            });
+
+            zone.addEventListener('drop', function (e) {
+              e.preventDefault();
+              this.classList.remove('drag-over');
+
+              if (draggedElement) {
+                this.appendChild(draggedElement);
+              }
+            });
+          });
+
+          // Также делаем pool-items зоной сброса для возврата элементов
+          poolItems.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            this.classList.add('drag-over');
+          });
+
+          poolItems.addEventListener('dragleave', function (e) {
+            if (!this.contains(e.relatedTarget)) {
+              this.classList.remove('drag-over');
+            }
+          });
+
+          poolItems.addEventListener('drop', function (e) {
+            e.preventDefault();
+            this.classList.remove('drag-over');
+
+            if (draggedElement) {
+              this.appendChild(draggedElement);
+            }
+          });
+
+          // Проверка классификации
+          document
+            .getElementById('checkClassification')
+            .addEventListener('click', function () {
+              const hardwareZone = document.querySelector(
+                '[data-category="hardware"] .drop-zone'
+              );
+              const softwareZone = document.querySelector(
+                '[data-category="software"] .drop-zone'
+              );
+
+              const hardwareItems =
+                hardwareZone.querySelectorAll('.component-item');
+              const softwareItems =
+                softwareZone.querySelectorAll('.component-item');
+
+              let correctCount = 0;
+              let totalItems = 0;
+
+              // Проверяем hardware элементы
+              hardwareItems.forEach(item => {
+                totalItems++;
+                if (item.dataset.type === 'hardware') {
+                  correctCount++;
+                  item.style.borderColor = '#28a745';
+                  item.style.backgroundColor = '#d4edda';
+                } else {
+                  item.style.borderColor = '#dc3545';
+                  item.style.backgroundColor = '#f8d7da';
+                }
+              });
+
+              // Проверяем software элементы
+              softwareItems.forEach(item => {
+                totalItems++;
+                if (item.dataset.type === 'software') {
+                  correctCount++;
+                  item.style.borderColor = '#28a745';
+                  item.style.backgroundColor = '#d4edda';
+                } else {
+                  item.style.borderColor = '#dc3545';
+                  item.style.backgroundColor = '#f8d7da';
+                }
+              });
+
+              if (totalItems === 0) {
+                alert('Перетащи компоненты в категории для проверки!');
+                return;
+              }
+
+              const percentage = Math.round((correctCount / totalItems) * 100);
+
+              if (correctCount === totalItems && totalItems === 8) {
+                alert(
+                  `🎉 Отлично! Ты правильно классифицировал все компоненты (${correctCount}/${totalItems})!`
+                );
+                this.textContent = 'Классификация завершена!';
+                this.disabled = true;
+              } else {
+                alert(
+                  `Результат: ${correctCount}/${totalItems} правильно (${percentage}%). Попробуй еще раз!`
+                );
+              }
+            });
+
+          // Сброс классификации
+          document
+            .getElementById('resetClassification')
+            .addEventListener('click', function () {
+              // Возвращаем все элементы в pool
+              componentItems.forEach(item => {
+                poolItems.appendChild(item);
+                item.style.borderColor = '#17a2b8';
+                item.style.backgroundColor = 'white';
+              });
+
+              // Включаем кнопку проверки
+              const checkBtn = document.getElementById('checkClassification');
+              checkBtn.textContent = 'Проверить классификацию';
+              checkBtn.disabled = false;
+
+              alert('Классификация сброшена! Попробуй снова.');
+            });
+        }
+      });
+    </script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

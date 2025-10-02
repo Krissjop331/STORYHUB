@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - 6 класс: Мини-тест</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="index.html">5 класс</button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html">Урок 2. Бит и Байт</li>
+              <li data-href="2lesson3.html" class="active">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <div class="lesson-content">
+              <img
+                src="images/2Video3_3.png"
+                alt="Урок 3 - часть 3"
+                class="content_games_img"
+              />
+
+              <!-- Мини-тест -->
+              <div class="mini-test-container">
+                <h3>🧩 Быстрая проверка</h3>
+                <p>Преобразуй число 3₁₀ в двоичную систему:</p>
+
+                <div class="input-container">
+                  <input
+                    type="text"
+                    id="answerInput"
+                    placeholder="Введи ответ"
+                    maxlength="4"
+                  />
+                  <button id="checkAnswer" class="check-btn">Проверить</button>
+                </div>
+
+                <div class="feedback" id="feedback"></div>
+
+                <div class="help-section">
+                  <button id="showHelp" class="help-btn">
+                    🤔 Нужна помощь?
+                  </button>
+                  <div
+                    id="helpContent"
+                    class="help-content"
+                    style="display: none"
+                  >
+                    <p><strong>Алгоритм преобразования:</strong></p>
+                    <p>3 ÷ 2 = 1 (остаток 1)</p>
+                    <p>1 ÷ 2 = 0 (остаток 1)</p>
+                    <p>Читаем остатки снизу вверх: <strong>11</strong></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <img
+              src="images/arrow.png"
+              alt="Далее"
+              class="arrow"
+              id="next-arrow"
+              style="display: none"
+            />
+            <img
+              src="images/arrow.png"
+              alt="Назад"
+              class="arrow-back"
+              id="back-arrow"
+              title="Вернуться к предыдущей странице"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .lesson-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        padding: 20px;
+        position: relative;
+        min-height: 500px;
+      }
+
+      .content_games_img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      .mini-test-container {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: 2px solid #4d36db;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .mini-test-container h3 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 18px;
+        text-align: center;
+      }
+
+      .mini-test-container p {
+        margin-bottom: 20px;
+        font-size: 16px;
+        text-align: center;
+        color: #333;
+      }
+
+      .input-container {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #answerInput {
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 2px solid #4d36db;
+        width: 120px;
+        text-align: center;
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      #answerInput:focus {
+        outline: none;
+        border-color: #6b46c1;
+        box-shadow: 0 0 8px rgba(77, 54, 219, 0.3);
+      }
+
+      .check-btn {
+        padding: 10px 20px;
+        background: #4d36db;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      .check-btn:hover {
+        background: #3626aa;
+      }
+
+      .check-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+
+      .feedback {
+        text-align: center;
+        font-weight: bold;
+        font-size: 16px;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        min-height: 20px;
+      }
+
+      .feedback.correct {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #28a745;
+      }
+
+      .feedback.incorrect {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #dc3545;
+      }
+
+      .help-section {
+        text-align: center;
+      }
+
+      .help-btn {
+        padding: 8px 16px;
+        background: #17a2b8;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+      }
+
+      .help-btn:hover {
+        background: #138496;
+      }
+
+      .help-content {
+        background: #e8f4fd;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+        border-left: 4px solid #17a2b8;
+        text-align: left;
+      }
+
+      .help-content p {
+        margin: 5px 0;
+        font-size: 14px;
+      }
+
+      .arrow {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        z-index: 10;
+      }
+
+      .arrow:hover {
+        transform: scale(1.1);
+      }
+
+      @media (max-width: 768px) {
+        .lesson-content {
+          padding: 15px;
+        }
+
+        .mini-test-container {
+          padding: 20px;
+          margin: 0 10px;
+        }
+
+        .input-container {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        #answerInput {
+          width: 100%;
+          max-width: 150px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const answerInput = document.getElementById('answerInput');
+        const checkBtn = document.getElementById('checkAnswer');
+        const feedback = document.getElementById('feedback');
+        const helpBtn = document.getElementById('showHelp');
+        const helpContent = document.getElementById('helpContent');
+        const nextArrow = document.getElementById('next-arrow');
+
+        let testPassed = false;
+
+        // Валидация ввода - только 0 и 1
+        answerInput.addEventListener('input', function (e) {
+          e.target.value = e.target.value.replace(/[^01]/g, '');
+        });
+
+        // Показать/скрыть помощь
+        helpBtn.addEventListener('click', function () {
+          if (helpContent.style.display === 'none') {
+            helpContent.style.display = 'block';
+            helpBtn.textContent = '🙈 Скрыть помощь';
+          } else {
+            helpContent.style.display = 'none';
+            helpBtn.textContent = '🤔 Нужна помощь?';
+          }
+        });
+
+        // Проверка ответа
+        checkBtn.addEventListener('click', function () {
+          const answer = answerInput.value.trim();
+
+          if (!answer) {
+            showFeedback('Введи ответ!', 'incorrect');
+            return;
+          }
+
+          if (answer === '11') {
+            testPassed = true;
+            showFeedback('🎉 Правильно! 3₁₀ = 11₂', 'correct');
+            checkBtn.disabled = true;
+            checkBtn.textContent = 'Выполнено!';
+            answerInput.disabled = true;
+
+            // Показываем стрелку
+            setTimeout(() => {
+              nextArrow.style.display = 'block';
+            }, 1000);
+          } else {
+            // Показываем что означает введенное число
+            const decimal = parseInt(answer, 2);
+            showFeedback(
+              `❌ Неправильно. ${answer}₂ = ${decimal}₁₀, а нужно 3₁₀`,
+              'incorrect'
+            );
+          }
+        });
+
+        // Enter для отправки
+        answerInput.addEventListener('keypress', function (e) {
+          if (e.key === 'Enter') {
+            checkBtn.click();
+          }
+        });
+
+        function showFeedback(message, type) {
+          feedback.textContent = message;
+          feedback.className = `feedback ${type}`;
+        }
+
+        // Обработчик клика по стрелке
+        if (nextArrow) {
+          nextArrow.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (!testPassed) {
+              alert('Сначала выполни задание!');
+              return;
+            }
+
+            window.location.href = '2lesson3-4.html';
+          });
+        }
+      });
+    </script>
+    <script src="js/video-modal.js"></script>
+    <!-- Подключаем видео-плеер -->
+    <script src="js/main.js"></script>
+
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5802.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - Финальная оценка курса</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="js/test-export.js"></script>
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn active" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+            <ul class="lesson-list">
+              <li data-href="lesson0.html">Введение</li>
+              <li data-href="lesson1.html">
+                Урок 1. Базовые правила безопасности в кабинете информатики
+              </li>
+              <li data-href="lesson2.html">Урок 2. Эргономика</li>
+              <li data-href="lesson3.html">
+                Урок 3. Кибер-гигиена и защита личных данных
+              </li>
+              <li data-href="lesson4.html">
+                Урок 4. Как работают компьютеры: Аппаратное обеспечение
+              </li>
+              <li data-href="lesson5.html">
+                Урок 5. Как работают компьютеры: Программное обеспечение
+              </li>
+              <li data-href="lesson6.html" class="active">Урок 6. Алгоритмы</li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <div class="final-engagement-survey">
+              <div class="survey-header">
+                <div class="survey-intro">
+                  <h2>🎯 Финальная оценка твоего участия!</h2>
+                  <p>
+                    Последний этап - расскажи о своем участии в изучении
+                    алгоритмов
+                  </p>
+                  <button id="startFinalSurvey" class="start-survey-btn">
+                    Завершить оценку
+                  </button>
+                </div>
+              </div>
+
+              <div
+                id="finalSurveyContainer"
+                class="survey-container"
+                style="display: none"
+              >
+                <div class="survey-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="surveyProgressFill"></div>
+                  </div>
+                  <p>
+                    Вопрос <span id="currentSurveyQ">1</span> из
+                    <span id="totalSurveyQ">5</span>
+                  </p>
+                </div>
+
+                <div id="surveyQuestionContainer" class="question-container">
+                  <!-- Вопросы будут добавлены через JavaScript -->
+                </div>
+
+                <div
+                  id="finalSurveyResult"
+                  class="survey-result"
+                  style="display: none"
+                >
+                  <h3 id="surveyResultTitle">Анализ завершен! 🎓</h3>
+                  <p id="surveyResultText">Вот итоги твоего участия в курсе</p>
+                  <div
+                    id="engagementInsights"
+                    class="engagement-insights"
+                  ></div>
+                  <div id="engagementLevel" class="engagement-level"></div>
+                  <div id="courseCompletion" class="course-completion">
+                    <h2>🏆 Поздравляем с завершением курса!</h2>
+                    <p>
+                      Ты успешно прошел все 6 уроков по информатике для 5
+                      класса!
+                    </p>
+                    <div class="final-achievements">
+                      <h4>🎯 Твои достижения:</h4>
+                      <div class="achievement-grid">
+                        <div class="achievement-item">
+                          <div class="achievement-icon">🛡️</div>
+                          <div class="achievement-text">
+                            <h5>Мастер безопасности</h5>
+                            <p>Изучил правила работы в кабинете информатики</p>
+                          </div>
+                        </div>
+                        <div class="achievement-item">
+                          <div class="achievement-icon">🧘‍♀️</div>
+                          <div class="achievement-text">
+                            <h5>Эксперт эргономики</h5>
+                            <p>Понял важность здорового рабочего места</p>
+                          </div>
+                        </div>
+                        <div class="achievement-item">
+                          <div class="achievement-icon">🔒</div>
+                          <div class="achievement-text">
+                            <h5>Защитник данных</h5>
+                            <p>Освоил основы кибер-безопасности</p>
+                          </div>
+                        </div>
+                        <div class="achievement-item">
+                          <div class="achievement-icon">🔧</div>
+                          <div class="achievement-text">
+                            <h5>Знаток железа</h5>
+                            <p>Разобрался с компонентами компьютера</p>
+                          </div>
+                        </div>
+                        <div class="achievement-item">
+                          <div class="achievement-icon">💻</div>
+                          <div class="achievement-text">
+                            <h5>Мастер ПО</h5>
+                            <p>Изучил типы программного обеспечения</p>
+                          </div>
+                        </div>
+                        <div class="achievement-item">
+                          <div class="achievement-icon">🧩</div>
+                          <div class="achievement-text">
+                            <h5>Алгоритмист</h5>
+                            <p>Понял основы алгоритмического мышления</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button id="completeCourse" class="complete-course-btn">
+                    🎉 Завершить курс
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Красивое модальное окно завершения курса -->
+    <div id="completionModal" class="completion-modal-overlay">
+      <div class="completion-modal">
+        <div class="completion-confetti">
+          <div class="confetti"></div>
+          <div class="confetti"></div>
+          <div class="confetti"></div>
+          <div class="confetti"></div>
+          <div class="confetti"></div>
+          <div class="confetti"></div>
+          <div class="confetti"></div>
+          <div class="confetti"></div>
+          <div class="confetti"></div>
+          <div class="confetti"></div>
+        </div>
+
+        <div class="completion-content">
+          <div class="completion-trophy">🏆</div>
+          <h2 class="completion-title">Поздравляем!</h2>
+          <p class="completion-subtitle">
+            Ты успешно завершил курс информатики для 5 класса!
+          </p>
+
+          <div class="completion-achievements">
+            <h3>Теперь ты знаешь основы:</h3>
+            <div class="completion-skills">
+              <div class="skill-item">
+                <div class="skill-icon">🛡️</div>
+                <span>Безопасности в кабинете</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon">🧘‍♀️</div>
+                <span>Эргономики</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon">🔒</div>
+                <span>Кибер-безопасности</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon">🔧</div>
+                <span>Устройства компьютера</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon">💻</div>
+                <span>Программного обеспечения</span>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon">🧩</div>
+                <span>Алгоритмов</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="completion-message">
+            <p>🚀 Удачи в дальнейшем изучении информатики!</p>
+          </div>
+
+          <div class="completion-buttons">
+            <button id="closeCompletion" class="completion-btn secondary">
+              Закрыть
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .final-engagement-survey {
+        padding: 40px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 20px;
+        margin: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .survey-header {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .survey-intro h2 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 28px;
+      }
+
+      .survey-intro p {
+        margin-bottom: 25px;
+        font-size: 16px;
+        color: #666;
+      }
+
+      .start-survey-btn {
+        padding: 20px 40px;
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 4px 15px rgba(77, 54, 219, 0.3);
+      }
+
+      .start-survey-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(77, 54, 219, 0.4);
+      }
+
+      .survey-container {
+        margin-top: 30px;
+      }
+
+      .survey-progress {
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4d36db, #6b46c1);
+        transition: width 0.5s ease;
+        width: 20%;
+      }
+
+      .question-container {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .question-title {
+        color: #4d36db;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      .question-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .option-btn {
+        padding: 15px 20px;
+        background: #f8f9fa;
+        border: 2px solid #dee2e6;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        text-align: left;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .option-btn:hover {
+        background: #e9ecef;
+        border-color: #4d36db;
+        transform: translateX(5px);
+      }
+
+      .option-btn.selected {
+        border-color: #4d36db;
+        background: linear-gradient(135deg, #e8f0fe, #f3e5f5);
+        transform: translateX(5px);
+        box-shadow: 0 4px 12px rgba(77, 54, 219, 0.2);
+      }
+
+      .survey-result {
+        background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+        border: 2px solid #17a2b8;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .survey-result h3 {
+        color: #0c5460;
+        margin-bottom: 15px;
+        font-size: 24px;
+      }
+
+      .survey-result p {
+        color: #0c5460;
+        margin-bottom: 20px;
+        font-size: 16px;
+      }
+
+      .engagement-insights {
+        background: rgba(255, 255, 255, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        text-align: left;
+      }
+
+      .insight-item {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+        padding: 12px;
+        background: white;
+        border-radius: 8px;
+        border-left: 4px solid #17a2b8;
+      }
+
+      .insight-emoji {
+        font-size: 24px;
+        margin-right: 15px;
+      }
+
+      .engagement-level {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border: 2px solid #17a2b8;
+      }
+
+      .level-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        margin: 15px 0;
+      }
+
+      .level-bar {
+        width: 200px;
+        height: 20px;
+        background: #e9ecef;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .level-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #dc3545, #ffc107, #28a745);
+        transition: width 0.8s ease;
+        border-radius: 10px;
+      }
+
+      .level-text {
+        font-weight: bold;
+        font-size: 18px;
+        color: #0c5460;
+      }
+
+      .course-completion {
+        background: linear-gradient(135deg, #e8f5e8, #d4edda);
+        padding: 30px;
+        border-radius: 15px;
+        margin: 25px 0;
+        border: 3px solid #28a745;
+      }
+
+      .course-completion h2 {
+        color: #155724;
+        margin-bottom: 15px;
+        font-size: 24px;
+      }
+
+      .course-completion p {
+        color: #155724;
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+
+      .final-achievements h4 {
+        color: #155724;
+        margin-bottom: 20px;
+        font-size: 18px;
+      }
+
+      .achievement-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .achievement-item {
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 15px;
+        border-radius: 10px;
+        border-left: 4px solid #28a745;
+      }
+
+      .achievement-icon {
+        font-size: 32px;
+        margin-right: 15px;
+        min-width: 50px;
+      }
+
+      .achievement-text h5 {
+        color: #155724;
+        margin-bottom: 5px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .achievement-text p {
+        color: #155724;
+        font-size: 12px;
+        margin: 0;
+        line-height: 1.3;
+      }
+
+      .complete-course-btn {
+        padding: 20px 40px;
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+      }
+
+      .complete-course-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+      }
+
+      /* Красивое модальное окно завершения */
+      .completion-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        animation: fadeIn 0.5s ease;
+      }
+
+      .completion-modal-overlay.active {
+        display: flex;
+      }
+
+      .completion-modal {
+        position: relative;
+        background: linear-gradient(135deg, #ffffff, #f8f9fa);
+        border-radius: 25px;
+        padding: 50px 40px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: modalSlideIn 0.6s ease;
+        text-align: center;
+        border: 3px solid #ffd700;
+      }
+
+      .completion-confetti {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        border-radius: 25px;
+      }
+
+      .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: linear-gradient(
+          45deg,
+          #ff6b6b,
+          #4ecdc4,
+          #45b7d1,
+          #f9ca24,
+          #f0932b
+        );
+        animation: confettiFall 3s linear infinite;
+      }
+
+      .confetti:nth-child(1) {
+        left: 10%;
+        animation-delay: 0s;
+        background: #ff6b6b;
+      }
+      .confetti:nth-child(2) {
+        left: 20%;
+        animation-delay: 0.5s;
+        background: #4ecdc4;
+      }
+      .confetti:nth-child(3) {
+        left: 30%;
+        animation-delay: 1s;
+        background: #45b7d1;
+      }
+      .confetti:nth-child(4) {
+        left: 40%;
+        animation-delay: 1.5s;
+        background: #f9ca24;
+      }
+      .confetti:nth-child(5) {
+        left: 50%;
+        animation-delay: 2s;
+        background: #f0932b;
+      }
+      .confetti:nth-child(6) {
+        left: 60%;
+        animation-delay: 0.3s;
+        background: #ff6b6b;
+      }
+      .confetti:nth-child(7) {
+        left: 70%;
+        animation-delay: 0.8s;
+        background: #4ecdc4;
+      }
+      .confetti:nth-child(8) {
+        left: 80%;
+        animation-delay: 1.3s;
+        background: #45b7d1;
+      }
+      .confetti:nth-child(9) {
+        left: 90%;
+        animation-delay: 1.8s;
+        background: #f9ca24;
+      }
+      .confetti:nth-child(10) {
+        left: 15%;
+        animation-delay: 2.3s;
+        background: #f0932b;
+      }
+
+      .completion-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .completion-trophy {
+        font-size: 80px;
+        margin-bottom: 20px;
+        animation: bounce 2s infinite;
+      }
+
+      .completion-title {
+        color: #2c3e50;
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 15px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .completion-subtitle {
+        color: #34495e;
+        font-size: 18px;
+        margin-bottom: 30px;
+        font-weight: 500;
+      }
+
+      .completion-achievements {
+        background: linear-gradient(135deg, #e8f5e8, #d4edda);
+        border-radius: 15px;
+        padding: 25px;
+        margin: 25px 0;
+        border: 2px solid #28a745;
+      }
+
+      .completion-achievements h3 {
+        color: #155724;
+        font-size: 20px;
+        margin-bottom: 20px;
+        font-weight: 600;
+      }
+
+      .completion-skills {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      .skill-item {
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 12px 15px;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+        border-left: 4px solid #28a745;
+      }
+
+      .skill-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .skill-icon {
+        font-size: 24px;
+        margin-right: 12px;
+      }
+
+      .skill-item span {
+        color: #155724;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .completion-message {
+        background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+        border-radius: 15px;
+        padding: 20px;
+        margin: 25px 0;
+        border: 2px solid #ffc107;
+      }
+
+      .completion-message p {
+        color: #856404;
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .completion-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+
+      .completion-btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        min-width: 180px;
+      }
+
+      .completion-btn.primary {
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        color: white;
+        box-shadow: 0 4px 15px rgba(77, 54, 219, 0.3);
+      }
+
+      .completion-btn.primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(77, 54, 219, 0.4);
+      }
+
+      .completion-btn.secondary {
+        background: linear-gradient(135deg, #6c757d, #868e96);
+        color: white;
+        box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+      }
+
+      .completion-btn.secondary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+      }
+
+      /* Анимации */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes modalSlideIn {
+        from {
+          opacity: 0;
+          transform: scale(0.7) translateY(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-20px);
+        }
+        60% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes confettiFall {
+        0% {
+          transform: translateY(-100vh) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .final-engagement-survey {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .survey-header {
+          flex-direction: column;
+          text-align: center;
+          gap: 20px;
+        }
+
+        .survey-intro h2 {
+          font-size: 24px;
+        }
+
+        .question-container {
+          padding: 20px;
+        }
+
+        .achievement-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .level-bar {
+          width: 150px;
+        }
+
+        .start-survey-btn,
+        .complete-course-btn {
+          padding: 15px 30px;
+          font-size: 16px;
+        }
+
+        .completion-modal {
+          padding: 30px 20px;
+          margin: 20px;
+        }
+
+        .completion-title {
+          font-size: 28px;
+        }
+
+        .completion-trophy {
+          font-size: 60px;
+        }
+
+        .completion-skills {
+          grid-template-columns: 1fr;
+        }
+
+        .completion-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .completion-btn {
+          min-width: 200px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        
+        if (window.TestResults) { try { window.TestResults.init({ lessonId: 6, requireAuth: true }); } catch(e) { console.warn(e); } }
+const questions = [
+          {
+            question: 'Насколько тебе было легко или сложно изучать алгоритмы?',
+            type: 'difficulty',
+            options: [
+              { text: 'Очень легко', value: 'easy', class: 'easy' },
+              {
+                text: 'Немного сложно, но я справился',
+                value: 'medium',
+                class: 'medium',
+              },
+              {
+                text: 'Очень сложно, мне нужна помощь',
+                value: 'hard',
+                class: 'hard',
+              },
+            ],
+          },
+          {
+            question:
+              'Ты сам пробовал создавать алгоритмы или только изучал примеры?',
+            type: 'interaction',
+            options: [
+              {
+                text: 'Да, я пробовал создавать свои алгоритмы',
+                value: 'high',
+                class: 'high',
+              },
+              {
+                text: 'Нет, просто изучал примеры',
+                value: 'low',
+                class: 'low',
+              },
+              { text: 'Иногда пробовал', value: 'medium', class: 'medium' },
+            ],
+          },
+          {
+            question:
+              'Ты бы хотел, чтобы в курсе было больше уроков об алгоритмах?',
+            type: 'preference',
+            options: [
+              { text: 'Больше', value: 'more', class: 'high' },
+              { text: 'Меньше', value: 'less', class: 'low' },
+              { text: 'Столько же', value: 'same', class: 'medium' },
+            ],
+          },
+          {
+            question:
+              'Были ли моменты, когда изучение алгоритмов показалось скучным?',
+            type: 'boredom',
+            options: [
+              {
+                text: 'Нет, было интересно',
+                value: 'interesting',
+                class: 'high',
+              },
+              {
+                text: 'Было скучно, мало практики',
+                value: 'few_tasks',
+                class: 'low',
+              },
+              { text: 'Слишком просто', value: 'too_easy', class: 'medium' },
+            ],
+          },
+          {
+            question:
+              'Ты бы мог объяснить другу, что такое алгоритм и как его создать?',
+            type: 'understanding',
+            options: [
+              { text: 'Да, легко', value: 'confident', class: 'high' },
+              { text: 'Наверное, да', value: 'maybe', class: 'medium' },
+              { text: 'Не уверен', value: 'unsure', class: 'low' },
+            ],
+          },
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+
+        document
+          .getElementById('startFinalSurvey')
+          .addEventListener('click', startSurvey);
+
+        // Обновленный обработчик кнопки завершения курса
+        document
+          .getElementById('completeCourse')
+          .addEventListener('click', showCompletionModal);
+
+        // Обработчики для модального окна
+        document
+          .getElementById('closeCompletion')
+          .addEventListener('click', hideCompletionModal);
+
+        document
+          .getElementById('downloadCertificate')
+          .addEventListener('click', downloadCertificate);
+
+        // Закрытие модального окна при клике на фон
+        document
+          .getElementById('completionModal')
+          .addEventListener('click', function (e) {
+            if (e.target === this) {
+              hideCompletionModal();
+            }
+          });
+
+        function startSurvey() {
+          document.querySelector('.survey-header').style.display = 'none';
+          document.getElementById('finalSurveyContainer').style.display =
+            'block';
+          document.getElementById('totalSurveyQ').textContent =
+            questions.length;
+          showQuestion();
+        }
+
+        function showQuestion() {
+          const question = questions[currentQuestion];
+          document.getElementById('currentSurveyQ').textContent =
+            currentQuestion + 1;
+
+          const progress = ((currentQuestion + 1) / questions.length) * 100;
+          document.getElementById('surveyProgressFill').style.width =
+            progress + '%';
+
+          const container = document.getElementById('surveyQuestionContainer');
+
+          container.innerHTML = `
+            <div class="question-title">${question.question}</div>
+            <div class="question-options">
+              ${question.options
+                .map(
+                  (option, index) =>
+                    `<button class="option-btn ${question.type}-option ${option.class}" data-index="${index}" data-value="${option.value}">
+                  ${option.text}
+                </button>`
+                )
+                .join('')}
+            </div>
+          `;
+
+          container.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+              container
+                .querySelectorAll('.option-btn')
+                .forEach(opt => opt.classList.remove('selected'));
+              this.classList.add('selected');
+
+              setTimeout(() => {
+                selectAnswer(parseInt(this.dataset.index), this.dataset.value);
+              }, 300);
+            });
+          });
+        }
+
+        function selectAnswer(selectedIndex, value) {
+          const question = questions[currentQuestion];
+
+          answers.push({
+            question: question.question,
+            selected: selectedIndex,
+            answer: question.options[selectedIndex].text,
+            value: value,
+            type: question.type,
+          });
+
+          setTimeout(() => {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+              showQuestion();
+            } else {
+              showResults();
+            }
+          }, 500);
+        }
+
+        function showResults() {
+          document.getElementById('surveyQuestionContainer').style.display =
+            'none';
+          const resultDiv = document.getElementById('finalSurveyResult');
+          resultDiv.style.display = 'block';
+
+          const engagementScore = calculateEngagementScore(answers);
+          const insights = generateEngagementInsights(answers, engagementScore);
+
+          const insightsDiv = document.getElementById('engagementInsights');
+          insightsDiv.innerHTML =
+            '<h4>🔍 Анализ твоего участия в изучении алгоритмов:</h4>' +
+            insights
+              .map(
+                insight => `
+              <div class="insight-item">
+                <div class="insight-emoji">${insight.emoji}</div>
+                <div>${insight.text}</div>
+              </div>
+            `
+              )
+              .join('');
+
+          showEngagementLevel(engagementScore);
+          // === Сохранение для Excel (лист "Вовлечённость") и кнопка скачивания ===
+          try {
+            if (window.TestResults) {
+              const exportQuestions = (typeof answers !== 'undefined' ? answers : []).map((a, i) => ({
+                index: i + 1,
+                question: a.question,
+                answer: String(a.answer ?? a.value ?? ''),
+                correct: true,
+                correctAnswer: ''
+              }));
+              if (exportQuestions.length) {
+                window.TestResults.saveTest({
+                  testType: 'engagement',
+                  questions: exportQuestions
+                });
+              }
+              // Кнопка скачивания под уровнем вовлеченности
+              window.TestResults.renderDownloadUI('#engagementLevel', { showDialogAfterSave: true, autoEnableWhenAllDone: true });
+            }
+          } catch (e) { console.warn('saveTest engagement failed', e); }
+
+        }
+
+        function calculateEngagementScore(answers) {
+          let score = 0;
+          const maxScore = 100;
+
+          answers.forEach(answer => {
+            switch (answer.value) {
+              case 'easy':
+              case 'high':
+              case 'more':
+              case 'interesting':
+              case 'confident':
+                score += 20;
+                break;
+              case 'medium':
+              case 'same':
+              case 'too_easy':
+              case 'maybe':
+                score += 12;
+                break;
+              case 'hard':
+              case 'low':
+              case 'less':
+              case 'few_tasks':
+              case 'unsure':
+                score += 5;
+                break;
+            }
+          });
+
+          return Math.min(score, maxScore);
+        }
+
+        function generateEngagementInsights(answers, score) {
+          const insights = [];
+
+          // Анализ сложности
+          const difficulty = answers[0]?.value;
+          if (difficulty === 'easy') {
+            insights.push({
+              emoji: '🧩',
+              text: 'Отлично! Алгоритмы оказались понятными для тебя.',
+            });
+          } else if (difficulty === 'medium') {
+            insights.push({
+              emoji: '💪',
+              text: 'Хорошо! Ты справился с изучением алгоритмов, несмотря на трудности.',
+            });
+          } else {
+            insights.push({
+              emoji: '🤝',
+              text: 'Алгоритмы - сложная тема. Продолжай изучать, и станет легче!',
+            });
+          }
+
+          // Анализ практики
+          const interaction = answers[1]?.value;
+          if (interaction === 'high') {
+            insights.push({
+              emoji: '🚀',
+              text: 'Замечательно! Ты активно практиковался в создании алгоритмов.',
+            });
+          } else if (interaction === 'medium') {
+            insights.push({
+              emoji: '👍',
+              text: 'Хорошо! Попробуй создавать больше собственных алгоритмов.',
+            });
+          } else {
+            insights.push({
+              emoji: '💡',
+              text: 'Рекомендуем больше практиковаться в создании алгоритмов!',
+            });
+          }
+
+          // Анализ понимания
+          const understanding = answers[4]?.value;
+          if (understanding === 'confident') {
+            insights.push({
+              emoji: '🎓',
+              text: 'Превосходно! Ты хорошо понял тему алгоритмов.',
+            });
+          }
+
+          // Общая оценка курса
+          insights.push({
+            emoji: '🏆',
+            text: 'Ты завершил полный курс информатики для 5 класса! Это большое достижение!',
+          });
+
+          return insights;
+        }
+
+        function showEngagementLevel(score) {
+          const levelDiv = document.getElementById('engagementLevel');
+          let level, color, description;
+
+          if (score >= 80) {
+            level = 'Отличная вовлеченность';
+            color = '#28a745';
+            description = 'Ты активно участвовал в изучении алгоритмов!';
+          } else if (score >= 60) {
+            level = 'Хорошая вовлеченность';
+            color = '#ffc107';
+            description = 'Неплохое участие в изучении алгоритмов!';
+          } else {
+            level = 'Базовая вовлеченность';
+            color = '#dc3545';
+            description = 'Рекомендуем больше практиковаться с алгоритмами.';
+          }
+
+          levelDiv.innerHTML = `
+            <h4>📊 Уровень вовлеченности в изучение алгоритмов:</h4>
+            <div class="level-indicator">
+              <div class="level-bar">
+                <div class="level-fill" style="width: ${score}%; background: ${color};"></div>
+              </div>
+              <div class="level-text">${score}%</div>
+            </div>
+            <p><strong>${level}</strong></p>
+            <p>${description}</p>
+          `;
+        }
+
+        function showCompletionModal() {
+          const modal = document.getElementById('completionModal');
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы
+        }
+
+        function hideCompletionModal() {
+          const modal = document.getElementById('completionModal');
+          modal.classList.remove('active');
+          document.body.style.overflow = 'auto'; // Восстанавливаем прокрутку страницы
+        }
+
+        function downloadCertificate() {
+          // Здесь можно добавить логику генерации и скачивания сертификата
+          // Пока что просто показываем уведомление
+          alert(
+            '🎉 Функция генерации сертификата будет добавлена в следующем обновлении!\n\nВ скором времени ты сможешь скачать красивый сертификат о прохождении курса.'
+          );
+        }
+      });
+    </script>
+  </body>
+</html>

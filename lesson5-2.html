@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - Урок 5: Типы программного обеспечения</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn active" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+            <ul class="lesson-list">
+              <li data-href="lesson0.html">Введение</li>
+              <li data-href="lesson1.html">
+                Урок 1. Базовые правила безопасности в кабинете информатики
+              </li>
+              <li data-href="lesson2.html">Урок 2. Эргономика</li>
+              <li data-href="lesson3.html">
+                Урок 3. Кибер-гигиена и защита личных данных
+              </li>
+              <li data-href="lesson4.html">
+                Урок 4. Как работают компьютеры: Аппаратное обеспечение
+              </li>
+              <li data-href="lesson5.html" class="active">
+                Урок 5. Как работают компьютеры: Программное обеспечение
+              </li>
+              <li data-href="lesson6.html">Урок 6. Алгоритмы</li>
+            </ul>
+          </div>
+
+          <div class="content_games" id="center">
+            <div class="software-learning">
+              <div class="software-info">
+                <img
+                  src="images/Video5_2.png"
+                  alt="Типы программного обеспечения"
+                  class="software-image"
+                />
+
+                <div class="software-categories">
+                  <h2>💻 Типы программного обеспечения</h2>
+                  <p>Кликни на каждый тип, чтобы узнать больше!</p>
+
+                  <div class="software-grid">
+                    <div
+                      class="software-card"
+                      data-type="system"
+                      data-explored="false"
+                    >
+                      <div class="card-icon">🖥️</div>
+                      <h3>Системное ПО</h3>
+                      <p class="card-description">Операционные системы</p>
+                      <div class="card-details" style="display: none">
+                        <ul>
+                          <li>Windows, macOS, Linux</li>
+                          <li>Управляет компьютером</li>
+                          <li>Запускает другие программы</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div
+                      class="software-card"
+                      data-type="application"
+                      data-explored="false"
+                    >
+                      <div class="card-icon">📱</div>
+                      <h3>Прикладное ПО</h3>
+                      <p class="card-description">
+                        Программы для пользователей
+                      </p>
+                      <div class="card-details" style="display: none">
+                        <ul>
+                          <li>Word, Excel, браузеры</li>
+                          <li>Игры и мессенджеры</li>
+                          <li>Фоторедакторы</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div
+                      class="software-card"
+                      data-type="drivers"
+                      data-explored="false"
+                    >
+                      <div class="card-icon">🔧</div>
+                      <h3>Драйверы</h3>
+                      <p class="card-description">Связь с устройствами</p>
+                      <div class="card-details" style="display: none">
+                        <ul>
+                          <li>Драйверы принтера</li>
+                          <li>Драйверы видеокарты</li>
+                          <li>Управление устройствами</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div
+                      class="software-card"
+                      data-type="utilities"
+                      data-explored="false"
+                    >
+                      <div class="card-icon">⚙️</div>
+                      <h3>Утилиты</h3>
+                      <p class="card-description">Обслуживание системы</p>
+                      <div class="card-details" style="display: none">
+                        <ul>
+                          <li>Антивирусы</li>
+                          <li>Очистка диска</li>
+                          <li>Архиваторы</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="learning-progress">
+                    <div class="progress-info">
+                      <span id="explored-count">0</span>/4 типов изучено
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" id="learning-progress"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <img
+              src="images/arrow.png"
+              alt="Далее"
+              class="arrow"
+              id="next-arrow"
+              style="display: none"
+            />
+            <img
+              src="images/arrow.png"
+              alt="Назад"
+              class="arrow-back"
+              id="back-arrow"
+              title="Вернуться к предыдущей странице"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .software-learning {
+        padding: 30px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 20px;
+        margin: 20px;
+      }
+
+      .software-info {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+      }
+
+      .software-image {
+        max-width: 300px;
+        max-height: 250px;
+        object-fit: contain;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .software-categories {
+        flex: 1;
+      }
+
+      .software-categories h2 {
+        color: #4d36db;
+        margin-bottom: 10px;
+        font-size: 24px;
+        text-align: center;
+      }
+
+      .software-categories p {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #666;
+        font-size: 16px;
+      }
+
+      .software-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      .software-card {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .software-card:hover {
+        border-color: #4d36db;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(77, 54, 219, 0.2);
+      }
+
+      .software-card.explored {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        border-color: #28a745;
+      }
+
+      .software-card.explored::after {
+        content: '✓';
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        color: #28a745;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .card-icon {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+
+      .software-card h3 {
+        color: #333;
+        margin-bottom: 8px;
+        font-size: 16px;
+      }
+
+      .card-description {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .card-details {
+        text-align: left;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #ddd;
+      }
+
+      .card-details ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .card-details li {
+        color: #555;
+        font-size: 13px;
+        margin-bottom: 5px;
+      }
+
+      .learning-progress {
+        background: rgba(77, 54, 219, 0.1);
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      .progress-info {
+        color: #4d36db;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4d36db, #6b46c1);
+        transition: width 0.5s ease;
+        width: 0%;
+      }
+
+      @media (max-width: 768px) {
+        .software-info {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .software-image {
+          max-width: 100%;
+          align-self: center;
+        }
+
+        .software-grid {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .software-card {
+          padding: 15px;
+        }
+
+        .card-icon {
+          font-size: 32px;
+        }
+
+        .software-learning {
+          padding: 20px;
+          margin: 10px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        let exploredCount = 0;
+        const totalTypes = 4;
+
+        document.querySelectorAll('.software-card').forEach(card => {
+          card.addEventListener('click', function () {
+            const isExplored = this.dataset.explored === 'true';
+
+            if (!isExplored) {
+              // Отмечаем как изученное
+              this.dataset.explored = 'true';
+              this.classList.add('explored');
+              exploredCount++;
+              updateProgress();
+            }
+
+            // Показываем/скрываем детали
+            const details = this.querySelector('.card-details');
+            const isVisible = details.style.display !== 'none';
+
+            // Сначала скрываем все детали
+            document.querySelectorAll('.card-details').forEach(detail => {
+              detail.style.display = 'none';
+            });
+
+            // Показываем детали текущей карточки, если они были скрыты
+            if (!isVisible) {
+              details.style.display = 'block';
+            }
+          });
+        });
+
+        function updateProgress() {
+          document.getElementById('explored-count').textContent = exploredCount;
+          const percentage = (exploredCount / totalTypes) * 100;
+          document.getElementById('learning-progress').style.width =
+            percentage + '%';
+
+          if (exploredCount === totalTypes) {
+            document.getElementById('next-arrow').style.display = 'block';
+            setTimeout(() => {
+              alert(
+                '🎉 Отлично! Теперь ты знаешь все типы программного обеспечения!'
+              );
+            }, 500);
+          }
+        }
+      });
+    </script>
+    <script src="js/video-modal.js"></script>
+    <!-- Подключаем видео-плеер -->
+    <script src="js/main.js"></script>
+
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5799.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

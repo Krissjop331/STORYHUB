@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - 6 класс: Шестнадцатеричная система</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="index.html">5 класс</button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html">Урок 2. Бит и Байт</li>
+              <li data-href="2lesson3.html">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html" class="active">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games">
+            <!-- Интерактивная задача -->
+            <div class="hex-challenge">
+              <h3>🔢 Преобразуй число 120 в шестнадцатеричную систему</h3>
+              <p>Подсказка: 120 ÷ 16 = 7 остаток 8</p>
+
+              <div class="hex-input-container">
+                <span class="hex-prefix">0x</span>
+                <input
+                  type="text"
+                  id="hexInput"
+                  placeholder="?"
+                  maxlength="2"
+                />
+                <button id="checkHex" class="check-hex-btn">Проверить</button>
+              </div>
+
+              <div class="hex-help">
+                <h4>📚 Справочная таблица:</h4>
+                <div class="hex-table">
+                  <div class="hex-row">
+                    <span>0-9 = 0-9</span>
+                    <span>10 = A</span>
+                    <span>11 = B</span>
+                  </div>
+                  <div class="hex-row">
+                    <span>12 = C</span>
+                    <span>13 = D</span>
+                    <span>14 = E</span>
+                    <span>15 = F</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hex-result" id="hexResult"></div>
+            </div>
+
+            <img
+              src="images/arrow.png"
+              alt="Далее"
+              class="arrow"
+              id="nextArrow"
+              style="display: none"
+            />
+            <img
+              src="images/arrow.png"
+              alt="Назад"
+              class="arrow-back"
+              id="back-arrow"
+              title="Вернуться к предыдущей странице"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .hex-challenge {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border: 3px solid #4d36db;
+        text-align: center;
+        max-width: 500px;
+        width: 90%;
+      }
+
+      .hex-challenge h3 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 20px;
+      }
+
+      .hex-challenge p {
+        color: #666;
+        margin-bottom: 25px;
+        font-style: italic;
+      }
+
+      .hex-input-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 25px;
+      }
+
+      .hex-prefix {
+        font-size: 24px;
+        font-weight: bold;
+        color: #4d36db;
+        font-family: monospace;
+      }
+
+      #hexInput {
+        width: 80px;
+        height: 60px;
+        font-size: 32px;
+        text-align: center;
+        border: 3px solid #4d36db;
+        border-radius: 10px;
+        font-family: monospace;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      #hexInput:focus {
+        outline: none;
+        box-shadow: 0 0 10px rgba(77, 54, 219, 0.3);
+      }
+
+      .check-hex-btn {
+        padding: 15px 25px;
+        background: #4d36db;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      .check-hex-btn:hover {
+        background: #3626aa;
+        transform: translateY(-2px);
+      }
+
+      .hex-help {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+
+      .hex-help h4 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 16px;
+      }
+
+      .hex-table {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .hex-row {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .hex-row span {
+        background: white;
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-family: monospace;
+        font-weight: bold;
+        border: 1px solid #ddd;
+        font-size: 14px;
+      }
+
+      .hex-result {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        font-weight: bold;
+        min-height: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .hex-result.success {
+        background: #d4edda;
+        color: #155724;
+        border: 2px solid #28a745;
+      }
+
+      .hex-result.error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 2px solid #dc3545;
+      }
+
+      @media (max-width: 768px) {
+        .hex-challenge {
+          top: 50%;
+          padding: 20px;
+          margin: 20px;
+        }
+
+        .hex-input-container {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        #hexInput {
+          width: 100px;
+          height: 50px;
+          font-size: 24px;
+        }
+
+        .hex-row {
+          justify-content: center;
+        }
+
+        .hex-row span {
+          font-size: 12px;
+          padding: 6px 8px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const hexInput = document.getElementById('hexInput');
+        const checkBtn = document.getElementById('checkHex');
+        const resultDiv = document.getElementById('hexResult');
+        const nextArrow = document.getElementById('nextArrow');
+
+        // Правильный ответ: 120 в шестнадцатеричной = 78
+        const correctAnswer = '78';
+
+        function checkAnswer() {
+          const userAnswer = hexInput.value.trim().toUpperCase();
+
+          if (!userAnswer) {
+            showResult('Введи ответ!', 'error');
+            return;
+          }
+
+          if (userAnswer === correctAnswer) {
+            showResult('🎉 Правильно! 120₁₀ = 0x78₁₆', 'success');
+            nextArrow.style.display = 'block';
+            checkBtn.disabled = true;
+            hexInput.disabled = true;
+
+            // Показываем объяснение
+            setTimeout(() => {
+              resultDiv.innerHTML +=
+                '<br><small>Объяснение: 120 ÷ 16 = 7 остаток 8, поэтому ответ 78</small>';
+            }, 1000);
+          } else {
+            // Проверяем распространенные ошибки
+            if (userAnswer === '120') {
+              showResult(
+                '❌ Это десятичное число! Нужно перевести в шестнадцатеричную систему.',
+                'error'
+              );
+            } else if (userAnswer === '87') {
+              showResult(
+                '❌ Цифры перепутаны местами. Проверь порядок.',
+                'error'
+              );
+            } else if (userAnswer.length === 1) {
+              showResult(
+                '❌ Число 120 больше 15, поэтому нужно две цифры.',
+                'error'
+              );
+            } else if (!/^[0-9A-F]+$/.test(userAnswer)) {
+              showResult('❌ Используй только цифры 0-9 и буквы A-F.', 'error');
+            } else {
+              showResult(
+                `❌ Неправильно. Попробуй ещё раз! Подсказка: первая цифра = 120 ÷ 16`,
+                'error'
+              );
+            }
+          }
+        }
+
+        function showResult(message, type) {
+          resultDiv.textContent = message;
+          resultDiv.className = `hex-result ${type}`;
+        }
+
+        // Обработчики событий
+        checkBtn.addEventListener('click', checkAnswer);
+
+        hexInput.addEventListener('keypress', e => {
+          if (e.key === 'Enter') {
+            checkAnswer();
+          }
+        });
+
+        // Валидация ввода
+        hexInput.addEventListener('input', e => {
+          let value = e.target.value.toUpperCase();
+          value = value.replace(/[^0-9A-F]/g, ''); // Только hex символы
+          if (value.length > 2) value = value.substring(0, 2); // Максимум 2 символа
+          e.target.value = value;
+
+          // Очищаем результат при изменении ввода
+          if (resultDiv.classList.contains('success')) {
+            resultDiv.className = 'hex-result';
+            resultDiv.textContent = '';
+          }
+        });
+
+        // Автофокус
+        hexInput.focus();
+      });
+    </script>
+    <script src="js/video-modal.js"></script>
+    <!-- Подключаем видео-плеер -->
+    <script src="js/main.js"></script>
+
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5799.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

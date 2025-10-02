@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>STORYHUB - 6 класс: Выбор ответа</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header-ui.css" />
+</head>
+
+  <body>
+    <script src="js/site-guard-header.js"></script>
+    <header class="header sg-header">
+  <div class="container">
+    <div class="header_inner">
+      <a href="lesson0.html" class="logo">STORY<span>HUB</span></a>
+      <div class="header-controls">
+        <a href="#" class="admin-panel-btn" id="adminPanelBtn" style="display:none" title="Панель">Админка</a>
+        <div class="exit">
+          <p class="nameuser" id="userName"></p>
+          <a href="#" class="iconexit" id="logoutBtn" title="Выйти из системы">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="content">
+      <div class="container">
+        <div class="content_inner">
+          <div class="menu">
+            <div class="class-switch">
+              <button class="switch-btn" data-href="lesson1.html">
+                5 класс
+              </button>
+              <button class="switch-btn active" data-href="2lesson.html">
+                6 класс
+              </button>
+            </div>
+
+            <ul class="lesson-list">
+              <li data-href="2lesson.html">
+                Урок 1. Двоичное представление в компьютерах
+              </li>
+              <li data-href="2lesson2.html">Урок 2. Бит и Байт</li>
+              <li data-href="2lesson3.html" class="active">
+                Урок 3. Десятичная и двоичная система счисления и их
+                преобразование
+              </li>
+              <li data-href="2lesson4.html">
+                Урок 4. Шестнадцатеричная система счисления
+              </li>
+              <li data-href="2lesson5.html">
+                Урок 5. Как работают компьютеры: Программное и аппаратное
+                обеспечение
+              </li>
+              <li data-href="2lesson6.html">
+                Урок 6. Как работают компьютеры – Ввод, Хранение, Обработка и
+                Вывод данных
+              </li>
+            </ul>
+          </div>
+
+          <div class="content_games" id="center">
+            <div class="content_games_inner">
+              <img
+                src="images/2Video2_7.png"
+                alt="Вопрос: что означает 111₂?"
+                class="video1-7_img"
+              />
+
+              <div class="question-container">
+                <h3>Что означает 111₂ в десятичной системе?</h3>
+                <div class="content_games_inner_tests">
+                  <div
+                    class="test-option"
+                    data-answer="6"
+                    data-correct="false"
+                    data-feedback="Неправильно. 111₂ = 1×4 + 1×2 + 1×1 = 7₁₀, а не 6"
+                  >
+                    6
+                  </div>
+                  <div
+                    class="test-option"
+                    data-answer="7"
+                    data-correct="true"
+                    data-feedback="Правильно! 111₂ = 1×4 + 1×2 + 1×1 = 7₁₀"
+                  >
+                    7
+                  </div>
+                  <div
+                    class="test-option"
+                    data-answer="5"
+                    data-correct="false"
+                    data-feedback="Неправильно. 5₁₀ в двоичной системе будет 101₂, а 111₂ = 7₁₀"
+                  >
+                    5
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <img
+              src="images/arrow.png"
+              alt="Далее"
+              class="arrow"
+              id="next-arrow"
+              style="display: none"
+            />
+            <img
+              src="images/arrow.png"
+              alt="Назад"
+              class="arrow-back"
+              id="back-arrow"
+              title="Вернуться к предыдущей странице"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="feedback-modal">
+      <div class="feedback-content">
+        <h3 id="feedbackTitle">Результат</h3>
+        <p id="feedbackText">Текст обратной связи</p>
+        <div class="calculation-steps" id="calculationSteps"></div>
+        <button id="closeFeedback" class="close-feedback-btn">Понятно</button>
+      </div>
+    </div>
+
+    <div id="feedbackOverlay" class="feedback-overlay"></div>
+
+    <!-- Modal for tooltips -->
+    <div id="tooltipOverlay" class="tooltip-overlay"></div>
+    <div id="tooltipModal" class="tooltip-modal"></div>
+
+    <style>
+      .content_games_inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 50px;
+        padding: 30px;
+        height: 100%;
+      }
+
+      .question-container {
+        max-width: 350px;
+      }
+
+      .question-container h3 {
+        color: #4d36db;
+        margin-bottom: 20px;
+        font-size: 18px;
+        text-align: center;
+      }
+
+      .content_games_inner_tests {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .test-option {
+        padding: 15px 20px;
+        background-color: #f8f9fa;
+        border: 2px solid #4d36db;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        text-align: center;
+        transition: all 0.3s ease;
+        color: #333;
+        font-size: 18px;
+      }
+
+      .test-option:hover:not(.selected) {
+        background-color: #e9ecef;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(77, 54, 219, 0.2);
+      }
+
+      .test-option.selected {
+        pointer-events: none;
+        opacity: 0.7;
+      }
+
+      .test-option.correct {
+        background-color: #d4edda;
+        border-color: #28a745;
+        color: #155724;
+        animation: correctPulse 1s ease-in-out;
+      }
+
+      .test-option.incorrect {
+        background-color: #f8d7da;
+        border-color: #dc3545;
+        color: #721c24;
+        animation: incorrectShake 0.6s ease-in-out;
+      }
+
+      @keyframes correctPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+          box-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
+        }
+      }
+
+      @keyframes incorrectShake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        75% {
+          transform: translateX(5px);
+        }
+      }
+
+      .feedback-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        z-index: 1001;
+        max-width: 500px;
+        width: 90%;
+        display: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border: 3px solid #4d36db;
+      }
+
+      .feedback-modal.active {
+        display: block;
+        animation: modalAppear 0.3s ease-out;
+      }
+
+      @keyframes modalAppear {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      .feedback-content h3 {
+        color: #4d36db;
+        margin-bottom: 15px;
+        font-size: 20px;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .feedback-content p {
+        margin-bottom: 20px;
+        font-size: 16px;
+        line-height: 1.5;
+        text-align: center;
+        color: #333;
+      }
+
+      .calculation-steps {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border-left: 4px solid #4d36db;
+      }
+
+      .calculation-steps p {
+        margin: 5px 0;
+        font-family: monospace;
+        font-size: 14px;
+        text-align: left;
+      }
+
+      .close-feedback-btn {
+        display: block;
+        margin: 0 auto;
+        padding: 12px 30px;
+        background: linear-gradient(135deg, #4d36db, #6b46c1);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .close-feedback-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(77, 54, 219, 0.4);
+      }
+
+      .feedback-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        display: none;
+      }
+
+      .feedback-overlay.active {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .content_games_inner {
+          flex-direction: column;
+          gap: 30px;
+          padding: 20px;
+        }
+
+        .video1-7_img {
+          max-width: 300px;
+        }
+
+        .question-container {
+          max-width: 100%;
+        }
+
+        .test-option {
+          padding: 12px 15px;
+          font-size: 16px;
+        }
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/main-6class.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        let correctAnswered = false;
+        let selectedOptions = new Set();
+
+        document.querySelectorAll('.test-option').forEach(option => {
+          option.addEventListener('click', function () {
+            // Если уже правильно ответили, не реагируем
+            if (correctAnswered) return;
+
+            // Если эта опция уже была выбрана, не реагируем
+            if (selectedOptions.has(this)) return;
+
+            const isCorrect = this.dataset.correct === 'true';
+            const feedback = this.dataset.feedback;
+            const answer = this.dataset.answer;
+
+            // Добавляем в список выбранных
+            selectedOptions.add(this);
+
+            // Подсвечиваем выбранный ответ
+            if (isCorrect) {
+              this.classList.add('correct');
+              correctAnswered = true;
+
+              // Отключаем все варианты
+              document.querySelectorAll('.test-option').forEach(opt => {
+                opt.classList.add('selected');
+              });
+
+              // Показываем стрелку через небольшую задержку
+              setTimeout(() => {
+                document.getElementById('next-arrow').style.display = 'block';
+              }, 1500);
+            } else {
+              this.classList.add('incorrect');
+              this.classList.add('selected'); // Отключаем только неправильный ответ
+            }
+
+            // Показываем обратную связь
+            setTimeout(() => {
+              showFeedback(isCorrect ? 'Правильно!' : 'Неправильно!', feedback);
+            }, 1000);
+          });
+        });
+
+        function showFeedback(title, text) {
+          document.getElementById('feedbackTitle').textContent = title;
+          document.getElementById('feedbackText').textContent = text;
+
+          // Добавляем подробное объяснение для правильного ответа
+          const steps = document.getElementById('calculationSteps');
+          if (title === 'Правильно!') {
+            steps.innerHTML = `
+              <p><strong>Подробный расчет 111₂ → 10₁₀:</strong></p>
+              <p>111₂ = 1×2² + 1×2¹ + 1×2⁰</p>
+              <p>     = 1×4 + 1×2 + 1×1</p>
+              <p>     = 4 + 2 + 1</p>
+              <p>     = 7₁₀</p>
+            `;
+          } else {
+            steps.innerHTML = `
+              <p><strong>Правильный расчет:</strong></p>
+              <p>111₂ = 1×2² + 1×2¹ + 1×2⁰ = 1×4 + 1×2 + 1×1 = 7₁₀</p>
+              <p>Попробуй ещё раз!</p>
+            `;
+          }
+
+          document.getElementById('feedbackModal').classList.add('active');
+          document.getElementById('feedbackOverlay').classList.add('active');
+        }
+
+        function closeFeedback() {
+          document.getElementById('feedbackModal').classList.remove('active');
+          document.getElementById('feedbackOverlay').classList.remove('active');
+        }
+
+        document
+          .getElementById('closeFeedback')
+          .addEventListener('click', closeFeedback);
+        document
+          .getElementById('feedbackOverlay')
+          .addEventListener('click', closeFeedback);
+      });
+    </script>
+    <script src="js/video-modal.js"></script>
+    <!-- Подключаем видео-плеер -->
+    <script src="js/main.js"></script>
+
+    <script>
+      // Глобальная переменная для видео-плеера
+      let videoModal = null;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('📚 Урок 1 - часть 3 загружен');
+
+        // Инициализация видео-плеера
+        initVideoPlayer();
+
+        console.log('✅ Урок 1-3 успешно инициализирован');
+      });
+
+      // Инициализация видео-плеера для этой части урока
+      function initVideoPlayer() {
+        if (typeof window.createVideoModal === 'function') {
+          try {
+            videoModal = window.createVideoModal({
+              videoUrl: 'videos/IMG_5781.mp4', // Видео для этой части урока
+              buttonTitle: 'Посмотреть видео с жестами по уроку',
+              buttonIcon: '🤚',
+              buttonPosition: 'top-right',
+              autoplay: true,
+              controls: true,
+              loop: false,
+            });
+
+            console.log('🎥 Видео-плеер инициализирован для урока 1-3');
+          } catch (error) {
+            console.error('Ошибка инициализации видео-плеера:', error);
+          }
+        } else {
+          console.warn('⚠️ Модуль видео-плеера не загружен');
+        }
+      }
+
+      // Функция для программного обновления видео (может понадобиться)
+      window.updateLessonVideo = function (videoUrl, title, icon) {
+        if (videoModal) {
+          videoModal.updateVideo(videoUrl);
+          videoModal.options.buttonTitle = title;
+          videoModal.options.buttonIcon = icon;
+        }
+      };
+
+      // Функция для скрытия/показа видео кнопки
+      window.toggleVideoButton = function (show = true) {
+        if (videoModal && videoModal.button) {
+          videoModal.button.style.display = show ? 'flex' : 'none';
+        }
+      };
+
+      // Очистка ресурсов при уходе со страницы
+      window.addEventListener('beforeunload', function () {
+        if (videoModal) {
+          videoModal.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>

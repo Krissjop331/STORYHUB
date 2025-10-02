@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "name": "Иван Петров",
+      "login": "ivan",
+      "password": "1234",
+      "role": "student"
+    },
+    {
+      "id": "u2",
+      "name": "Анна Соколова",
+      "login": "asok",
+      "password": "1234",
+      "role": "student"
+    },
+    {
+      "id": "u3",
+      "name": "Мария Иванова",
+      "login": "maria",
+      "password": "1234",
+      "role": "teacher"
+    },
+    {
+      "id": "u4",
+      "name": "Администратор",
+      "login": "admin",
+      "password": "admin",
+      "role": "admin"
+    }
+  ]
+}
